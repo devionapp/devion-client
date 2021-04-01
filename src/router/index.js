@@ -8,20 +8,20 @@ const routes = [
   {
     path: "/",
     name: "Home",
-    component: () => import(/* webpackChunkName: "Home" */ "../views/Home.vue"),
+    component: () => import(/* webpackChunkName: "Home" */ "../views/Home.vue")
   },
   {
     path: "/dashboard",
     name: "Dashboard",
     component: () =>
-      import(/* webpackChunkName: "Dashboard" */ "../views/Dashboard.vue"),
-  },
+      import(/* webpackChunkName: "Dashboard" */ "../views/Dashboard.vue")
+  }
 ];
 
 const router = new VueRouter({
   mode: "history",
   base: process.env.BASE_URL,
-  routes,
+  routes
 });
 
 router.beforeEach((to, from, next) => {

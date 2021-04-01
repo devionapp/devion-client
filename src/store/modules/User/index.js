@@ -8,7 +8,7 @@ const User = {
   state,
   mutations,
   actions,
-  getters,
+  getters
 };
 
 export default User;

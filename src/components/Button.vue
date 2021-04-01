@@ -15,7 +15,7 @@ export default {
   props: {
     color: { required: false, default: "secondary", type: String },
     text: { required: false, default: "", type: String },
-    loading: { required: false, default: false, type: Boolean },
-  },
+    loading: { required: false, default: false, type: Boolean }
+  }
 };
 </script>

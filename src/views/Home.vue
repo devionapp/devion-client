@@ -2,24 +2,11 @@
   <v-main>
     <section class="Home">
       <v-container class="Home__Container">
-        <v-card width="600" class="mt-5">
-          <v-container>
-            <Form ref="form" :validations="$v">
-              <v-row>
-                <v-col cols="12">
-                  <TextField label="E-mail" type="email" />
-                </v-col>
-                <v-col cols="12">
-                  <TextField label="Senha" type="password" />
-                </v-col>
-                <v-col cols="12">
-                  <Button @click="login" text="Login" width="100%" x-large />
-                </v-col>
-              </v-row>
-            </Form>
-          </v-container>
+        <v-card width="600">
+          <LoginForm />
         </v-card>
       </v-container>
+
       <div class="Home__Waves">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
           <path
@@ -38,37 +25,12 @@
   </v-main>
 </template>
 <script>
-import { mapMutations } from "vuex";
-import { required } from "vuelidate/lib/validators";
-import { validationMixin } from "vuelidate";
-
+import LoginForm from "@/components/LoginForm";
 export default {
-  mixins: [validationMixin],
+  components: { LoginForm },
   data() {
-    return {
-      user: { email: null, senha: null },
-    };
-  },
-  validations: {
-    user: {
-      email: { required },
-      senha: { required },
-    },
-  },
-  methods: {
-    ...mapMutations("User", {
-      setIsLoggedIn: "SET_IS_LOGGED_IN",
-    }),
-    async login() {
-      console.log(this.$refs.form.validateForm());
-      if (!this.$refs.form.validateForm) {
-        return;
-      }
-
-      this.setIsLoggedIn(true);
-      this.$router.push({ name: "Dashboard" });
-    },
-  },
+    return {};
+  }
 };
 </script>
 <style lang="scss" scoped>
