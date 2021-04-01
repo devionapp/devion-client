@@ -1,30 +1,32 @@
-# ezsight-client
+# EzSight - Client
 
-## Project setup
+## Projeto iniciado com Vue CLI - @vue/cli 4.5.11
+
+## Para Instalar as dependências do projeto
 
 ```
 npm install
 ```
 
-### Compiles and hot-reloads for development
+### Compila e ativa o hot-reload para desenvolvimento
 
 ```
 npm run serve
 ```
 
-### Compiles and minifies for production
+### Compila e minifica para produção
 
 ```
 npm run build
 ```
 
-### Run your unit tests
+### Rodar testes unitários
 
 ```
 npm run test:unit
 ```
 
-### Lints and fixes files
+### Lint
 
 ```
 npm run lint
