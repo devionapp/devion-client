@@ -2,6 +2,16 @@
 
 ## Projeto iniciado com Vue CLI - @vue/cli 4.5.11
 
+- Vue 2.x
+- VueX
+- Vue Router
+- ESLint
+- Prettier
+- Lodash
+- Vuetify
+- Vuelidate
+- Moment
+
 ## Para Instalar as dependências do projeto
 
 ```

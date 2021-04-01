@@ -4,6 +4,7 @@ import router from "./router";
 import store from "./store";
 import vuetify from "./plugins/vuetify";
 import vuelidate from "./plugins/vuelidate";
+import moment from "./plugins/moment";
 import Button from "@/components/Button";
 import TextField from "@/components/TextField";
 import "@babel/polyfill";
@@ -18,5 +19,6 @@ new Vue({
   store,
   vuetify,
   vuelidate,
+  moment,
   render: h => h(App)
 }).$mount("#app");
