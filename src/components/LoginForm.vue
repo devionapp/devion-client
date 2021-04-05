@@ -59,8 +59,12 @@ export default {
       setIsLoggedIn: "SET_IS_LOGGED_IN"
     }),
     async login() {
-      this.setIsLoggedIn(true);
-      this.$router.push({ name: "Dashboard" });
+      await this.axios.post("/users", {
+        email: `mikagallucci@hotmail.com`,
+        password: `123456`
+      });
+      // this.setIsLoggedIn(true);
+      // this.$router.push({ name: "Dashboard" });
     }
   }
 };
