@@ -1,6 +1,7 @@
 <template>
   <v-text-field
     v-model="input"
+    :prepend-inner-icon="prependInnerIcon"
     :label="label"
     :color="color"
     v-bind="$attrs"
@@ -30,6 +31,7 @@ export default {
     },
     color: { required: false, default: "secondary", type: String },
     label: { required: false, default: "", type: String },
+    prependInnerIcon: { required: false, default: "", type: String },
     disabled: {
       type: Boolean,
       default: false

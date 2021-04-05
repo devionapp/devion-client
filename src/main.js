@@ -5,8 +5,8 @@ import store from "./store";
 import vuetify from "./plugins/vuetify";
 import vuelidate from "./plugins/vuelidate";
 import moment from "./plugins/moment";
-import Button from "@/components/Button";
-import TextField from "@/components/TextField";
+import Button from "@/components/Form/Button";
+import TextField from "@/components/Form/TextField";
 import "./plugins/axios";
 import "@babel/polyfill";
 

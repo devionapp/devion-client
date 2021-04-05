@@ -6,17 +6,13 @@
     buttonSize="x-large"
     labelConfirm="Entrar"
     hideCancel
+    hideFooter
   >
-    <v-row>
-      <v-col cols="12">
-        <h1 class="text-center">
-          EzSight
-        </h1>
-      </v-col>
-    </v-row>
+    <v-container> </v-container>
     <v-row>
       <v-col cols="12">
         <TextField
+          prependInnerIcon="mdi-email"
           label="E-mail"
           type="email"
           v-model="user.email"
@@ -25,13 +21,41 @@
       </v-col>
     </v-row>
     <v-row>
-      <v-col cols="12">
+      <v-col cols="12" lg="8">
         <TextField
+          prependInnerIcon="mdi-key"
           label="Senha"
           type="password"
           v-model="user.password"
           :v="$v.user.password"
         />
+      </v-col>
+      <v-col cols="12" lg="4">
+        <Button
+          width="100%"
+          x-large
+          text="Entrar"
+          @click="$refs.form.onConfirm()"
+        />
+      </v-col>
+    </v-row>
+    <v-row no-gutters>
+      <v-col cols="12" lg="6">
+        <v-checkbox
+          v-model="user.keepalive"
+          label="Manter conectado"
+        ></v-checkbox>
+      </v-col>
+      <v-col cols="12" lg="6" class="d-flex align-lg-center justify-lg-end">
+        <router-link to="/recuperar-senha">Esqueceu sua senha?</router-link>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col cols="12" lg="6">
+        <p>
+          Não tem uma conta?
+          <router-link to="/cadastro">Cadastre-se!</router-link>
+        </p>
       </v-col>
     </v-row>
   </EZForm>
@@ -40,13 +64,15 @@
 <script>
 import { mapMutations } from "vuex";
 import { required, email } from "vuelidate/lib/validators";
-import EZForm from "@/components/EZForm";
+import EZForm from "@/components/Form/EZForm";
 
 export default {
   name: "LoginForm",
   components: { EZForm },
   data() {
-    return { user: { email: null, password: null } };
+    return {
+      user: { email: null, password: null, keepalive: false }
+    };
   },
   validations: {
     user: {

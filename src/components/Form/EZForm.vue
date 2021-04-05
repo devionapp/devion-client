@@ -2,11 +2,13 @@
   <v-form class="Form" v-model="valid">
     <v-container>
       <v-row>
-        <v-col cols="12">
-          <slot />
-        </v-col>
+        <v-container>
+          <v-col cols="12">
+            <slot />
+          </v-col>
+        </v-container>
       </v-row>
-      <v-row>
+      <v-row v-if="!hideFooter">
         <v-col cols="12" lg="6" v-if="!hideCancel">
           <Button
             width="100%"
@@ -57,6 +59,11 @@ export default {
       default: "Salvar"
     },
     hideCancel: {
+      required: false,
+      type: Boolean,
+      default: false
+    },
+    hideFooter: {
       required: false,
       type: Boolean,
       default: false
