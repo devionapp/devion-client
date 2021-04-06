@@ -1,7 +1,9 @@
 <template>
   <v-text-field
+    @click:append="$emit('clickAppend')"
     v-model="input"
     :prepend-inner-icon="prependInnerIcon"
+    :append-icon="appendIcon"
     :label="label"
     :color="color"
     v-bind="$attrs"
@@ -32,6 +34,7 @@ export default {
     color: { required: false, default: "secondary", type: String },
     label: { required: false, default: "", type: String },
     prependInnerIcon: { required: false, default: "", type: String },
+    appendIcon: { required: false, default: "", type: String },
     disabled: {
       type: Boolean,
       default: false

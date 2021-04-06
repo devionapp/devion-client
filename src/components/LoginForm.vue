@@ -25,8 +25,10 @@
         <TextField
           prependInnerIcon="mdi-key"
           label="Senha"
-          type="password"
           v-model="user.password"
+          @clickAppend="showPassword = !showPassword"
+          :type="showPassword ? 'text' : 'password'"
+          :appendIcon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
           :v="$v.user.password"
         />
       </v-col>
@@ -71,7 +73,12 @@ export default {
   components: { EZForm },
   data() {
     return {
-      user: { email: null, password: null, keepalive: false }
+      user: {
+        email: null,
+        password: null,
+        keepalive: false
+      },
+      showPassword: false
     };
   },
   validations: {
