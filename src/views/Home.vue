@@ -1,47 +1,24 @@
 <template>
-  <v-main>
-    <section class="Home">
-      <v-container class="Home__Container">
-        <v-row>
-          <v-col cols="12" class="d-flex justify-center">
-            <v-img
-              lazy-src="@/assets/logo-menor.png"
-              max-height="150"
-              max-width="150"
-              contain
-              src="@/assets/logo-menor.png"
-            ></v-img>
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col cols="12" class="d-flex justify-center">
-            <v-card width="600">
-              <LoginForm />
-            </v-card>
-          </v-col>
-        </v-row>
-      </v-container>
-    </section>
+  <section id="inspire">
+    <v-navigation-drawer v-model="drawer" app>
+      <!--  -->
+    </v-navigation-drawer>
 
-    <Waves />
-  </v-main>
+    <v-app-bar app>
+      <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
+
+      <v-toolbar-title>Application</v-toolbar-title>
+    </v-app-bar>
+
+    <v-main>
+      <router-view></router-view>
+    </v-main>
+  </section>
 </template>
+
 <script>
-import LoginForm from "@/components/LoginForm";
-import Waves from "@/components/Layout/Waves";
 export default {
-  components: { LoginForm, Waves },
-  data() {
-    return {};
-  }
+  name: "Home",
+  data: () => ({ drawer: null })
 };
 </script>
-<style lang="scss" scoped>
-.Home {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  z-index: 2;
-  position: relative;
-}
-</style>

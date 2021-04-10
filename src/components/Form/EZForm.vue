@@ -75,7 +75,7 @@ export default {
   created() {},
   methods: {
     onCancel() {
-      alert("onCancel");
+      this.$emit("onCancel");
     },
 
     async onConfirm() {
