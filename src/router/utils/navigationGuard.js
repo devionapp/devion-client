@@ -1,7 +1,8 @@
 import store from "@/store";
 
-export default routeName => {
-  const dontNeedAuth = ["login", "cadastro", "recuperar-senha"];
+export default (routeName, dontNeedAuth) => {
+  const isLoggedIn = localStorage.getItem(`login`);
+  store.commit("User/SET_IS_LOGGED_IN", !!isLoggedIn);
 
   return (
     dontNeedAuth.includes(routeName) || store.getters["User/getIsLoggedIn"]

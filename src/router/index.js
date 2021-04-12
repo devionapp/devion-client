@@ -33,6 +33,14 @@ const routes = [
       import(
         /* webpackChunkName: "dashboard" */ "@/modules/dashboard/Dashboard.vue"
       )
+  },
+  {
+    path: "/configuracoes",
+    name: "configuracoes",
+    component: () =>
+      import(
+        /* webpackChunkName: "configuracoes" */ "@/modules/settings/views/Settings.vue"
+      )
   }
 ];
 
@@ -43,9 +51,17 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  if (!navigationGuard(to.name)) {
+  const dontNeedAuth = ["login", "cadastro", "recuperar-senha"];
+
+  if (!navigationGuard(to.name, dontNeedAuth)) {
     next({ name: "login" });
-  } else next();
+  } else {
+    // if (dontNeedAuth.includes(to.name)) {
+    //   next("dashboard");
+    // } else {
+    next();
+    // }
+  }
 });
 
 export default router;

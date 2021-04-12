@@ -26,6 +26,9 @@
               <v-list-item-title v-text="item.title"></v-list-item-title>
             </v-list-item-content>
           </v-list-item>
+          <v-list-item>
+            <Button text="Logout" @click="logout" />
+          </v-list-item>
         </v-list-item-group>
       </v-list>
     </v-navigation-drawer>
@@ -56,6 +59,12 @@ export default {
       { title: "Tarefas", icon: "mdi-calendar-check", route: "tarefas" },
       { title: "Configurações", icon: "mdi-cog", route: "configuracoes" }
     ]
-  })
+  }),
+  methods: {
+    logout() {
+      localStorage.removeItem("login");
+      this.$router.push({ name: "login" });
+    }
+  }
 };
 </script>

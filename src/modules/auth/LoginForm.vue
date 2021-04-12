@@ -100,6 +100,7 @@ export default {
       //   email: `mikagallucci@hotmail.com`,
       //   password: `123456`
       // });
+      localStorage.login = true;
       await this.setIsLoggedIn(true);
       this.$router.push({ name: "dashboard" });
     }
