@@ -1,6 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import navigationGuard from "./utils/navigationGuard";
+import modules from "./modules";
 Vue.use(VueRouter);
 
 const routes = [
@@ -34,14 +35,7 @@ const routes = [
         /* webpackChunkName: "dashboard" */ "@/modules/dashboard/Dashboard.vue"
       )
   },
-  {
-    path: "/configuracoes",
-    name: "configuracoes",
-    component: () =>
-      import(
-        /* webpackChunkName: "configuracoes" */ "@/modules/settings/views/Settings.vue"
-      )
-  }
+  ...modules
 ];
 
 const router = new VueRouter({

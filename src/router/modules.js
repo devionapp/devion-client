@@ -1,3 +1,4 @@
 import settings from "@/modules/settings/routes";
+import projects from "@/modules/projects/routes";
 
-export default [...settings];
+export default [...settings, ...projects];
