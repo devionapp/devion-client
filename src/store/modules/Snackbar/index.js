@@ -3,7 +3,7 @@ import actions from "./actions";
 import mutations from "./mutations";
 import getters from "./getters";
 
-const User = {
+const Snackbar = {
   namespaced: true,
   state,
   mutations,
@@ -11,4 +11,4 @@ const User = {
   getters
 };
 
-export default User;
+export default Snackbar;

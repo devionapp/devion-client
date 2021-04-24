@@ -1,4 +1,5 @@
 export default () => ({
   isLoggedIn: false,
-  token: null
+  token: null,
+  user: null
 });

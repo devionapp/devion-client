@@ -5,4 +5,14 @@ const login = async payload => {
   return response;
 };
 
-export default { login };
+const signUp = async payload => {
+  const response = await axios.post("/signup", payload);
+  return response;
+};
+
+const registerCompany = async payload => {
+  const response = await axios.post("/tenants", payload);
+  return response;
+};
+
+export default { login, signUp, registerCompany };

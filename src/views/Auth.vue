@@ -1,10 +1,10 @@
 <template>
   <v-main>
-    <section class="Home">
-      <v-container class="Home__Container">
+    <section class="Auth">
+      <v-container class="Auth__Container">
         <v-row>
           <v-col cols="12" class="d-flex justify-center">
-            <h1>Devion</h1>
+            <h1 style="font-size:48px;">Devion</h1>
           </v-col>
         </v-row>
         <v-row>
@@ -32,7 +32,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.Home {
+.Auth {
   display: flex;
   flex-direction: column;
   justify-content: space-between;

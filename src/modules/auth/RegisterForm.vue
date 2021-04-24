@@ -5,12 +5,12 @@
     buttonSize="x-large"
     labelConfirm="Cadastrar"
     @onCancel="$router.push({ name: 'login' })"
-    @onConfirm="$router.push({ name: 'login' })"
+    @onConfirm="handleCreateNewAccount"
   >
     <v-container>
       <v-row>
         <v-col cols="12">
-          <h3>Cadastrar nova conta</h3>
+          <h3>Cadastrar nova organização</h3>
         </v-col>
       </v-row>
       <v-row>
@@ -18,19 +18,26 @@
           <TextField
             autofocus
             prependInnerIcon="mdi-domain"
-            label="Nome da sua empresa"
+            label="Nome da sua organização"
             v-model="newAccount.companyName"
             :v="$v.newAccount.companyName"
           />
         </v-col>
       </v-row>
       <v-row>
-        <v-col cols="12">
+        <v-col cols="12" lg="6">
           <TextField
             prependInnerIcon="mdi-account"
             label="Nome do responsável"
-            v-model="newAccount.userName"
-            :v="$v.newAccount.userName"
+            v-model="newAccount.firstName"
+            :v="$v.newAccount.firstName"
+          />
+        </v-col>
+        <v-col cols="12" lg="6">
+          <TextField
+            label="Sobrenome"
+            v-model="newAccount.lastName"
+            :v="$v.newAccount.lastName"
           />
         </v-col>
       </v-row>
@@ -62,15 +69,17 @@
 <script>
 import { required, email } from "vuelidate/lib/validators";
 import EZForm from "@/components/Form/EZForm";
-
+import { mapActions } from "vuex";
 export default {
   name: "RegisterForm",
   components: { EZForm },
   data() {
     return {
+      loading: false,
       newAccount: {
         companyName: null,
-        userName: null,
+        firstName: null,
+        lastName: null,
         userEmail: null,
         userPassword: null
       }
@@ -79,15 +88,21 @@ export default {
   validations: {
     newAccount: {
       companyName: { required },
-      userName: { required },
+      firstName: { required },
+      lastName: { required },
       userEmail: { required, email },
       userPassword: { required }
     }
   },
-  methods: {}
+  methods: {
+    ...mapActions("Auth", {
+      createNewAccount: "createNewAccount"
+    }),
+    async handleCreateNewAccount() {
+      this.loading = true;
+      await this.createNewAccount(this.newAccount);
+      this.loading = false;
+    }
+  }
 };
 </script>
-<style lang="scss" scoped>
-.RegisterForm {
-}
-</style>

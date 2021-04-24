@@ -8,7 +8,7 @@
           </v-list-item-avatar>
 
           <v-list-item-content>
-            <v-list-item-title>Mikael Gallucci</v-list-item-title>
+            <v-list-item-title>{{ user.name }}</v-list-item-title>
             <!-- <v-list-item-subtitle>Empresa XXX </v-list-item-subtitle> -->
           </v-list-item-content>
         </v-list-item>
@@ -33,7 +33,9 @@
     <v-app-bar app height="72" color="secondary" dark>
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
 
-      <v-toolbar-title color="secondary">Devion</v-toolbar-title>
+      <v-toolbar-title color="secondary" @click="$router.push('/dashboard')">
+        Devion
+      </v-toolbar-title>
 
       <v-spacer></v-spacer>
       <v-menu left bottom>
@@ -68,13 +70,16 @@
 
     <v-main>
       <v-container fluid>
-        <router-view></router-view>
+        <transition name="fade" mode="out-in">
+          <router-view></router-view>
+        </transition>
       </v-container>
     </v-main>
   </section>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   name: "Home",
   data: () => ({
@@ -85,6 +90,11 @@ export default {
       { title: "Tarefas", icon: "mdi-calendar-check", route: "tarefas" }
     ]
   }),
+  computed: {
+    ...mapGetters("User", {
+      user: "getUser"
+    })
+  },
   methods: {
     logout() {
       localStorage.removeItem("devionToken");
@@ -93,3 +103,12 @@ export default {
   }
 };
 </script>
+<style lang="scss" scoped>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}
+</style>
