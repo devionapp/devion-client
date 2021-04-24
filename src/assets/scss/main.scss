@@ -3,6 +3,23 @@ section {
 }
 
 h1 {
+  font-size: 36px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   color: var(--v-secondary-base);
-  font-size: 64px;
+}
+
+span,
+p {
+  color: var(--v-text-base);
+}
+
+.text-red {
+  color: var(--v-error-base);
 }

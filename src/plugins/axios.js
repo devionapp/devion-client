@@ -6,7 +6,8 @@ import axios from "axios";
 // Full config:  https://github.com/axios/axios#request-config
 // axios.defaults.baseURL = process.env.baseURL || process.env.apiUrl || '';
 // axios.defaults.headers.common['Authorization'] = AUTH_TOKEN;
-// axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+// axios.defaults.headers.post["Content-Type"] =
+//   "application/x-www-form-urlencoded";
 
 let config = {
   baseURL: process.env.VUE_APP_API_BASE_URL
@@ -60,4 +61,4 @@ Plugin.install = function(Vue, options) {
 
 Vue.use(Plugin);
 
-export default Plugin;
+export default _axios;

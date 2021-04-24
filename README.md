@@ -1,4 +1,4 @@
-# EzSight - Client
+# devion - Client
 
 ## Projeto iniciado com Vue CLI - @vue/cli 4.5.11
 

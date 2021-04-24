@@ -1,7 +1,10 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import navigationGuard from "./utils/navigationGuard";
+import needAuth from "./utils/needAuth";
+import validateToken from "./utils/validateToken";
 import modules from "./modules";
+import store from "@/store";
+
 Vue.use(VueRouter);
 
 const routes = [
@@ -44,17 +47,17 @@ const router = new VueRouter({
   routes
 });
 
-router.beforeEach((to, from, next) => {
-  const dontNeedAuth = ["login", "cadastro", "recuperar-senha"];
+router.beforeEach(async (to, from, next) => {
+  await validateToken();
 
-  if (!navigationGuard(to.name, dontNeedAuth)) {
+  const isLoggedIn = store.getters["User/getIsLoggedIn"];
+
+  if (!isLoggedIn && needAuth(to.name)) {
     next({ name: "login" });
+  } else if (isLoggedIn && !needAuth(to.name)) {
+    next({ name: "dashboard" });
   } else {
-    // if (dontNeedAuth.includes(to.name)) {
-    //   next("dashboard");
-    // } else {
     next();
-    // }
   }
 });
 

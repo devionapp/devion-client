@@ -2,7 +2,7 @@
   <EZForm
     ref="form"
     :validations="$v"
-    @onConfirm="login"
+    @onConfirm="handleLogin"
     buttonSize="x-large"
     labelConfirm="Entrar"
     hideCancel
@@ -38,37 +38,30 @@
             width="100%"
             x-large
             text="Entrar"
+            :loading="loading"
             @click="$refs.form.onConfirm()"
           />
         </v-col>
       </v-row>
-      <v-row no-gutters>
-        <v-col cols="12" lg="6">
-          <v-checkbox
-            v-model="user.keepalive"
-            label="Manter conectado"
-          ></v-checkbox>
-        </v-col>
-        <v-col cols="12" lg="6" class="d-flex align-lg-center justify-lg-end">
-          <router-link :to="{ name: 'recuperar-senha' }"
-            >Esqueceu sua senha?</router-link
-          >
-        </v-col>
-      </v-row>
       <v-row>
-        <v-col cols="12" lg="6">
-          <p>
+        <v-col cols="12" class="d-flex align-lg-center justify-lg-center">
+          <p style="margin-bottom:0">
             Não tem uma conta?
             <router-link :to="{ name: 'cadastro' }">Cadastre-se!</router-link>
           </p>
         </v-col>
+        <!-- <v-col cols="12" lg="6" class="d-flex align-lg-center justify-lg-end">
+          <router-link :to="{ name: 'recuperar-senha' }"
+            >Esqueceu sua senha?</router-link
+          >
+        </v-col> -->
       </v-row>
     </v-container>
   </EZForm>
 </template>
 
 <script>
-import { mapMutations } from "vuex";
+import { mapActions } from "vuex";
 import { required, email } from "vuelidate/lib/validators";
 import EZForm from "@/components/Form/EZForm";
 
@@ -79,9 +72,9 @@ export default {
     return {
       user: {
         email: null,
-        password: null,
-        keepalive: false
+        password: null
       },
+      loading: false,
       showPassword: false
     };
   },
@@ -92,22 +85,14 @@ export default {
     }
   },
   methods: {
-    ...mapMutations("User", {
-      setIsLoggedIn: "SET_IS_LOGGED_IN"
+    ...mapActions("User", {
+      login: "login"
     }),
-    async login() {
-      // await this.axios.post("/users", {
-      //   email: `mikagallucci@hotmail.com`,
-      //   password: `123456`
-      // });
-      localStorage.login = true;
-      await this.setIsLoggedIn(true);
-      this.$router.push({ name: "dashboard" });
+    async handleLogin() {
+      this.loading = true;
+      await this.login(this.user);
+      this.loading = false;
     }
   }
 };
 </script>
-<style lang="scss" scoped>
-.LoginForm {
-}
-</style>

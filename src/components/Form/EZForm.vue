@@ -1,35 +1,37 @@
 <template>
-  <v-form class="Form" v-model="valid">
-    <v-container>
-      <v-row>
-        <v-container>
-          <v-col cols="12">
-            <slot />
+  <div @keydown.enter="onConfirm">
+    <v-form class="Form" v-model="valid">
+      <v-container>
+        <v-row>
+          <v-container>
+            <v-col cols="12">
+              <slot />
+            </v-col>
+          </v-container>
+        </v-row>
+        <v-row v-if="!hideFooter">
+          <v-col cols="12" lg="6" v-if="!hideCancel">
+            <Button
+              width="100%"
+              color="error"
+              :x-large="buttonSize === 'x-large'"
+              buttonSize
+              :text="labelCancel"
+              @click="onCancel"
+            />
           </v-col>
-        </v-container>
-      </v-row>
-      <v-row v-if="!hideFooter">
-        <v-col cols="12" lg="6" v-if="!hideCancel">
-          <Button
-            width="100%"
-            color="error"
-            :x-large="buttonSize === 'x-large'"
-            buttonSize
-            :text="labelCancel"
-            @click="onCancel"
-          />
-        </v-col>
-        <v-col cols="12" :lg="hideCancel ? '12' : '6'">
-          <Button
-            width="100%"
-            :x-large="buttonSize === 'x-large'"
-            :text="labelConfirm"
-            @click="onConfirm"
-          />
-        </v-col>
-      </v-row>
-    </v-container>
-  </v-form>
+          <v-col cols="12" :lg="hideCancel ? '12' : '6'">
+            <Button
+              width="100%"
+              :x-large="buttonSize === 'x-large'"
+              :text="labelConfirm"
+              @click="onConfirm"
+            />
+          </v-col>
+        </v-row>
+      </v-container>
+    </v-form>
+  </div>
 </template>
 
 <script>

@@ -7,6 +7,7 @@ import vuelidate from "./plugins/vuelidate";
 import moment from "./plugins/moment";
 import "./plugins/axios";
 import "@babel/polyfill";
+import "./assets/scss/main.scss";
 
 Vue.config.productionTip = false;
 
