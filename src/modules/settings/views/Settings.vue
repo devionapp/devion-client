@@ -22,16 +22,13 @@
         <TextField label="E-mail" />
       </v-col>
     </v-row>
-
-    <InviteNewUser />
   </section>
 </template>
 
 <script>
-import InviteNewUser from "../components/InviteNewUser";
 export default {
   name: "Settings",
-  components: { InviteNewUser },
+
   data() {
     return {};
   },

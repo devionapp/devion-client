@@ -9,6 +9,7 @@ export default {
 
       await api.signUp({
         tenantId: tenant.id,
+        roleId: 1,
         firstName: payload.firstName,
         lastName: payload.lastName,
         email: payload.userEmail,

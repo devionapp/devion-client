@@ -1,13 +1,5 @@
 <template>
-  <EZForm
-    ref="form"
-    :validations="$v"
-    @onConfirm="handleLogin"
-    buttonSize="x-large"
-    labelConfirm="Entrar"
-    hideCancel
-    hideFooter
-  >
+  <EZForm ref="form" :validations="$v" @onConfirm="handleLogin" hideFooter>
     <v-container>
       <v-row>
         <v-col cols="12">

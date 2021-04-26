@@ -6,7 +6,6 @@ const defaultActions = {
 };
 
 const crudRoute = (
-  module,
   path,
   componentList,
   componentForm,
@@ -18,8 +17,8 @@ const crudRoute = (
 
   if (actions.list) {
     routes.push({
-      path: `${path}`,
-      name: `${module}.${path}`,
+      path: `/${path}`,
+      name: `${path}`,
       component: componentList,
       meta: permissions.READ ? { permission: permissions.READ } : null
     });
@@ -27,8 +26,8 @@ const crudRoute = (
 
   if (actions.create) {
     routes.push({
-      path: `${path}/adicionar`,
-      name: `${module}.${path}.create`,
+      path: `/${path}/adicionar`,
+      name: `${path}.create`,
       component: componentForm,
       meta: permissions.CREATE ? { permission: permissions.CREATE } : null
     });
@@ -36,8 +35,8 @@ const crudRoute = (
 
   if (actions.edit) {
     routes.push({
-      path: `${path}/:id/editar`,
-      name: `${module}.${path}.edit`,
+      path: `/${path}/:id/editar`,
+      name: `${path}.edit`,
       component: componentForm,
       meta: permissions.UPDATE ? { permission: permissions.UPDATE } : null
     });
@@ -45,8 +44,8 @@ const crudRoute = (
 
   if (actions.view) {
     routes.push({
-      path: `${path}/:id/visualizar`,
-      name: `${module}.${path}.view`,
+      path: `/${path}/:id/visualizar`,
+      name: `${path}.view`,
       component: componentForm,
       meta: permissions.READ ? { permission: permissions.READ } : null
     });

@@ -8,8 +8,10 @@
           </v-list-item-avatar>
 
           <v-list-item-content>
-            <v-list-item-title>{{ user.name }}</v-list-item-title>
-            <!-- <v-list-item-subtitle>Empresa XXX </v-list-item-subtitle> -->
+            <v-list-item-title>
+              {{ user.firstName }} {{ user.lastName }}
+            </v-list-item-title>
+            <v-list-item-subtitle>{{ user.tenant.name }}</v-list-item-subtitle>
           </v-list-item-content>
         </v-list-item>
       </template>
@@ -79,25 +81,47 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapMutations } from "vuex";
+import hasPermission from "@/helpers/hasPermission";
 export default {
   name: "Home",
   data: () => ({
-    drawer: false,
-    items: [
-      { title: "Dashboard", icon: "mdi-view-dashboard", route: "dashboard" },
-      { title: "Projetos", icon: "mdi-apps-box", route: "projetos" },
-      { title: "Tarefas", icon: "mdi-calendar-check", route: "tarefas" }
-    ]
+    drawer: false
   }),
   computed: {
     ...mapGetters("User", {
       user: "getUser"
-    })
+    }),
+    items() {
+      let items = [
+        { title: "Dashboard", icon: "mdi-view-dashboard", route: "dashboard" },
+        { title: "Projetos", icon: "mdi-apps-box", route: "projetos" },
+        { title: "Tarefas", icon: "mdi-calendar-check", route: "tarefas" },
+        {
+          title: "Usuários",
+          icon: "mdi-account-group",
+          route: "usuarios",
+          permission: "VIEW_USERS"
+        }
+      ];
+
+      items.forEach((i, index) => {
+        if (i.permission && !hasPermission(i.permission)) {
+          items.splice(index, 1);
+        }
+      });
+
+      return items;
+    }
   },
+
   methods: {
+    ...mapMutations("User", {
+      setUser: "SET_USER"
+    }),
     logout() {
       localStorage.removeItem("devionToken");
+      this.setUser(null);
       this.$router.push({ name: "login" });
     }
   }
