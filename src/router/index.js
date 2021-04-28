@@ -1,9 +1,9 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import needAuth from "./utils/needAuth";
-import validateToken from "./utils/validateToken";
 import modules from "./modules";
 import store from "@/store";
+import validateToken from "@/helpers/validateToken";
 import hasPermission from "@/helpers/hasPermission";
 
 Vue.use(VueRouter);
@@ -56,8 +56,11 @@ router.beforeEach(async (to, from, next) => {
   if (!isLoggedIn && needAuth(to.name)) {
     next({ name: "login" });
   } else if (isLoggedIn && !needAuth(to.name)) {
+    console.log(1);
     next({ name: "dashboard" });
   } else if (to.meta.permission && !hasPermission(to.meta.permission)) {
+    console.log(to.meta.permission);
+    console.log(hasPermission(to.meta.permission));
     next({ name: "dashboard" });
   } else {
     next();

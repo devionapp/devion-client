@@ -18,6 +18,7 @@ export default {
       );
     }
   },
+
   async create({ dispatch, getters }, payload) {
     try {
       delete payload.skill;
@@ -47,6 +48,42 @@ export default {
       );
     }
   },
+
+  async update({ dispatch }, payload) {
+    try {
+      delete payload.skill;
+      delete payload.skillLevel;
+      delete payload.tenant;
+      delete payload.tenantId;
+      delete payload.role;
+
+      const { data } = await userApi.patch(payload);
+
+      dispatch(
+        "Snackbar/setSnackbar",
+        {
+          show: true,
+          text: "Usuário atualizado com sucesso!",
+          color: "success"
+        },
+        { root: true }
+      );
+
+      router.push({ name: "usuarios" });
+      return data;
+    } catch (e) {
+      dispatch(
+        "Snackbar/setSnackbar",
+        {
+          show: true,
+          text: e?.response?.data.error.message ?? e,
+          color: "error"
+        },
+        { root: true }
+      );
+    }
+  },
+
   async getUser({ dispatch }, payload) {
     try {
       const { data } = await userApi.get(payload);
@@ -59,6 +96,7 @@ export default {
       );
     }
   },
+
   async getAllUsers({ dispatch }, payload) {
     try {
       const { data: users } = await userApi.getAll(payload);
@@ -80,6 +118,22 @@ export default {
         }
       });
       return users;
+    } catch (e) {
+      dispatch(
+        "Snackbar/setSnackbar",
+        {
+          show: true,
+          text: e.response.data.error.message ?? e,
+          color: "error"
+        },
+        { root: true }
+      );
+    }
+  },
+
+  async deleteUser({ dispatch }, payload) {
+    try {
+      await userApi.deleteRecord(payload);
     } catch (e) {
       dispatch(
         "Snackbar/setSnackbar",

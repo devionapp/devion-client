@@ -19,18 +19,6 @@
 import { mapGetters, mapActions } from "vuex";
 export default {
   name: "Snackbar",
-  props: {
-    show: {
-      type: Boolean
-    },
-    color: {
-      type: String,
-      default: "secondary"
-    },
-    text: {
-      type: String
-    }
-  },
   methods: {
     ...mapActions("Snackbar", {
       setSnackbar: "setSnackbar"

@@ -31,6 +31,7 @@
 </template>
 
 <script>
+import checkRouteState from "@/router/utils/checkRouteState";
 export default {
   name: "EZForm",
   props: {
@@ -40,6 +41,10 @@ export default {
       default() {
         return {};
       }
+    },
+    value: {
+      type: Object,
+      required: false
     },
     buttonSize: {
       required: false,
@@ -65,12 +70,32 @@ export default {
       required: false,
       type: Boolean,
       default: false
+    },
+    putFunction: {
+      type: Function,
+      required: false,
+      default: null
+    },
+    getFunction: {
+      type: Function,
+      required: false,
+      default: null
+    },
+    insertFunction: {
+      type: Function,
+      required: false,
+      default: null
     }
   },
   data() {
-    return { valid: false };
+    return { valid: false, routeState: checkRouteState(this.$route) };
   },
-  created() {},
+  async created() {
+    if (this.routeState === "EDIT") {
+      const response = await this.getFunction(this.$route.params.id);
+      this.$emit("input", response);
+    }
+  },
   methods: {
     onCancel() {
       this.$emit("onCancel");
@@ -83,7 +108,17 @@ export default {
         return;
       }
 
-      this.$emit("onConfirm");
+      console.log(this.routeState);
+      if (!this.routeState || this.routeState === "VIEW") {
+        return this.$emit("onConfirm");
+      }
+
+      if (this.routeState === "EDIT") {
+        await this.putFunction(this.value);
+      }
+      if (this.routeState === "INSERT") {
+        await this.insertFunction(this.value);
+      }
     },
 
     async validateForm() {

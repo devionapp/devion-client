@@ -14,11 +14,13 @@ Vue.config.productionTip = false;
 import Button from "@/components/Form/Button";
 import TextField from "@/components/Form/TextField";
 import Select from "@/components/Form/Select";
+import Subheader from "@/components/Form/Subheader";
 import Table from "@/components/Table";
 Vue.component("Button", Button);
 Vue.component("TextField", TextField);
 Vue.component("Select", Select);
 Vue.component("Table", Table);
+Vue.component("Subheader", Subheader);
 
 new Vue({
   router,

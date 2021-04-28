@@ -19,9 +19,11 @@ const _axios = axios.create(config);
 
 _axios.interceptors.request.use(
   function(config) {
+    //Insere o token na requisicao
     config.headers["Authorization"] = `Bearer ${localStorage.getItem(
       "devionToken"
     )}`;
+
     return config;
   },
   function(error) {

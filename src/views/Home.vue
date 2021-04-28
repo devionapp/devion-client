@@ -20,7 +20,11 @@
 
       <v-list shaped>
         <v-list-item-group color="primary">
-          <v-list-item v-for="(item, i) in items" :key="i" :to="item.route">
+          <v-list-item
+            v-for="(item, i) in items"
+            :key="i"
+            :to="{ name: item.route }"
+          >
             <v-list-item-icon>
               <v-icon v-text="item.icon"></v-icon>
             </v-list-item-icon>
@@ -35,7 +39,10 @@
     <v-app-bar app height="72" color="secondary" dark>
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
 
-      <v-toolbar-title color="secondary" @click="$router.push('/dashboard')">
+      <v-toolbar-title
+        color="secondary"
+        @click="$router.push({ name: 'dashboard' })"
+      >
         Devion
       </v-toolbar-title>
 
@@ -71,7 +78,7 @@
     </v-app-bar>
 
     <v-main>
-      <v-container fluid>
+      <v-container>
         <transition name="fade" mode="out-in">
           <router-view></router-view>
         </transition>
@@ -96,7 +103,7 @@ export default {
       let items = [
         { title: "Dashboard", icon: "mdi-view-dashboard", route: "dashboard" },
         { title: "Projetos", icon: "mdi-apps-box", route: "projetos" },
-        { title: "Tarefas", icon: "mdi-calendar-check", route: "tarefas" },
+        // { title: "Tarefas", icon: "mdi-calendar-check", route: "tarefas" },
         {
           title: "Usuários",
           icon: "mdi-account-group",

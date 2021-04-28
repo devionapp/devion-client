@@ -1,9 +1,13 @@
+.v-application--wrap {
+  background-color: #f1f1f1;
+}
+
 section {
   height: 100%;
 }
 
 h1 {
-  font-size: 36px;
+  font-size: 34px;
 }
 
 h1,
@@ -11,12 +15,9 @@ h2,
 h3,
 h4,
 h5,
-h6 {
-  color: var(--v-secondary-base);
-}
-
-span,
-p {
+h6 span,
+p,
+label {
   color: var(--v-text-base);
 }
 
