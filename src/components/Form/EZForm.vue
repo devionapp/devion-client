@@ -46,6 +46,10 @@ export default {
       type: Object,
       required: false
     },
+    model: {
+      type: Object,
+      required: false
+    },
     buttonSize: {
       required: false,
       type: String,
@@ -70,21 +74,6 @@ export default {
       required: false,
       type: Boolean,
       default: false
-    },
-    putFunction: {
-      type: Function,
-      required: false,
-      default: null
-    },
-    getFunction: {
-      type: Function,
-      required: false,
-      default: null
-    },
-    insertFunction: {
-      type: Function,
-      required: false,
-      default: null
     }
   },
   data() {
@@ -92,13 +81,13 @@ export default {
   },
   async created() {
     if (this.routeState === "EDIT") {
-      const response = await this.getFunction(this.$route.params.id);
+      const response = await this.model.loadRecord(this.$route.params.id);
       this.$emit("input", response);
     }
   },
   methods: {
     onCancel() {
-      this.$emit("onCancel");
+      this.$router.go(-1);
     },
 
     async onConfirm() {
@@ -108,16 +97,15 @@ export default {
         return;
       }
 
-      console.log(this.routeState);
       if (!this.routeState || this.routeState === "VIEW") {
         return this.$emit("onConfirm");
       }
 
       if (this.routeState === "EDIT") {
-        await this.putFunction(this.value);
+        await this.model.updateRecord(this.$route.params.id, this.value);
       }
       if (this.routeState === "INSERT") {
-        await this.insertFunction(this.value);
+        await this.model.insertRecord(this.value);
       }
     },
 

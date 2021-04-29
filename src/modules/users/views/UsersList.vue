@@ -2,23 +2,17 @@
   <section class="UsersList">
     <Subheader createPermission="CREATE_USERS" title="Usuários" />
 
-    <Table
-      v-model="users"
-      :getFunction="getAllUsers"
-      :deleteFunction="deleteUser"
-      :headers="headers"
-      :items="users"
-    />
+    <Table v-model="users" :model="model" :headers="headers" :items="users" />
   </section>
 </template>
 
 <script>
-import { mapActions } from "vuex";
-
+import User from "../models/User";
 export default {
   name: "UsersList",
   data() {
     return {
+      model: new User(),
       headers: [
         {
           text: "ID",
@@ -33,11 +27,6 @@ export default {
       users: []
     };
   },
-  methods: {
-    ...mapActions("User", {
-      getAllUsers: "getAllUsers",
-      deleteUser: "deleteUser"
-    })
-  }
+  methods: {}
 };
 </script>

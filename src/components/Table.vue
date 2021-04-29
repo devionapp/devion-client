@@ -32,6 +32,10 @@ export default {
       type: Array,
       required: true
     },
+    model: {
+      type: Object,
+      required: false
+    },
     items: {
       type: Array,
       required: true
@@ -41,20 +45,9 @@ export default {
       required: false,
       default: 10
     },
-    deleteFunction: {
-      type: Function,
-      required: false,
-      default: null
-    },
-    getFunction: {
-      type: Function,
-      required: false,
-      default: null
-    },
     hideEdit: {
       type: Boolean,
-      required: false,
-      default: null
+      required: false
     },
     hideDelete: {
       type: Boolean,
@@ -63,19 +56,21 @@ export default {
   },
   data() {
     return {
-      loading: false
+      loading: false,
+      loaded: false
     };
   },
-  async created() {
-    await this.handleGetFunction();
+  created() {
+    this.handleModel();
   },
   methods: {
-    async handleGetFunction() {
-      this.loading = true;
-      const response = await this.getFunction();
-      this.$emit("input", response);
-      this.loading = false;
+    async handleModel() {
+      if (this.model) {
+        const response = await this.loadCollection();
+        this.$emit("input", response);
+      }
     },
+
     editItem(id) {
       this.$router.push({
         name: `${this.$route.name}.edit`,
@@ -83,8 +78,38 @@ export default {
       });
     },
     async deleteItem(id) {
-      await this.deleteFunction(id);
-      await this.handleGetFunction();
+      await this.model.deleteRecord(id);
+      await this.model.loadCollection();
+    },
+    async loadCollection(page = 0, filter = null, sort = null) {
+      if (this.loading) {
+        return null;
+      }
+
+      this.loaded = false;
+
+      // Exibe o spinner apenas após 50ms
+      var t = setTimeout(() => {
+        this.loading = true;
+      }, 50);
+
+      try {
+        // if (!filter && findKey(this.getFilters(), "value")) {
+        //   filter = this.getFilters();
+        // }
+
+        // if (page === 0) {
+        //   this.resetPage();
+        // }
+
+        const response = await this.model.loadCollection(page, filter, sort);
+        this.$emit("input", response);
+        return Promise.resolve(response);
+      } finally {
+        clearTimeout(t);
+        this.loaded = true;
+        this.loading = false;
+      }
     }
   },
   computed: {

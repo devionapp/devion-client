@@ -2,16 +2,7 @@
   <section>
     <Subheader title="Usuários" />
 
-    <EZForm
-      ref="form"
-      v-model="user"
-      :validations="$v"
-      :getFunction="getUser"
-      :putFunction="updateUser"
-      :insertFunction="createUser"
-      @onConfirm="createNewUser"
-      @onCancel="$router.go(-1)"
-    >
+    <EZForm ref="form" v-model="user" :model="model" :validations="$v">
       <v-card>
         <v-container>
           <h3 class="mb-2">Dados Básicos</h3>
@@ -121,23 +112,26 @@
                   </v-list>
                 </template>
               </v-select>
-            </v-col> </v-row
-        ></v-container>
+            </v-col>
+          </v-row>
+        </v-container>
       </v-card>
     </EZForm>
   </section>
 </template>
 
 <script>
-import { mapActions } from "vuex";
 import { required, requiredIf, email } from "vuelidate/lib/validators";
 import EZForm from "@/components/Form/EZForm";
 import checkRouteState from "@/router/utils/checkRouteState";
+import User from "../models/User";
+
 export default {
   name: "UsersForm",
   components: { EZForm },
   data() {
     return {
+      model: new User(),
       user: {
         firstName: null,
         lastName: null,
@@ -215,19 +209,6 @@ export default {
       },
       roleId: { required }
     }
-  },
-  created() {},
-  methods: {
-    ...mapActions("User", {
-      create: "create",
-      getUser: "getUser",
-      updateUser: "update",
-      createUser: "create"
-    }),
-    async createNewUser() {
-      await this.create(this.user);
-    }
-  },
-  computed: {}
+  }
 };
 </script>
