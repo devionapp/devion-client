@@ -26,11 +26,12 @@
           />
         </v-col>
         <v-col cols="12" lg="3">
-          <TextField
+          <DatePicker
+            id="birthday"
             prependInnerIcon="mdi-calendar"
-            label="Data de Nascimentp"
+            label="Data de Nascimento"
             type="date"
-            v-model="user.dataNascimento"
+            v-model="user.birthday"
             hint="Será utilizado para o login."
           />
         </v-col>
@@ -58,6 +59,7 @@
             :v="$v.user.roleId"
             v-model="user.roleId"
             itemText="name"
+            :disabled="user.roleId === 1"
           >
             <template #itemSlot="data" @click="data.select">
               <v-list dense>
@@ -80,6 +82,23 @@
           </Select>
         </v-col>
         <v-col cols="12" lg="3">
+          <TextField
+            prependInnerIcon="mdi-key"
+            label="Senha"
+            :disabled="routeState !== 'INSERT'"
+            v-model="user.password"
+            @clickAppend="showPassword = !showPassword"
+            :type="showPassword ? 'text' : 'password'"
+            :appendIcon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+            :v="$v.user.password"
+            :hint="
+              routeState === 'INSERT'
+                ? `O usuário poderá alterar a senha depois.`
+                : null
+            "
+          />
+        </v-col>
+        <!-- <v-col cols="12" lg="3">
           <v-select
             outlined
             label="Papel"
@@ -111,26 +130,7 @@
               </v-list>
             </template>
           </v-select>
-        </v-col>
-      </v-row>
-      <v-row>
-        <v-col cols="12" lg="3">
-          <TextField
-            prependInnerIcon="mdi-key"
-            label="Senha"
-            :disabled="routeState !== 'INSERT'"
-            v-model="user.password"
-            @clickAppend="showPassword = !showPassword"
-            :type="showPassword ? 'text' : 'password'"
-            :appendIcon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-            :v="$v.user.password"
-            :hint="
-              routeState === 'INSERT'
-                ? `O usuário poderá alterar a senha depois.`
-                : null
-            "
-          />
-        </v-col>
+        </v-col> -->
       </v-row>
     </DVForm>
   </section>
@@ -191,6 +191,13 @@ export default {
         }
       ],
       perfis: [
+        {
+          id: 1,
+          name: "Administrador",
+          text: "Tem todas as permissoes do sistema",
+          icon: "mdi-account-star",
+          disabled: true
+        },
         {
           id: 2,
           name: "Gestor",

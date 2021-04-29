@@ -122,6 +122,16 @@ export default class HttpErrorMiddleware {
    */
   async onRequestError(error) {
     console.log("onRequestError");
+    store.dispatch(
+      "Snackbar/setSnackbar",
+      {
+        show: true,
+        text: error.response.data.error.message,
+        color: "error"
+      },
+      { root: true }
+    );
+
     // if (error.message.includes("timeout")) {
     //   // await Modal.showQuestionRetry(
     //   //   `O servidor está demorando muito para responder. (${error.message})`

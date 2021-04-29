@@ -4,7 +4,7 @@ import router from "./router";
 import store from "./store";
 import vuetify from "./plugins/vuetify";
 import vuelidate from "./plugins/vuelidate";
-// import moment from "./plugins/moment";
+import moment from "./plugins/moment";
 import "./plugins/axios";
 import "@babel/polyfill";
 import "./assets/scss/main.scss";
@@ -14,12 +14,14 @@ Vue.config.productionTip = false;
 import Button from "@/components/Form/Button";
 import TextField from "@/components/Form/TextField";
 import Select from "@/components/Form/Select";
+import DatePicker from "@/components/Form/DatePicker";
 import Textheader from "@/components/Form/Textheader";
 import Subheader from "@/components/Subheader";
 import Table from "@/components/Table";
 Vue.component("Button", Button);
 Vue.component("TextField", TextField);
 Vue.component("Select", Select);
+Vue.component("DatePicker", DatePicker);
 Vue.component("Textheader", Textheader);
 Vue.component("Table", Table);
 Vue.component("Subheader", Subheader);
@@ -29,6 +31,6 @@ new Vue({
   store,
   vuetify,
   vuelidate,
-  // moment,
+  moment,
   render: h => h(App)
 }).$mount("#app");

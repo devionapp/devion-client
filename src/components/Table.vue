@@ -8,12 +8,41 @@
     class="Table elevation-1"
   >
     <template #item.actions="{ item }">
-      <v-icon class="mr-2" @click="editItem(item.id)" v-if="!hideEdit">
-        mdi-pencil
-      </v-icon>
-      <v-icon @click="deleteItem(item.id)" v-if="!hideDelete">
-        mdi-delete
-      </v-icon>
+      <v-tooltip v-model="show" bottom>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn
+            text
+            icon
+            color="secondary"
+            class="mr-2"
+            @click="editItem(item.id)"
+            v-bind="attrs"
+            v-on="on"
+          >
+            <v-icon v-if="!hideEdit">
+              mdi-pencil
+            </v-icon>
+          </v-btn>
+        </template>
+        <span>Editar</span>
+      </v-tooltip>
+      <v-tooltip v-model="show" bottom>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn
+            text
+            icon
+            color="error"
+            @click="deleteItem(item.id)"
+            v-bind="attrs"
+            v-on="on"
+          >
+            <v-icon v-if="!hideDelete">
+              mdi-delete
+            </v-icon>
+          </v-btn>
+        </template>
+        <span>Excluir</span>
+      </v-tooltip>
     </template>
     <template #no-data> </template>
   </v-data-table>

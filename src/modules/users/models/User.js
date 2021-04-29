@@ -9,13 +9,17 @@ export default class User extends Model {
     };
   }
 
-  beforeUpdate(record) {
-    delete record.skill;
-    delete record.skillLevel;
-    delete record.tenant;
-    delete record.role;
-    delete record.name;
-    delete record.dataNascimento;
+  async beforeSave(record) {
+    delete record?.skill;
+    delete record?.skillLevel;
+    delete record?.tenant;
+    delete record?.role;
+    delete record?.name;
+
+    if (record.birthday) {
+      record.birthday = new Date(record.birthday);
+    }
+
     return record;
   }
 
@@ -43,13 +47,9 @@ export default class User extends Model {
   }
 
   async insertRecord(record) {
-    delete record?.skill;
-    delete record?.skillLevel;
+    record = await this.beforeSave(record);
     record.tenantId = store.getters["User/getUser"].tenantId;
-    const { data } = await HttpRequest("/signup", this.baseURL).post(
-      "",
-      record
-    );
+    const { data } = await HttpRequest("signup", this.baseURL).post("", record);
     return Promise.resolve(data);
   }
 }
