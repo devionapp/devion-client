@@ -1,5 +1,5 @@
 <template>
-  <EZForm ref="form" :validations="$v" @onConfirm="handleLogin" hideFooter>
+  <DVForm ref="form" :validations="$v" @onConfirm="handleLogin" hideFooter>
     <v-container>
       <v-row>
         <v-col cols="12">
@@ -49,17 +49,17 @@
         </v-col> -->
       </v-row>
     </v-container>
-  </EZForm>
+  </DVForm>
 </template>
 
 <script>
 import { mapActions } from "vuex";
 import { required, email } from "vuelidate/lib/validators";
-import EZForm from "@/components/Form/EZForm";
+import DVForm from "@/components/Form/DVForm";
 
 export default {
   name: "LoginForm",
-  components: { EZForm },
+  components: { DVForm },
   data() {
     return {
       user: {

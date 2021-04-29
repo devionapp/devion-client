@@ -1,6 +1,5 @@
-// import { Modal, Toast } from "@/services/messages";
 import URLHelper from "@/helpers/URLHelper";
-
+import store from "@/store";
 export default class HttpErrorMiddleware {
   /**
    *
@@ -27,6 +26,7 @@ export default class HttpErrorMiddleware {
    * @param {*} error
    */
   async serverError(error) {
+    console.log("ServerError");
     const retryMessages = ["GENERAL", "COMMAND_EXCEPTION"];
     const exception = JSON.parse(error.response.data);
     if (
@@ -47,6 +47,7 @@ export default class HttpErrorMiddleware {
    * @param {*} error
    */
   async conflictError(error) {
+    console.log("conflictError");
     // const exception = JSON.parse(error.response.data);
     // await Modal.showError(exception.mensagem || "", "Solicitação inválida");
     throw error;
@@ -57,6 +58,7 @@ export default class HttpErrorMiddleware {
    * @param {*} error
    */
   forbiddenError(error) {
+    console.log("forbiddenError");
     const url = URLHelper.getLocation(error.config.baseURL);
 
     if (url && url.pathname) {
@@ -73,6 +75,7 @@ export default class HttpErrorMiddleware {
    * @param {*} error
    */
   async badRequestError(error) {
+    console.log("badRequestError");
     // var URL = `${error.config.baseURL}/${error.config.url}`;
     // if (!URL.includes("oauth/token")) {
     //   // const exception = JSON.parse(error.response.data);
@@ -81,25 +84,33 @@ export default class HttpErrorMiddleware {
     throw error;
   }
 
+  async unprocessableEntityError(error) {
+    console.log("unprocessableEntityError");
+    if (error.response.data.error.code === "ER_DUP_ENTRY") {
+      //  erro de key duplicada
+    }
+
+    throw error;
+  }
+
   /**
    *
    * @param {*} error
    */
   async checkHttpStatusCode(error) {
+    console.log("checkHttpStatusCode");
     switch (error.response.status) {
       case 500:
       case 501:
         return this.serverError(error);
-
       case 409:
         return this.conflictError(error);
-
       case 403:
         return this.forbiddenError(error);
-
       case 400:
         return this.badRequestError(error);
-
+      case 422:
+        return this.unprocessableEntityError(error);
       default:
         throw error;
     }
@@ -110,6 +121,7 @@ export default class HttpErrorMiddleware {
    * @param {*} error
    */
   async onRequestError(error) {
+    console.log("onRequestError");
     // if (error.message.includes("timeout")) {
     //   // await Modal.showQuestionRetry(
     //   //   `O servidor está demorando muito para responder. (${error.message})`
@@ -130,9 +142,25 @@ export default class HttpErrorMiddleware {
    * @param {*} error
    */
   async onResponseError(error) {
+    console.log("onResponseError");
+
     if (error.config.ignoreErrors) {
       throw error;
     }
+
+    if (typeof error.response.data === "string") {
+      error.response.data = JSON.parse(error.response.data);
+    }
+
+    store.dispatch(
+      "Snackbar/setSnackbar",
+      {
+        show: true,
+        text: error.response.data.error.message,
+        color: "error"
+      },
+      { root: true }
+    );
 
     if (error.message.includes("timeout")) {
       // await Modal.showQuestionRetry(

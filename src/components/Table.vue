@@ -70,7 +70,6 @@ export default {
         this.$emit("input", response);
       }
     },
-
     editItem(id) {
       this.$router.push({
         name: `${this.$route.name}.edit`,
@@ -78,8 +77,19 @@ export default {
       });
     },
     async deleteItem(id) {
-      await this.model.deleteRecord(id);
-      await this.model.loadCollection();
+      this.loading = true;
+
+      try {
+        await this.model.deleteRecord(id);
+      } finally {
+        this.loading = false;
+      }
+
+      const results = await this.loadCollection(this.currentPage);
+      if (results && results.length === 0) {
+        this.currentPage = this.currentPage > 0 ? this.currentPage - 1 : 0;
+        this.loadCollection(this.currentPage);
+      }
     },
     async loadCollection(page = 0, filter = null, sort = null) {
       if (this.loading) {

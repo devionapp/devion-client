@@ -1,5 +1,5 @@
 <template>
-  <EZForm
+  <DVForm
     ref="form"
     :validations="$v"
     buttonSize="x-large"
@@ -26,16 +26,16 @@
         </v-col>
       </v-row>
     </v-container>
-  </EZForm>
+  </DVForm>
 </template>
 
 <script>
-import EZForm from "@/components/Form/EZForm";
+import DVForm from "@/components/Form/DVForm";
 import { required, email } from "vuelidate/lib/validators";
 
 export default {
   name: "RegisterForm",
-  components: { EZForm },
+  components: { DVForm },
   data() {
     return {
       email: null

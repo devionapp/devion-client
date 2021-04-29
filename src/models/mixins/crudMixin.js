@@ -1,5 +1,4 @@
 import { isObject, has, isEmpty, toNumber, cloneDeep } from "lodash";
-import router from "@/router";
 import store from "@/store";
 export default {
   /**
@@ -154,9 +153,16 @@ export default {
       await this.afterInsert(originalAttributes, response.data);
 
       if (!this.silent) {
-        // Toast.success("Item incluído com sucesso!");
+        store.dispatch(
+          "Snackbar/setSnackbar",
+          {
+            show: true,
+            text: "Item criado com sucesso!",
+            color: "success"
+          },
+          { root: true }
+        );
       }
-
       return Promise.resolve(response.data);
     } catch (error) {
       const customError = error.response ? error.response.data : error;
@@ -209,8 +215,6 @@ export default {
         );
       }
 
-      router.go(-1);
-
       return Promise.resolve(response.data);
     } catch (error) {
       const customError = error.response ? error.response.data : error;
@@ -252,7 +256,15 @@ export default {
       await this.afterUpdate(originalAttributes, response.data);
 
       if (!this.silent) {
-        // Toast.success("Item atualizado com sucesso!");
+        store.dispatch(
+          "Snackbar/setSnackbar",
+          {
+            show: true,
+            text: "Item atualizado com sucesso!",
+            color: "success"
+          },
+          { root: true }
+        );
       }
 
       return Promise.resolve(response.data);
@@ -275,7 +287,15 @@ export default {
       const response = await this.request.delete(`${id}`);
 
       if (!this.silent) {
-        // Toast.success("Item excluído com sucesso!");
+        store.dispatch(
+          "Snackbar/setSnackbar",
+          {
+            show: true,
+            text: "Item excluido com sucesso!",
+            color: "success"
+          },
+          { root: true }
+        );
       }
 
       return Promise.resolve(response);
