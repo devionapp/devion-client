@@ -8,7 +8,7 @@
     class="Table elevation-1"
   >
     <template #item.actions="{ item }">
-      <v-tooltip v-model="show" bottom>
+      <v-tooltip bottom>
         <template v-slot:activator="{ on, attrs }">
           <v-btn
             text
@@ -26,7 +26,7 @@
         </template>
         <span>Editar</span>
       </v-tooltip>
-      <v-tooltip v-model="show" bottom>
+      <v-tooltip bottom>
         <template v-slot:activator="{ on, attrs }">
           <v-btn
             text

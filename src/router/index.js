@@ -58,6 +58,7 @@ router.beforeEach(async (to, from, next) => {
   } else if (isLoggedIn && !needAuth(to.name)) {
     next({ name: "dashboard" });
   } else if (to.meta.permission && !hasPermission(to.meta.permission)) {
+    console.log(to.meta.permission);
     next({ name: "dashboard" });
   } else {
     next();

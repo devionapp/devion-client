@@ -1,12 +1,12 @@
-const routes = [
-  {
-    path: "/projetos",
-    name: "projetos",
-    component: () =>
-      import(
-        /* webpackChunkName: "projetos" */ "@/modules/projects/views/Projects.vue"
-      )
-  }
-];
+import crudRoute from "@/router/utils/createCrudRoute";
 
-export default routes;
+const ProjectsList = () =>
+  import(/* webpackChunkName: "projects" */ "./views/ProjectsList");
+const ProjectsForm = () =>
+  import(/* webpackChunkName: "projects" */ "./views/ProjectsForm");
+
+export default crudRoute("projetos", ProjectsList, ProjectsForm, {
+  READ: "VIEW_PROJECTS",
+  CREATE: "CREATE_PROJECTS",
+  UPDATE: "CREATE_PROJECTS"
+});

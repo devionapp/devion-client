@@ -67,14 +67,16 @@
 </template>
 
 <script>
-import { required, email } from "vuelidate/lib/validators";
+import Auth from "@/modules/auth/models/Auth";
 import DVForm from "@/components/Form/DVForm";
-import { mapActions } from "vuex";
+import { required, email } from "vuelidate/lib/validators";
+
 export default {
   name: "RegisterForm",
   components: { DVForm },
   data() {
     return {
+      model: new Auth(),
       loading: false,
       newAccount: {
         companyName: null,
@@ -95,12 +97,9 @@ export default {
     }
   },
   methods: {
-    ...mapActions("Auth", {
-      createNewAccount: "createNewAccount"
-    }),
     async handleCreateNewAccount() {
       this.loading = true;
-      await this.createNewAccount(this.newAccount);
+      await this.model.createNewAccount(this.newAccount);
       this.loading = false;
     }
   }

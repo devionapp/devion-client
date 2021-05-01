@@ -53,15 +53,16 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
-import { required, email } from "vuelidate/lib/validators";
+import Auth from "@/modules/auth/models/Auth";
 import DVForm from "@/components/Form/DVForm";
+import { required, email } from "vuelidate/lib/validators";
 
 export default {
   name: "LoginForm",
   components: { DVForm },
   data() {
     return {
+      model: new Auth(),
       user: {
         email: null,
         password: null
@@ -77,12 +78,9 @@ export default {
     }
   },
   methods: {
-    ...mapActions("User", {
-      login: "login"
-    }),
     async handleLogin() {
       this.loading = true;
-      await this.login(this.user);
+      await this.model.login(this.user);
       this.loading = false;
     }
   }
