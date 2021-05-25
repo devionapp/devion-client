@@ -10,7 +10,7 @@
     :disabled="disabled"
     :error-messages="errors"
     outlined
-  ></v-text-field>
+  />
 </template>
 
 <script>
@@ -50,6 +50,12 @@ export default {
 
       if (this.v.$error && has(this.v, "email") && !this.v.email) {
         errors.push("Formato de E-mail Inválido");
+      }
+
+      if (this.v.$error && has(this.v, "minLength") && !this.v.minLength) {
+        errors.push(
+          `Este campo deve ter no minímo ${this.v.$params.minLength.min} caracteres`
+        );
       }
 
       return errors;

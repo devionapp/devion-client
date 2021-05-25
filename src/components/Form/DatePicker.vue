@@ -6,6 +6,7 @@
     transition="scale-transition"
     offset-y
     min-width="auto"
+    :disabled="disabled"
   >
     <template v-slot:activator="{ on, attrs }">
       <div v-on="on">
@@ -16,6 +17,7 @@
           append-icon="mdi-calendar"
           readonly
           v-bind="attrs"
+          :disabled="disabled"
           @blur="date = parseDate(dateFormatted)"
         />
       </div>
@@ -41,6 +43,10 @@ export default {
     value: {
       type: [Date, String],
       default: ""
+    },
+    disabled: {
+      type: Boolean,
+      default: false
     }
   },
   data: vm => ({

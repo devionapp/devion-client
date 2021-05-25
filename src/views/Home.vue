@@ -102,9 +102,18 @@ export default {
     items() {
       let items = [
         { title: "Dashboard", icon: "mdi-view-dashboard", route: "dashboard" },
-        { title: "Projetos", icon: "mdi-apps-box", route: "projetos" },
-        { title: "Skills", icon: "mdi-apps-box", route: "skills" },
-        // { title: "Tarefas", icon: "mdi-calendar-check", route: "tarefas" },
+        {
+          title: "Projetos",
+          icon: "mdi-apps-box",
+          route: "projetos",
+          permission: "VIEW_PROJECTS"
+        },
+        {
+          title: "Skills",
+          icon: "mdi-brain",
+          route: "skills",
+          permission: "VIEW_SKILLS"
+        },
         {
           title: "Usuários",
           icon: "mdi-account-group",

@@ -1,6 +1,6 @@
 <template>
   <section class="List">
-    <Subheader createPermission="CREATE_PROJECTS" title="Aplicações" />
+    <Subheader createPermission="CREATE_PROJECTS" title="Projetos" />
 
     <Table
       v-model="projects"

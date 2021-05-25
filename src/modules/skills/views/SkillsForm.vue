@@ -8,11 +8,15 @@
           <Textheader text="Dados básicos" />
         </v-col>
       </v-row>
-      <TextField
-        label="Descrição"
-        v-model="skill.description"
-        :v="$v.skill.description"
-      ></TextField>
+      <v-row>
+        <v-col cols="12" lg="8">
+          <TextField
+            label="Descrição"
+            v-model="skill.description"
+            :v="$v.skill.description"
+          />
+        </v-col>
+      </v-row>
     </DVForm>
   </section>
 </template>

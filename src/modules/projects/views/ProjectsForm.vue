@@ -1,12 +1,12 @@
 <template>
-  <section class="">
-    form
+  <section class="ProjectsForm">
+    Project
   </section>
 </template>
 
 <script>
 export default {
-  name: "",
+  name: "ProjectsForm",
   data() {
     return {};
   },

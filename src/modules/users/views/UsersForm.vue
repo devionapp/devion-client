@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <section class="UsersForm">
     <Subheader title="Usuários" />
 
     <DVForm ref="form" v-model="user" :model="model" :validations="$v" card>
@@ -16,6 +16,7 @@
             label="Nome"
             v-model="user.firstName"
             :v="$v.user.firstName"
+            :disabled="user.roleId === 1"
           />
         </v-col>
         <v-col cols="12" lg="3">
@@ -23,6 +24,7 @@
             label="Sobrenome"
             v-model="user.lastName"
             :v="$v.user.lastName"
+            :disabled="user.roleId === 1"
           />
         </v-col>
         <v-col cols="12" lg="3">
@@ -32,7 +34,7 @@
             label="Data de Nascimento"
             type="date"
             v-model="user.birthday"
-            hint="Será utilizado para o login."
+            :disabled="user.roleId === 1"
           />
         </v-col>
       </v-row>
@@ -50,6 +52,7 @@
             v-model="user.email"
             :v="$v.user.email"
             hint="Será utilizado para o login."
+            :disabled="user.roleId === 1"
           />
         </v-col>
         <v-col cols="12" lg="3">
@@ -85,7 +88,9 @@
           <TextField
             prependInnerIcon="mdi-key"
             label="Senha"
-            :disabled="routeState !== 'INSERT'"
+            :disabled="
+              currentUser.roleId === 1 ? false : routeState !== 'INSERT'
+            "
             v-model="user.password"
             @clickAppend="showPassword = !showPassword"
             :type="showPassword ? 'text' : 'password'"
@@ -137,11 +142,16 @@
 </template>
 
 <script>
-import { required, requiredIf, email } from "vuelidate/lib/validators";
+import {
+  required,
+  requiredIf,
+  email,
+  minLength
+} from "vuelidate/lib/validators";
 import DVForm from "@/components/Form/DVForm";
 import checkRouteState from "@/router/utils/checkRouteState";
 import User from "../models/User";
-
+import { mapGetters } from "vuex";
 export default {
   name: "UsersForm",
   components: { DVForm },
@@ -227,10 +237,16 @@ export default {
       password: {
         required: requiredIf(function() {
           return this.routeState === "INSERT";
-        })
+        }),
+        minLength: minLength(8)
       },
       roleId: { required }
     }
+  },
+  computed: {
+    ...mapGetters("User", {
+      currentUser: "getUser"
+    })
   }
 };
 </script>

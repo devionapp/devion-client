@@ -6,7 +6,7 @@ const ProjectsForm = () =>
   import(/* webpackChunkName: "projects" */ "./views/ProjectsForm");
 
 export default crudRoute("projetos", ProjectsList, ProjectsForm, {
-  READ: "VIEW_APPLICATIONS",
-  CREATE: "CREATE_APPLICATIONS",
-  UPDATE: "CREATE_APPLICATIONS"
+  READ: "VIEW_PROJECTS",
+  CREATE: "CREATE_PROJECTS",
+  UPDATE: "CREATE_PROJECTS"
 });
