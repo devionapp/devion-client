@@ -103,40 +103,55 @@
             "
           />
         </v-col>
-        <!-- <v-col cols="12" lg="3">
+      </v-row>
+      <v-row>
+        <v-col cols="12">
+          <Textheader text="Skills" />
+        </v-col>
+      </v-row>
+      <v-row v-for="(skill, index) in user.skills" :key="index">
+        <v-col cols="12" lg="3">
           <v-select
             outlined
-            label="Papel"
-            :items="funcoes"
-            v-model="user.skill"
-          ></v-select>
+            :items="skills"
+            label="Skill"
+            v-model="skill.skillId"
+            item-text="description"
+            item-value="id"
+          />
         </v-col>
         <v-col cols="12" lg="2">
           <v-select
             outlined
             label="Nivel"
-            item-text="name"
+            item-text="description"
+            item-value="id"
             :items="niveis"
-            v-model="user.skillLevel"
+            v-model="skill.level"
           >
             <template v-slot:item="data" @click="data.select">
               <v-list dense>
                 <v-list-item>
                   <v-list-item-icon>
-                    <v-icon>{{ data.item.name }}</v-icon>
+                    <v-icon>{{ data.item.id }}</v-icon>
                   </v-list-item-icon>
 
                   <v-list-item-content>
                     <v-list-item-subtitle
-                      v-html="data.item.text"
+                      v-html="data.item.description"
                     ></v-list-item-subtitle>
                   </v-list-item-content>
                 </v-list-item>
               </v-list>
             </template>
           </v-select>
-        </v-col> -->
+        </v-col>
       </v-row>
+      <div class="v-row">
+        <v-col cols="12" lg="3">
+          <Button text="Adicionar Skill" @click="addSkill" />
+        </v-col>
+      </div>
     </DVForm>
   </section>
 </template>
@@ -151,53 +166,43 @@ import {
 import DVForm from "@/components/Form/DVForm";
 import checkRouteState from "@/router/utils/checkRouteState";
 import User from "../models/User";
+import Skill from "../models/Skill";
 import { mapGetters } from "vuex";
+
 export default {
   name: "UsersForm",
   components: { DVForm },
   data() {
     return {
       model: new User(),
+      skillModel: new Skill(),
       user: {
         firstName: null,
         lastName: null,
         email: null,
         roleId: null,
-        skill: null
+        skills: []
       },
       routeState: checkRouteState(this.$route),
       loading: false,
       showPassword: false,
+      skills: [],
       niveis: [
         {
-          name: 1,
-          text: "Nivel Iniciante"
+          id: 1,
+          description: "Nivel Iniciante"
         },
         {
-          name: 2,
-          text: "Nivel Básico/Júnior"
+          id: 2,
+          description: "Nivel Básico/Júnior"
         },
         {
-          name: 3,
-          text: "Nivel Intermediário/Pleno"
+          id: 3,
+          description: "Nivel Intermediário/Pleno"
         },
         {
-          name: 4,
-          text: "Nivel Avançado/Sênior"
-        }
-      ],
-      funcoes: [
-        {
-          text: "Desenvolvedor Front-End"
-        },
-        {
-          text: "Desenvolvedor Back-End"
-        },
-        {
-          text: "Analista"
-        },
-        {
-          text: "QA (Test)"
+          id: 4,
+          description: "Nivel Avançado/Sênior"
         }
       ],
       perfis: [
@@ -247,6 +252,24 @@ export default {
     ...mapGetters("User", {
       currentUser: "getUser"
     })
+  },
+  created() {
+    this.getSkills();
+  },
+  methods: {
+    addSkill() {
+      if (!this.user.skills) {
+        this.user.skills = [];
+      }
+      this.user.skills.push({
+        skillId: null,
+        level: null
+      });
+      this.$forceUpdate();
+    },
+    async getSkills() {
+      this.skills = await this.skillModel.loadCollection();
+    }
   }
 };
 </script>
