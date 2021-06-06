@@ -3,8 +3,9 @@
     <v-navigation-drawer v-model="drawer" app>
       <template v-slot:prepend>
         <v-list-item two-line>
-          <v-list-item-avatar>
-            <img src="https://randomuser.me/api/portraits/men/1.jpg" />
+          <v-list-item-avatar color="#E0E0E0">
+            {{ user.firstName.substr(0, 1) }}{{ user.lastName.substr(0, 1) }}
+            <!-- <img src="https://randomuser.me/api/portraits/men/1.jpg" /> -->
           </v-list-item-avatar>
 
           <v-list-item-content>

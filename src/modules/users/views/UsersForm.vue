@@ -146,10 +146,18 @@
             </template>
           </v-select>
         </v-col>
+        <v-col cols="12" lg="2">
+          <Button icon color="error" class="mt-2" @click="removeSkill(index)">
+            <v-icon>mdi-delete</v-icon>
+          </Button>
+        </v-col>
       </v-row>
       <div class="v-row">
         <v-col cols="12" lg="3">
-          <Button text="Adicionar Skill" @click="addSkill" />
+          <Button @click="addSkill" color="primary" text>
+            <v-icon class="mr-2">mdi-plus</v-icon>
+            Nova Skill
+          </Button>
         </v-col>
       </div>
     </DVForm>
@@ -265,6 +273,10 @@ export default {
         skillId: null,
         level: null
       });
+      this.$forceUpdate();
+    },
+    removeSkill(index) {
+      this.user.skills.splice(index, 1);
       this.$forceUpdate();
     },
     async getSkills() {

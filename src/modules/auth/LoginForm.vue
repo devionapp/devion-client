@@ -29,7 +29,7 @@
           <Button
             width="100%"
             x-large
-            text="Entrar"
+            label="Entrar"
             :loading="loading"
             @click="$refs.form.onConfirm()"
           />

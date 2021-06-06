@@ -12,7 +12,7 @@
           color="error"
           :x-large="buttonSize === 'x-large'"
           buttonSize
-          :text="labelCancel"
+          :label="labelCancel"
           @click="onCancel"
         />
       </v-col>
@@ -20,7 +20,7 @@
         <Button
           width="100%"
           :x-large="buttonSize === 'x-large'"
-          :text="labelConfirm"
+          :label="labelConfirm"
           @click="onConfirm"
         />
       </v-col>
