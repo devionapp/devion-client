@@ -48,6 +48,8 @@
       </v-toolbar-title>
 
       <v-spacer></v-spacer>
+
+      <!-- FAZER IGUAL ESSE -->
       <v-menu left bottom>
         <template v-slot:activator="{ on, attrs }">
           <v-btn icon v-bind="attrs" v-on="on">
@@ -76,6 +78,7 @@
           </v-list-item>
         </v-list>
       </v-menu>
+      <!-- ------- -->
     </v-app-bar>
 
     <v-main>

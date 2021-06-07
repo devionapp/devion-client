@@ -13,6 +13,8 @@ Vue.config.productionTip = false;
 
 import Button from "@/components/Form/Button";
 import TextField from "@/components/Form/TextField";
+import Checkbox from "@/components/Form/Checkbox";
+import TextArea from "@/components/Form/TextArea";
 import Select from "@/components/Form/Select";
 import DatePicker from "@/components/Form/DatePicker";
 import Textheader from "@/components/Form/Textheader";
@@ -20,6 +22,8 @@ import Subheader from "@/components/Subheader";
 import Table from "@/components/Table";
 Vue.component("Button", Button);
 Vue.component("TextField", TextField);
+Vue.component("Checkbox", Checkbox);
+Vue.component("TextArea", TextArea);
 Vue.component("Select", Select);
 Vue.component("DatePicker", DatePicker);
 Vue.component("Textheader", Textheader);

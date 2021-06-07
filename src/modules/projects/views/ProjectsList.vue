@@ -7,6 +7,7 @@
       :model="model"
       :headers="headers"
       :items="projects"
+      hideDelete
     />
   </section>
 </template>
@@ -19,15 +20,8 @@ export default {
     return {
       model: new Project(),
       headers: [
-        {
-          text: "ID",
-          align: "start",
-          sortable: true,
-          value: "id"
-        },
         { text: "Nome", value: "name" },
-        { text: "E-mail", value: "email" },
-        { text: "Perfil", value: "role" }
+        { text: "Tipo", value: "type" }
       ],
       projects: []
     };
@@ -37,5 +31,3 @@ export default {
   computed: {}
 };
 </script>
-
-<style lang="scss" scoped></style>
