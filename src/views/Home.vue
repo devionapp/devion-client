@@ -113,6 +113,12 @@ export default {
           permission: "VIEW_PROJECTS"
         },
         {
+          title: "Aplicações",
+          icon: "mdi-application",
+          route: "aplicacoes"
+          // permission: "VIEW_PROJECTS"
+        },
+        {
           title: "Skills",
           icon: "mdi-brain",
           route: "skills",

@@ -19,7 +19,10 @@ export default {
   data() {
     return {
       model: new Project(),
-      headers: [{ text: "Nome", value: "name" }],
+      headers: [
+        { text: "Nome", value: "name" },
+        { text: "Tipo", value: "type" }
+      ],
       projects: []
     };
   },

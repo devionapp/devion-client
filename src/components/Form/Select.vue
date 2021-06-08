@@ -13,7 +13,7 @@
     v-bind="$attrs"
     outlined
   >
-    <template v-slot:item="data" @click="data.select">
+    <template v-slot:item="data" @click="data.select" v-if="hasItemSlot">
       <slot ref="itemSlot" name="itemSlot" v-bind:item="data.item"></slot>
     </template>
   </v-select>
@@ -25,7 +25,7 @@ export default {
   name: "Select",
   props: {
     value: {
-      type: [String, Number],
+      type: [String, Number, Object, Array],
       default: ""
     },
     v: {
@@ -47,7 +47,7 @@ export default {
       },
       type: Array
     },
-    itemText: { required: false, default: "", type: String },
+    itemText: { required: false, default: "description", type: String },
     itemValue: { required: false, default: "id", type: String },
     disabled: {
       type: Boolean,
@@ -56,6 +56,9 @@ export default {
   },
 
   computed: {
+    hasItemSlot() {
+      return !!this.$scopedSlots.itemSlot;
+    },
     errors() {
       const errors = [];
 
@@ -87,5 +90,3 @@ export default {
   }
 };
 </script>
-
-<style lang="scss" scoped></style>

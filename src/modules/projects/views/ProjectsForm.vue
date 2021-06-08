@@ -9,67 +9,29 @@
         </v-col>
       </v-row>
       <v-row>
-        <v-col cols="12" lg="6">
+        <v-col cols="4">
           <v-row>
-            <v-col cols="7">
+            <v-col cols="12">
               <TextField
                 label="Nome"
                 v-model="project.name"
                 :v="$v.project.name"
               />
             </v-col>
-            <v-col cols="5">
-              <TextField
-                label="Linguagem/Framework"
-                v-model="project.language"
-                :v="$v.project.language"
-              />
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col cols="6">
-              <TextField
-                label="Repositório"
-                v-model="project.repository"
-                :v="$v.project.repository"
-              />
-            </v-col>
-            <v-col cols="6">
-              <TextField
-                label="Padrão (Design Pattern)"
-                v-model="project.designPattern"
-                :v="$v.project.designPattern"
-              />
-            </v-col>
           </v-row>
           <v-row>
             <v-col cols="12">
-              <TextArea
-                label="Descrição"
-                v-model="project.description"
-                :v="$v.project.description"
-              />
+              <Select label="Aplicações" v-model="project.applications" />
             </v-col>
           </v-row>
         </v-col>
-        <v-col cols="12" lg="6">
-          <v-row>
-            <v-col cols="12" lg="2" align="center">
-              <Checkbox label="É uma API" v-model="project.isApi" hideDetails />
-            </v-col>
-            <v-col cols="12" lg="6" align="center" v-if="project.isApi">
-              <TextField
-                label="URL Base"
-                v-model="project.baseUrl"
-                :v="$v.project.baseUrl"
-              />
-            </v-col>
-          </v-row>
-        </v-col>
-      </v-row>
-      <v-row>
-        <v-col cols="12">
-          <Textheader text="Requisitos" />
+        <v-col cols="8">
+          <TextArea
+            label="Descrição"
+            v-model="project.description"
+            :v="$v.project.description"
+            rows="6"
+          />
         </v-col>
       </v-row>
     </DVForm>
@@ -85,12 +47,13 @@ export default {
   components: {
     DVForm
   },
-
   data() {
     return {
       model: new Project(),
       project: {
-        description: null
+        name: null,
+        description: null,
+        applications: []
       }
     };
   },
