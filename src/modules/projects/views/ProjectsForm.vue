@@ -21,7 +21,13 @@
           </v-row>
           <v-row>
             <v-col cols="12">
-              <Select label="Aplicações" v-model="project.applications" />
+              <Select
+                multiple
+                label="Aplicações"
+                v-model="project.applications"
+                :items="applications"
+                item-text="name"
+              />
             </v-col>
           </v-row>
         </v-col>
@@ -34,6 +40,11 @@
           />
         </v-col>
       </v-row>
+      <v-row>
+        <v-col cols="12">
+          <Textheader text="Requisitos" />
+        </v-col>
+      </v-row>
     </DVForm>
   </section>
 </template>
@@ -42,6 +53,8 @@
 import { required } from "vuelidate/lib/validators";
 import DVForm from "@/components/Form/DVForm";
 import Project from "../models/Project";
+import Application from "../models/Application";
+
 export default {
   name: "ProjectsForm",
   components: {
@@ -50,6 +63,8 @@ export default {
   data() {
     return {
       model: new Project(),
+      applicationModel: new Application(),
+      applications: [],
       project: {
         name: null,
         description: null,
@@ -57,7 +72,9 @@ export default {
       }
     };
   },
-  created() {},
+  async mounted() {
+    this.applications = await this.applicationModel.loadCollection();
+  },
   methods: {},
   computed: {},
   validations: {

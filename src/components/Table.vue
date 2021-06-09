@@ -26,7 +26,7 @@
         </template>
         <span>Editar</span>
       </v-tooltip>
-      <v-tooltip bottom>
+      <v-tooltip bottom v-if="!hideDelete">
         <template v-slot:activator="{ on, attrs }">
           <v-btn
             text
@@ -36,7 +36,7 @@
             v-bind="attrs"
             v-on="on"
           >
-            <v-icon v-if="!hideDelete">
+            <v-icon>
               mdi-delete
             </v-icon>
           </v-btn>

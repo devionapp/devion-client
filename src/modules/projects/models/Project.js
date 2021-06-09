@@ -10,6 +10,7 @@ export default class Project extends Model {
   }
 
   async beforeSave(record) {
+    delete record.applications;
     delete record.createdBy;
     record.tenantId = store.getters["User/getUser"].tenantId;
     return record;

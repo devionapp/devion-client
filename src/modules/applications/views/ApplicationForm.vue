@@ -1,8 +1,14 @@
 <template>
-  <section class="ProjectsForm">
-    <Subheader title="Projetos" />
+  <section class="ApplicationsForm">
+    <Subheader title="Aplicações" />
 
-    <DVForm ref="form" v-model="project" :model="model" :validations="$v" card>
+    <DVForm
+      ref="form"
+      v-model="application"
+      :model="model"
+      :validations="$v"
+      card
+    >
       <v-row>
         <v-col cols="12">
           <Textheader text="Dados básicos" />
@@ -14,15 +20,15 @@
             <v-col cols="7">
               <TextField
                 label="Nome"
-                v-model="project.name"
-                :v="$v.project.name"
+                v-model="application.name"
+                :v="$v.application.name"
               />
             </v-col>
             <v-col cols="5">
               <TextField
                 label="Linguagem/Framework"
-                v-model="project.language"
-                :v="$v.project.language"
+                v-model="application.language"
+                :v="$v.application.language"
               />
             </v-col>
           </v-row>
@@ -30,15 +36,15 @@
             <v-col cols="6">
               <TextField
                 label="Repositório"
-                v-model="project.repository"
-                :v="$v.project.repository"
+                v-model="application.repository"
+                :v="$v.application.repository"
               />
             </v-col>
             <v-col cols="6">
               <TextField
                 label="Padrão (Design Pattern)"
-                v-model="project.designPattern"
-                :v="$v.project.designPattern"
+                v-model="application.designPattern"
+                :v="$v.application.designPattern"
               />
             </v-col>
           </v-row>
@@ -46,38 +52,38 @@
             <v-col cols="12">
               <TextArea
                 label="Descrição"
-                v-model="project.description"
-                :v="$v.project.description"
+                v-model="application.description"
+                :v="$v.application.description"
               />
             </v-col>
           </v-row>
         </v-col>
         <v-col cols="12" lg="6">
           <v-row>
-            <v-col cols="12" lg="2" align="center">
-              <Checkbox label="É uma API" v-model="project.isApi" hideDetails />
-            </v-col>
-            <v-col cols="12" lg="6" v-if="project.isApi">
-              <TextField
-                label="URL Base"
-                v-model="project.baseUrl"
-                :v="$v.project.baseUrl"
+            <v-col cols="12" lg="3" align="center">
+              <Select
+                label="Tipo"
+                :items="appTypes"
+                v-model="application.type"
+                :v="$v.application.type"
               />
             </v-col>
-            <v-col cols="12" lg="4" v-if="project.isApi">
+            <v-col cols="12" lg="6" v-if="application.isApi">
+              <TextField
+                label="URL Base"
+                v-model="application.baseUrl"
+                :v="$v.application.baseUrl"
+              />
+            </v-col>
+            <v-col cols="12" lg="4" v-if="application.isApi">
               <Select
                 label="Tipo de Autenticação"
                 :items="authTypes"
-                v-model="project.authenticationType"
-                :v="$v.project.authenticationType"
+                v-model="application.authenticationType"
+                :v="$v.application.authenticationType"
               />
             </v-col>
           </v-row>
-        </v-col>
-      </v-row>
-      <v-row>
-        <v-col cols="12">
-          <Textheader text="Requisitos" />
         </v-col>
       </v-row>
     </DVForm>
@@ -87,15 +93,33 @@
 <script>
 import { required } from "vuelidate/lib/validators";
 import DVForm from "@/components/Form/DVForm";
-import Project from "../models/Project";
+import Application from "../models/Application";
 export default {
-  name: "ProjectsForm",
+  name: "ApplicationsForm",
   components: {
     DVForm
   },
   data() {
     return {
-      model: new Project(),
+      model: new Application(),
+      appTypes: [
+        {
+          id: 1,
+          description: "Back-End/API"
+        },
+        {
+          id: 2,
+          description: "Front-End"
+        },
+        {
+          id: 3,
+          description: "Mobile"
+        },
+        {
+          id: 4,
+          description: "Outro"
+        }
+      ],
       authTypes: [
         {
           id: 1,
@@ -118,8 +142,10 @@ export default {
           description: "Outro"
         }
       ],
-      project: {
-        description: null
+      application: {
+        name: null,
+        description: null,
+        type: null
       }
     };
   },
@@ -127,9 +153,10 @@ export default {
   methods: {},
   computed: {},
   validations: {
-    project: {
+    application: {
       name: { required },
-      description: { required }
+      description: { required },
+      type: { required }
     }
   }
 };

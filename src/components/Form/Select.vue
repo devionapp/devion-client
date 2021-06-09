@@ -11,6 +11,8 @@
     :item-text="itemText"
     :item-value="itemValue"
     v-bind="$attrs"
+    :chips="multiple"
+    :multiple="multiple"
     outlined
   >
     <template v-slot:item="data" @click="data.select" v-if="hasItemSlot">
@@ -50,6 +52,10 @@ export default {
     itemText: { required: false, default: "description", type: String },
     itemValue: { required: false, default: "id", type: String },
     disabled: {
+      type: Boolean,
+      default: false
+    },
+    multiple: {
       type: Boolean,
       default: false
     }

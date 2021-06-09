@@ -1,29 +1,26 @@
 <template>
   <section class="List">
-    <Subheader createPermission="CREATE_PROJECTS" title="Projetos" />
+    <Subheader createPermission="CREATE_APPLICATIONS" title="Aplicações" />
 
     <Table
-      v-model="projects"
+      v-model="applications"
       :model="model"
       :headers="headers"
-      :items="projects"
+      :items="applications"
       hideDelete
     />
   </section>
 </template>
 
 <script>
-import Project from "@/modules/projects/models/Project";
+import Application from "@/modules/applications/models/Application";
 export default {
-  name: "Projects",
+  name: "Applications",
   data() {
     return {
-      model: new Project(),
-      headers: [
-        { text: "Nome", value: "name" },
-        { text: "Tipo", value: "type" }
-      ],
-      projects: []
+      model: new Application(),
+      headers: [{ text: "Nome", value: "name" }],
+      applications: []
     };
   },
   created() {},
