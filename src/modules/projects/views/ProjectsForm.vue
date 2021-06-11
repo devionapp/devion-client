@@ -24,8 +24,8 @@
               <Select
                 multiple
                 label="Aplicações"
-                v-model="project.applications"
-                :items="applications"
+                v-model="project.apps"
+                :items="apps"
                 item-text="name"
               />
             </v-col>
@@ -64,16 +64,16 @@ export default {
     return {
       model: new Project(),
       applicationModel: new Application(),
-      applications: [],
+      apps: [],
       project: {
         name: null,
         description: null,
-        applications: []
+        apps: []
       }
     };
   },
   async mounted() {
-    this.applications = await this.applicationModel.loadCollection();
+    this.apps = await this.applicationModel.loadCollection();
   },
   methods: {},
   computed: {},

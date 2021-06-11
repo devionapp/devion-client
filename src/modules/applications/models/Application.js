@@ -2,7 +2,7 @@ import Model from "@/models/Model";
 export default class Application extends Model {
   config() {
     return {
-      resource: "applications",
+      resource: "apps",
       storeName: "Application"
     };
   }
