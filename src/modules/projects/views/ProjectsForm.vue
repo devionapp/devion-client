@@ -25,6 +25,7 @@
                 multiple
                 label="Aplicações"
                 v-model="project.apps"
+                return-object
                 :items="apps"
                 item-text="name"
               />
