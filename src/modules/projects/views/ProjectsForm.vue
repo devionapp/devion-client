@@ -64,8 +64,6 @@
                     text
                     icon
                     @click="removeRequirement(index)"
-                    v-bind="attrs"
-                    v-on="on"
                     class="mr-5"
                   >
                     <v-icon color="error">
@@ -79,7 +77,12 @@
               </v-expansion-panel-header>
               <v-expansion-panel-content>
                 <v-row class="mt-5">
-                  <v-col cols="7">
+                  <v-col cols="12" lg="6">
+                    <v-row>
+                      <v-col cols="12">
+                        <Textheader text="Dados básicos" small primary />
+                      </v-col>
+                    </v-row>
                     <v-row>
                       <v-col cols="6">
                         <TextField
@@ -95,10 +98,34 @@
                         <TextArea
                           label="Descrição"
                           v-model="requirement.description"
-                          rows="4"
+                          rows="5"
                         />
                       </v-col>
                     </v-row>
+                    <v-row>
+                      <v-col cols="12">
+                        <v-row>
+                          <v-col cols="12">
+                            <Textheader
+                              text="Dicionário de Dados"
+                              small
+                              primary
+                            />
+                          </v-col>
+                        </v-row>
+                        <RequirementFields v-model="requirement.fields" />
+                      </v-col>
+                    </v-row>
+                  </v-col>
+                  <v-col cols="12" lg="6">
+                    <v-row>
+                      <v-col cols="12">
+                        <Textheader text="Regras de Negócio" small primary />
+                      </v-col>
+                    </v-row>
+                    <RequirementBusinessRules
+                      v-model="requirement.businessRules"
+                    />
                   </v-col>
                 </v-row>
               </v-expansion-panel-content>
@@ -121,13 +148,17 @@
 <script>
 import { required } from "vuelidate/lib/validators";
 import DVForm from "@/components/Form/DVForm";
+import RequirementFields from "../components/RequirementFields";
+import RequirementBusinessRules from "../components/RequirementBusinessRules";
 import Project from "../models/Project";
 import Application from "../models/Application";
 
 export default {
   name: "ProjectsForm",
   components: {
-    DVForm
+    DVForm,
+    RequirementFields,
+    RequirementBusinessRules
   },
   data() {
     return {
