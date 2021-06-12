@@ -1,6 +1,7 @@
 <template>
   <v-select
     v-model="input"
+    background-color="#fff"
     :prepend-inner-icon="prependInnerIcon"
     :append-icon="appendIcon"
     :label="label"

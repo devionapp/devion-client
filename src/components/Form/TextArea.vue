@@ -1,6 +1,7 @@
 <template>
   <v-textarea
     @click:append="$emit('clickAppend')"
+    background-color="#fff"
     v-model="input"
     :prepend-inner-icon="prependInnerIcon"
     :append-icon="appendIcon"

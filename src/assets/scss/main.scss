@@ -17,8 +17,13 @@ h4,
 h5,
 h6 span,
 p,
-label {
+label,
+.text-color-base {
   color: var(--v-text-base);
+}
+
+.text-color-primary {
+  color: var(--v-primary-base);
 }
 
 .text-red {
