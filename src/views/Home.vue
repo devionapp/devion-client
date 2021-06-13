@@ -50,6 +50,26 @@
       <v-spacer></v-spacer>
 
       <!-- FAZER IGUAL ESSE -->
+
+      <v-menu left bottom offset-y>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn icon v-bind="attrs" v-on="on">
+            <v-icon>mdi-bell</v-icon>
+          </v-btn>
+        </template>
+
+        <v-list left-bottom>
+          <v-list-item>
+            <v-list-item-icon>
+              <v-icon>mdi-bell</v-icon>
+            </v-list-item-icon>
+            <v-list-item-content>
+              Atividade Liberada
+            </v-list-item-content>
+          </v-list-item>
+        </v-list>
+      </v-menu>
+
       <v-menu left bottom>
         <template v-slot:activator="{ on, attrs }">
           <v-btn icon v-bind="attrs" v-on="on">
@@ -129,6 +149,12 @@ export default {
           icon: "mdi-account-group",
           route: "usuarios",
           permission: "VIEW_USERS"
+        },
+        {
+          title: "Fluxos",
+          icon: "mdi-account-group",
+          route: "flows"
+          //permission: "VIEW_USERS"
         }
       ];
 
