@@ -115,8 +115,8 @@ export default {
         {
           title: "Aplicações",
           icon: "mdi-application",
-          route: "aplicacoes"
-          // permission: "VIEW_PROJECTS"
+          route: "aplicacoes",
+          permission: "VIEW_APPLICATIONS"
         },
         {
           title: "Skills",

@@ -57,6 +57,9 @@ export default {
     value: {
       immediate: true,
       handler(v) {
+        this.rules.forEach((r, index) => {
+          r.index = index + 1;
+        });
         this.input = v;
       }
     },
@@ -70,6 +73,7 @@ export default {
   created() {},
   methods: {
     async addRule() {
+      this.newRule.index = this.rules.length + 1;
       this.rules.push(this.newRule);
       this.newRule = {
         description: null
