@@ -11,9 +11,9 @@
       <v-row>
         <v-col cols="12" lg="8">
           <TextField
-            label="Descrição"
-            v-model="flow.description"
-            :v="$v.flow.description"
+            label="Nome"
+            v-model="flow.name"
+            :v="$v.flow.name"
           />
         </v-col>
       </v-row>

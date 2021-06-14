@@ -135,8 +135,8 @@ export default {
         {
           title: "Aplicações",
           icon: "mdi-application",
-          route: "aplicacoes"
-          // permission: "VIEW_PROJECTS"
+          route: "aplicacoes",
+          permission: "VIEW_APPLICATIONS"
         },
         {
           title: "Skills",
@@ -153,8 +153,8 @@ export default {
         {
           title: "Fluxos",
           icon: "mdi-account-group",
-          route: "flows"
-          //permission: "VIEW_USERS"
+          route: "flows",
+          permission: "VIEW_FLOWS"
         }
       ];
 
