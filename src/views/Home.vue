@@ -139,6 +139,12 @@ export default {
           permission: "VIEW_APPLICATIONS"
         },
         {
+          title: "Atividades",
+          icon: "mdi-calendar-check",
+          route: "atividades",
+          permission: "VIEW_TASKS"
+        },
+        {
           title: "Skills",
           icon: "mdi-brain",
           route: "skills",

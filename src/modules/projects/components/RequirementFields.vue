@@ -14,7 +14,14 @@
         <TextField label="Max." dense v-model="newField.max" type="number" />
       </v-col>
       <v-col cols="2">
-        <Select label="RN" dense v-model="newField.rule" />
+        <Select
+          label="RN"
+          dense
+          v-model="newField.rule"
+          :items="businessRules"
+          itemText="index"
+          itemValue="index"
+        />
       </v-col>
       <v-col cols="1">
         <Button @click="addField" color="primary" fab x-small>
@@ -36,7 +43,9 @@
               <td>{{ field.type }}</td>
               <td>{{ field.min }}</td>
               <td>{{ field.max }}</td>
-              <td>{{ field.rn }}</td>
+              <td>
+                {{ field.rule }}
+              </td>
               <td>
                 <v-btn text icon @click="removeField(index)">
                   <v-icon color="error">
@@ -57,6 +66,13 @@ export default {
   name: "RequirementFields",
   props: {
     value: {
+      type: Array,
+      required: true,
+      default: () => {
+        return [];
+      }
+    },
+    businessRules: {
       type: Array,
       required: true,
       default: () => {
@@ -131,8 +147,7 @@ export default {
     async removeField(index) {
       this.fields.splice(index, 1);
     }
-  },
-  computed: {}
+  }
 };
 </script>
 

@@ -84,12 +84,18 @@
                       </v-col>
                     </v-row>
                     <v-row>
-                      <v-col cols="6">
+                      <v-col cols="12" lg="7">
                         <TextField
                           autofocus
                           :class="`panel-textfield-${index}`"
                           label="Nome"
                           v-model="requirement.name"
+                        />
+                      </v-col>
+                      <v-col cols="12" lg="5">
+                        <Select
+                          :class="`panel-select-${index}`"
+                          label="Fluxo"
                         />
                       </v-col>
                     </v-row>
@@ -113,7 +119,10 @@
                             />
                           </v-col>
                         </v-row>
-                        <RequirementFields v-model="requirement.fields" />
+                        <RequirementFields
+                          v-model="requirement.fields"
+                          :businessRules="requirement.businessRules"
+                        />
                       </v-col>
                     </v-row>
                   </v-col>
