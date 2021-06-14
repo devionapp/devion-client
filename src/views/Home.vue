@@ -145,6 +145,12 @@ export default {
           permission: "VIEW_TASKS"
         },
         {
+          title: "Fluxos",
+          icon: "mdi-sitemap",
+          route: "flows",
+          permission: "VIEW_FLOWS"
+        },
+        {
           title: "Skills",
           icon: "mdi-brain",
           route: "skills",
@@ -155,12 +161,6 @@ export default {
           icon: "mdi-account-group",
           route: "usuarios",
           permission: "VIEW_USERS"
-        },
-        {
-          title: "Fluxos",
-          icon: "mdi-account-group",
-          route: "flows",
-          permission: "VIEW_FLOWS"
         }
       ];
 

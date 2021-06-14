@@ -152,14 +152,14 @@
           </Button>
         </v-col>
       </v-row>
-      <div class="v-row">
+      <v-row>
         <v-col cols="12" lg="3">
           <Button @click="addSkill" color="primary" text>
             <v-icon class="mr-2">mdi-plus</v-icon>
             Nova Skill
           </Button>
         </v-col>
-      </div>
+      </v-row>
     </DVForm>
   </section>
 </template>

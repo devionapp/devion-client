@@ -1,6 +1,6 @@
 <template>
   <section class="FlowsList">
-    <Subheader createPermission="CREATE_FLOWS" title="Flows" />
+    <Subheader createPermission="CREATE_FLOWS" title="Fluxos" />
 
     <Table v-model="flows" :model="model" :headers="headers" :items="flows" />
   </section>
@@ -14,15 +14,7 @@ export default {
     return {
       model: new Flow(),
       flows: [],
-      headers: [
-        {
-          text: "ID",
-          align: "start",
-          sortable: true,
-          value: "id"
-        },
-        { text: "Nome", value: "description" }
-      ]
+      headers: [{ text: "Nome", value: "name" }]
     };
   },
   created() {},

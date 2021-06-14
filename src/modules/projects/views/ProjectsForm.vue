@@ -95,7 +95,11 @@
                       <v-col cols="12" lg="5">
                         <Select
                           :class="`panel-select-${index}`"
+                          :items="flows"
+                          v-model="requirement.flowId"
                           label="Fluxo"
+                          itemText="name"
+                          itemValue="id"
                         />
                       </v-col>
                     </v-row>
@@ -161,6 +165,7 @@ import RequirementFields from "../components/RequirementFields";
 import RequirementBusinessRules from "../components/RequirementBusinessRules";
 import Project from "../models/Project";
 import Application from "../models/Application";
+import Flow from "../models/Flow";
 
 export default {
   name: "ProjectsForm",
@@ -173,7 +178,9 @@ export default {
     return {
       model: new Project(),
       applicationModel: new Application(),
+      flowModel: new Flow(),
       openedPanels: [],
+      flows: [],
       apps: [],
       project: {
         name: null,
@@ -185,6 +192,7 @@ export default {
   },
   async mounted() {
     this.apps = await this.applicationModel.loadCollection();
+    this.flows = await this.flowModel.loadCollection();
   },
   methods: {
     async addRequirement() {
