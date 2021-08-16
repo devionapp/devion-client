@@ -12,11 +12,10 @@
           label="Fluxo"
           itemText="name"
           itemValue="id"
-          v-model="flow"
+          v-model="task.flow"
         />
       </v-col>
     </v-row>
-
     <v-row v-for="(step, index) in steps" :key="index">
       <v-col cols="3" class="d-flex justify-start align-center pb-5">
         <h3 class="text-center mb-5">{{ step.index }}. {{ step.name }}</h3>
@@ -61,12 +60,17 @@ export default {
       flows: [],
       steps: [],
       users: [],
-      flow: null
+      task: {
+        flow: null,
+        steps: []
+      }
     };
   },
   watch: {
-    async flow(v) {
-      this.steps = (await this.flowModel.loadRecord(v)).steps;
+    "task.flow": {
+      async handler(v) {
+        this.steps = (await this.flowModel.loadRecord(v)).steps;
+      }
     }
   },
   async created() {
@@ -75,14 +79,13 @@ export default {
   },
   methods: {
     createTasks() {
-      this.$emit("close");
+      // this.$emit("close");
     },
     getUsers(skill) {
       return this.users.filter(user => {
         return user.skills?.some(s => s.id === skill);
       });
     }
-  },
-  computed: {}
+  }
 };
 </script>
