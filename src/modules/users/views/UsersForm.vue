@@ -224,19 +224,21 @@ export default {
         {
           id: 2,
           name: "Gestor",
-          text: "Pode fazer todas as ações com projetos e tarefas",
+          text:
+            "Pode fazer todas as ações com projetos e tarefas. Indicado para usuários como gestores de projets, PM, PO, etc...",
           icon: "mdi-account-star"
         },
         {
           id: 3,
           name: "Colaborador",
-          text: "Pode concluir e mover tarefas",
+          text:
+            "Perfil indicado para desenvolvedores, analistas, QA's. Pode realizar ações em tarefas, visualizar dados técnicos.",
           icon: "mdi-account-settings"
         },
         {
           id: 4,
           name: "Consultor",
-          text: "Pode visualizar",
+          text: "Pode visualizar dados de projetos e requisitos.",
           icon: "mdi-account-search"
         }
       ]

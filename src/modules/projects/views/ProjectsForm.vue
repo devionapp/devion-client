@@ -2,6 +2,12 @@
   <section class="ProjectsForm">
     <Subheader title="Projetos" />
 
+    <ModalCreateTask
+      :show="modalCreateTask"
+      @close="modalCreateTask = false"
+      :requirement="selectedRequirementTasks"
+    />
+
     <DVForm ref="form" v-model="project" :model="model" :validations="$v" card>
       <v-row>
         <v-col cols="12">
@@ -60,6 +66,24 @@
                 </span>
 
                 <template v-slot:actions>
+                  <v-tooltip bottom>
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-btn
+                        v-bind="attrs"
+                        v-on="on"
+                        text
+                        icon
+                        @click.stop="createTasks(index)"
+                        class="mr-5"
+                      >
+                        <v-icon color="success">
+                          mdi-file-tree
+                        </v-icon>
+                      </v-btn>
+                    </template>
+                    <span>Gerar atividades</span>
+                  </v-tooltip>
+
                   <v-btn
                     text
                     icon
@@ -163,6 +187,7 @@ import { required } from "vuelidate/lib/validators";
 import DVForm from "@/components/Form/DVForm";
 import RequirementFields from "../components/RequirementFields";
 import RequirementBusinessRules from "../components/RequirementBusinessRules";
+import ModalCreateTask from "../components/ModalCreateTask";
 import Project from "../models/Project";
 import Application from "../models/Application";
 import Flow from "../models/Flow";
@@ -172,14 +197,17 @@ export default {
   components: {
     DVForm,
     RequirementFields,
-    RequirementBusinessRules
+    RequirementBusinessRules,
+    ModalCreateTask
   },
   data() {
     return {
       model: new Project(),
       applicationModel: new Application(),
       flowModel: new Flow(),
+      selectedRequirementTasks: {},
       openedPanels: [],
+      modalCreateTask: false,
       flows: [],
       apps: [],
       project: {
@@ -213,6 +241,10 @@ export default {
     },
     async removeRequirement(index) {
       this.project.requirements.splice(index, 1);
+    },
+    createTasks(index) {
+      this.selectedRequirementTasks = this.project.requirements[index];
+      this.modalCreateTask = true;
     }
   },
   computed: {},

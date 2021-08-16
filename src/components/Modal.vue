@@ -1,22 +1,47 @@
 <template>
-  <v-dialog class="Modal" v-model="dialog.show" />
+  <v-dialog
+    class="Modal"
+    v-model="show"
+    @click:outside="$emit('close')"
+    width="950"
+  >
+    <v-card>
+      <v-toolbar color="primary" dark>{{ title }}</v-toolbar>
+
+      <v-card-text>
+        <v-container>
+          <slot />
+        </v-container>
+      </v-card-text>
+
+      <v-divider></v-divider>
+
+      <v-card-actions>
+        <v-spacer></v-spacer>
+        <Button color="primary" text @click="$emit('close')">
+          Cancelar
+        </Button>
+        <Button color="primary" @click="$emit('confirm')">
+          Salvar
+        </Button>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
 export default {
   name: "Modal",
-  methods: {
-    ...mapActions("Modal", {
-      setModal: "setModal"
-    })
-  },
-  computed: {
-    ...mapGetters("Modal", {
-      snackbar: "getModal"
-    })
+  props: {
+    show: {
+      type: Boolean,
+      required: true,
+      default: false
+    },
+    title: {
+      type: String,
+      default: "Titulo"
+    }
   }
 };
 </script>
-
-<style lang="scss" scoped></style>

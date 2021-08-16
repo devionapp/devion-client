@@ -6,7 +6,7 @@
           <v-container>
             <div class="Dashboard__Card">
               <h2>Seus Projetos</h2>
-              <span>0</span>
+              <span>1</span>
             </div>
           </v-container>
         </v-card>

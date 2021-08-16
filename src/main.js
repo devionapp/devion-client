@@ -20,6 +20,8 @@ import DatePicker from "@/components/Form/DatePicker";
 import Textheader from "@/components/Form/Textheader";
 import Subheader from "@/components/Subheader";
 import Table from "@/components/Table";
+import Modal from "@/components/Modal";
+
 Vue.component("Button", Button);
 Vue.component("TextField", TextField);
 Vue.component("Checkbox", Checkbox);
@@ -29,6 +31,7 @@ Vue.component("DatePicker", DatePicker);
 Vue.component("Textheader", Textheader);
 Vue.component("Table", Table);
 Vue.component("Subheader", Subheader);
+Vue.component("Modal", Modal);
 
 new Vue({
   router,

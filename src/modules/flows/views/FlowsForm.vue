@@ -28,6 +28,14 @@
             v-model="step.name"
           />
         </v-col>
+        <v-col cols="12" lg="3">
+          <Select
+            label="Skill necessária"
+            v-model="step.skillId"
+            itemValue="id"
+            :items="skills"
+          />
+        </v-col>
 
         <v-col cols="12" lg="2">
           <Button icon color="error" class="mt-2" @click="removeStep(index)">
@@ -51,6 +59,8 @@
 import { required } from "vuelidate/lib/validators";
 import DVForm from "@/components/Form/DVForm";
 import Flow from "../models/Flow";
+import Skill from "../models/Skill";
+
 export default {
   name: "FlowForm",
   components: {
@@ -59,13 +69,17 @@ export default {
   data() {
     return {
       model: new Flow(),
+      skillModel: new Skill(),
+      skills: [],
       flow: {
         name: null,
         steps: []
       }
     };
   },
-  created() {},
+  async created() {
+    this.skills = await this.skillModel.loadCollection();
+  },
   methods: {
     addStep() {
       if (!this.flow.steps) {
@@ -84,7 +98,6 @@ export default {
       this.$forceUpdate();
     }
   },
-  computed: {},
   validations: {
     flow: {
       name: { required }

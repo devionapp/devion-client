@@ -57,6 +57,7 @@
           <TextField
             prependInnerIcon="mdi-key"
             label="Senha"
+            type="password"
             v-model="newAccount.userPassword"
             :v="$v.newAccount.userPassword"
           />
