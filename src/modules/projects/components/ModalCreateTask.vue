@@ -12,22 +12,34 @@
           label="Fluxo"
           itemText="name"
           itemValue="id"
-          v-model="task.flow"
+          v-model="task.flowId"
         />
       </v-col>
-    </v-row>
-    <v-row v-for="(step, index) in steps" :key="index">
-      <v-col cols="3" class="d-flex justify-start align-center pb-5">
-        <h3 class="text-center mb-5">{{ step.index }}. {{ step.name }}</h3>
-      </v-col>
-      <v-col cols="9">
-        <Select
-          :label="`Responsável pela etapa: ${step.name}`"
-          v-model="step.user"
-          :items="getUsers(step.skillId)"
-          itemText="name"
-          itemValue="id"
-        />
+      <v-col cols="12" lg="5">
+        <v-select
+          outlined
+          label="Nivel de skill necessária"
+          item-text="description"
+          item-value="id"
+          :items="niveis"
+          v-model="task.skillLevel"
+        >
+          <template v-slot:item="data" @click="data.select">
+            <v-list dense>
+              <v-list-item>
+                <v-list-item-icon>
+                  <v-icon>{{ data.item.id }}</v-icon>
+                </v-list-item-icon>
+
+                <v-list-item-content>
+                  <v-list-item-subtitle
+                    v-html="data.item.description"
+                  ></v-list-item-subtitle>
+                </v-list-item-content>
+              </v-list-item>
+            </v-list>
+          </template>
+        </v-select>
       </v-col>
     </v-row>
   </Modal>
@@ -35,7 +47,7 @@
 
 <script>
 import Flow from "../models/Flow";
-import User from "../models/User";
+import Card from "../models/Card";
 
 export default {
   name: "ModalCreateTask",
@@ -56,35 +68,43 @@ export default {
   data() {
     return {
       flowModel: new Flow(),
-      userModel: new User(),
+      cardModel: new Card(),
       flows: [],
       steps: [],
-      users: [],
       task: {
-        flow: null,
-        steps: []
-      }
+        flowId: null,
+        skillLevel: null,
+        type: "task",
+        name: this.requirement.name
+      },
+      niveis: [
+        {
+          id: 1,
+          description: "Nivel Iniciante"
+        },
+        {
+          id: 2,
+          description: "Nivel Básico/Júnior"
+        },
+        {
+          id: 3,
+          description: "Nivel Intermediário/Pleno"
+        },
+        {
+          id: 4,
+          description: "Nivel Avançado/Sênior"
+        }
+      ]
     };
   },
-  watch: {
-    "task.flow": {
-      async handler(v) {
-        this.steps = (await this.flowModel.loadRecord(v)).steps;
-      }
-    }
-  },
   async created() {
-    this.users = await this.userModel.loadCollection();
     this.flows = await this.flowModel.loadCollection();
   },
   methods: {
-    createTasks() {
-      // this.$emit("close");
-    },
-    getUsers(skill) {
-      return this.users.filter(user => {
-        return user.skills?.some(s => s.id === skill);
-      });
+    async createTasks() {
+      this.task.name = this.requirement.name;
+      await this.cardModel.insertRecord(this.task);
+      this.$emit("close");
     }
   }
 };

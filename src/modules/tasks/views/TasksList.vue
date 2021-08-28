@@ -14,26 +14,27 @@
         <v-expansion-panel-content>
           <div class="d-flex mt-5">
             <div
-              v-for="column in columns"
-              :key="column.title"
-              class="column bg-gray-100 rounded-lg px-3 py-3 column-width rounded mr-4"
+              v-for="step in flow.steps"
+              :key="step.title"
+              class="step bg-gray-100 rounded-lg px-3 py-3 step-width rounded mr-4"
             >
               <p
                 class="text-gray-700 font-semibold font-sans tracking-wide text-sm"
               >
-                {{ column.title }}
+                {{ step.title }}
               </p>
 
               <draggable
-                class="column-container"
-                :list="column.tasks"
+                class="step-container"
+                :list="step.tasks"
                 :animation="200"
                 ghost-class="ghost-card"
                 group="tasks"
+                @change="log"
               >
                 <!-- Each element from here will be draggable and animated. Note :key is very important here to be unique both for draggable and animations to be smooth & consistent. -->
                 <task-card
-                  v-for="task in column.tasks"
+                  v-for="task in step.tasks"
                   :key="task.id"
                   :task="task"
                   class="mt-3 cursor-move"
@@ -54,7 +55,7 @@ import TaskCard from "../components/TaskCard.vue";
 import Flow from "../models/Flow";
 
 export default {
-  name: "App",
+  name: "TasksList",
   components: {
     TaskCard,
     draggable
@@ -65,46 +66,23 @@ export default {
   methods: {
     async getFlows() {
       this.flows = await this.flowModel.loadCollection();
-      // this.columns = this.flow.steps;
+    },
+    log(log) {
+      console.log(log);
     }
   },
   data() {
     return {
       flowModel: new Flow(),
       flows: [],
-      openedPanels: [],
-      columns: [
-        {
-          title: "Analise",
-          tasks: [
-            {
-              id: 1,
-              title: "Criação de Conta",
-              date: "14 de Setembro",
-              type: "Requisito"
-            }
-          ]
-        },
-        {
-          title: "Dev. Front-End",
-          tasks: []
-        },
-        {
-          title: "Dev. Back-End",
-          tasks: []
-        },
-        {
-          title: "QA",
-          tasks: []
-        }
-      ]
+      openedPanels: []
     };
   }
 };
 </script>
 
 <style>
-.column-width {
+.step-width {
   min-width: 320px;
   width: 320px;
 }
@@ -115,12 +93,12 @@ export default {
   border: 1px solid #4299e1;
 }
 
-.column {
+.step {
   background-color: rgb(236, 236, 236);
   height: 700px;
 }
 
-.column-container {
+.step-container {
   width: 100%;
   height: 100%;
 }

@@ -9,10 +9,12 @@ export default class Flow extends Model {
   }
 
   prepareCollectionOnLoad(collection) {
-    collection.map(flow => {
+    collection.map(async flow => {
+      const tasks = (await this.request(`${flow.id}/cards`)).data;
+
       flow.steps.map(step => {
         step.title = step.name;
-        step.tasks = [];
+        step.tasks = tasks.filter(t => t.stepId === step.id);
       });
     });
 

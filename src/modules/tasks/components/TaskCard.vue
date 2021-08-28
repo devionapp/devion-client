@@ -4,7 +4,7 @@
   >
     <div class="flex justify-between">
       <p class="text-gray-700 font-semibold font-sans tracking-wide text-sm">
-        {{ task.title }}
+        {{ task.name }}
       </p>
     </div>
     <div class="flex mt-4 justify-between items-center">
