@@ -1,6 +1,7 @@
 <template>
   <div
     class="task-card bg-white shadow rounded px-3 pt-3 pb-5 border border-white"
+    @dblclick="openModalCard"
   >
     <div class="flex justify-between">
       <p class="text-gray-700 font-semibold font-sans tracking-wide text-sm">
@@ -35,6 +36,11 @@ export default {
         default: "teal"
       };
       return mappings[this.task.type] || mappings.default;
+    }
+  },
+  methods: {
+    openModalCard() {
+      alert("openModalCard");
     }
   }
 };

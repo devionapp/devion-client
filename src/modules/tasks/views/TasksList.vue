@@ -30,7 +30,7 @@
                 :animation="200"
                 ghost-class="ghost-card"
                 group="tasks"
-                @change="log"
+                @change="change"
               >
                 <!-- Each element from here will be draggable and animated. Note :key is very important here to be unique both for draggable and animations to be smooth & consistent. -->
                 <task-card
@@ -67,7 +67,8 @@ export default {
     async getFlows() {
       this.flows = await this.flowModel.loadCollection();
     },
-    log(log) {
+    async change(log) {
+      await this.$forceUpdate();
       console.log(log);
     }
   },
