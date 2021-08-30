@@ -2,6 +2,12 @@
   <section class="task-list">
     <Subheader title="Atividades" />
 
+    <ModalCard
+      :show="modalCard"
+      @close="modalCard = false"
+      :card="selectedCard"
+    />
+
     <v-expansion-panels multiple v-model="openedPanels">
       <v-expansion-panel
         v-for="(flow, index) in flows"
@@ -38,6 +44,7 @@
                   :key="task.id"
                   :task="task"
                   class="mt-3 cursor-move"
+                  @openModalCard="openModalCard"
                 />
                 <!-- </transition-group> -->
               </draggable>
@@ -52,12 +59,14 @@
 <script>
 import draggable from "vuedraggable";
 import TaskCard from "../components/TaskCard.vue";
+import ModalCard from "../components/ModalCard.vue";
 import Flow from "../models/Flow";
 
 export default {
   name: "TasksList",
   components: {
     TaskCard,
+    ModalCard,
     draggable
   },
   async created() {
@@ -70,13 +79,19 @@ export default {
     async change(log) {
       await this.$forceUpdate();
       console.log(log);
+    },
+    openModalCard(task) {
+      this.selectedCard = task;
+      this.modalCard = true;
     }
   },
   data() {
     return {
       flowModel: new Flow(),
       flows: [],
-      openedPanels: []
+      openedPanels: [],
+      selectedCard: {},
+      modalCard: false
     };
   }
 };

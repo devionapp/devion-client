@@ -3,7 +3,7 @@
     class="Modal"
     v-model="show"
     @click:outside="$emit('close')"
-    width="950"
+    :width="width"
   >
     <v-card>
       <v-toolbar color="primary" dark>{{ title }}</v-toolbar>
@@ -41,6 +41,10 @@ export default {
     title: {
       type: String,
       default: "Titulo"
+    },
+    width: {
+      type: Number,
+      default: 950
     }
   }
 };

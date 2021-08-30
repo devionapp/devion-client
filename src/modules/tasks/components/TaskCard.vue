@@ -10,37 +10,30 @@
     </div>
     <div class="flex mt-4 justify-between items-center">
       <span class="text-sm text-gray-600">{{ task.date }}</span>
-      <badge v-if="task.type" :color="badgeColor">{{ task.type }}</badge>
+
+      <v-chip color="primary" small>
+        {{ getTaskType(task.type) }}
+      </v-chip>
     </div>
   </div>
 </template>
 <script>
-import Badge from "./Badge.vue";
 export default {
-  components: {
-    Badge
-  },
   props: {
     task: {
       type: Object,
       default: () => ({})
     }
   },
-  computed: {
-    badgeColor() {
-      const mappings = {
-        Design: "purple",
-        "Feature Request": "teal",
-        Backend: "blue",
-        QA: "green",
-        default: "teal"
-      };
-      return mappings[this.task.type] || mappings.default;
-    }
-  },
+
   methods: {
     openModalCard() {
-      alert("openModalCard");
+      this.$emit("openModalCard", this.task);
+    },
+    getTaskType(type) {
+      if (type === "task") {
+        return "Requisito";
+      }
     }
   }
 };
