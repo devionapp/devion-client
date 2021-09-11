@@ -75,6 +75,7 @@ export default {
         flowId: null,
         skillLevel: null,
         type: "task",
+        requirementId: null,
         name: this.requirement.name
       },
       niveis: [
@@ -103,6 +104,7 @@ export default {
   methods: {
     async createTasks() {
       this.task.name = this.requirement.name;
+      this.task.requirementId = this.requirement.id;
       await this.cardModel.insertRecord(this.task);
       this.$emit("close");
     }

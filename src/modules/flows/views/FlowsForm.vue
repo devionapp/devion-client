@@ -88,7 +88,8 @@ export default {
 
       this.flow.steps.push({
         index: this.flow.steps.length + 1,
-        name: null
+        name: null,
+        isFinish: false
       });
 
       this.$forceUpdate();

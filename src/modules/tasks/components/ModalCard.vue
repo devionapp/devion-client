@@ -7,10 +7,15 @@
     </v-row>
     <v-row class="mt-2">
       <v-col cols="6">
-        <TextArea label="Descricão" />
+        <TextArea label="Descricão" v-model="task.description" readonly />
       </v-col>
       <v-col cols="3">
-        <v-select label="Responsável" outlined :items="users">
+        <v-select
+          label="Responsável"
+          outlined
+          :items="users"
+          v-model="task.user"
+        >
           <template #selection="{item}">
             <v-list-item-avatar color="#E0E0E0">
               {{ item.firstName.substr(0, 1) }}{{ item.lastName.substr(0, 1) }}
@@ -25,45 +30,16 @@
           </template>
         </v-select>
       </v-col>
-      <v-col cols="3">
-        <v-menu
-          ref="menu1"
-          v-model="menu1"
-          :close-on-content-click="false"
-          transition="scale-transition"
-          offset-y
-          max-width="290px"
-          min-width="auto"
-        >
-          <template v-slot:activator="{ on, attrs }">
-            <v-text-field
-              outlined
-              v-model="dateFormatted"
-              label="Data de entrega"
-              hint="Em dia/Atrasado"
-              persistent-hint
-              append-icon="mdi-calendar"
-              v-bind="attrs"
-              @blur="date = parseDate(dateFormatted)"
-              v-on="on"
-            ></v-text-field>
-          </template>
-          <v-date-picker
-            v-model="date"
-            no-title
-            @input="menu1 = false"
-          ></v-date-picker>
-        </v-menu>
-      </v-col>
     </v-row>
   </Modal>
 </template>
 
 <script>
 import User from "../models/User";
+import Requirement from "../models/Requirement";
 
 export default {
-  name: "ModalCreateTask",
+  name: "ModalCard",
   props: {
     show: {
       type: Boolean,
@@ -78,29 +54,30 @@ export default {
       }
     }
   },
-  data: vm => {
+  data: () => {
     return {
       userModel: new User(),
+      requirementModel: new Requirement(),
       users: [],
-      date: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
-        .toISOString()
-        .substr(0, 10),
-      dateFormatted: vm.formatDate(
-        new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
-          .toISOString()
-          .substr(0, 10)
-      ),
-      menu1: false
+      task: {
+        description: null,
+        user: null
+      }
     };
   },
-  computed: {
-    computedDateFormatted() {
-      return this.formatDate(this.date);
-    }
-  },
+  computed: {},
   watch: {
-    date() {
-      this.dateFormatted = this.formatDate(this.date);
+    async show(v) {
+      if (v) {
+        const requirement = await this.requirementModel.loadRecord(
+          this.card.requirementId
+        );
+
+        this.task = {
+          ...this.task,
+          ...requirement
+        };
+      }
     }
   },
   async created() {
@@ -113,18 +90,6 @@ export default {
       } catch (error) {
         console.log(error);
       }
-    },
-    formatDate(date) {
-      if (!date) return null;
-
-      const [year, month, day] = date.split("-");
-      return `${day}/${month}/${year}`;
-    },
-    parseDate(date) {
-      if (!date) return null;
-
-      const [month, day, year] = date.split("/");
-      return `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
     }
   }
 };

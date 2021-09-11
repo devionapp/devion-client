@@ -18,15 +18,16 @@
           {{ flow.name }}
         </v-expansion-panel-header>
         <v-expansion-panel-content>
-          <div class="d-flex mt-5">
+          <div class="expansion-panel-content">
             <div
               v-for="step in flow.steps"
               :key="step.title"
-              class="step bg-gray-100 rounded-lg px-3 py-3 step-width rounded mr-4"
+              :class="[
+                `step bg-gray-100 rounded-lg px-3 py-3 step-width rounded mr-4`,
+                { isFinish: step.isFinish }
+              ]"
             >
-              <p
-                class="text-gray-700 font-semibold font-sans tracking-wide text-sm"
-              >
+              <p class="step__title">
                 {{ step.title }}
               </p>
 
@@ -36,7 +37,7 @@
                 :animation="200"
                 ghost-class="ghost-card"
                 group="tasks"
-                @change="change"
+                @change="change($event, step)"
               >
                 <!-- Each element from here will be draggable and animated. Note :key is very important here to be unique both for draggable and animations to be smooth & consistent. -->
                 <task-card
@@ -61,9 +62,20 @@ import draggable from "vuedraggable";
 import TaskCard from "../components/TaskCard.vue";
 import ModalCard from "../components/ModalCard.vue";
 import Flow from "../models/Flow";
+import Task from "../models/Task";
 
 export default {
   name: "TasksList",
+  data() {
+    return {
+      model: new Task(),
+      flowModel: new Flow(),
+      flows: [],
+      openedPanels: [],
+      selectedCard: {},
+      modalCard: false
+    };
+  },
   components: {
     TaskCard,
     ModalCard,
@@ -76,28 +88,21 @@ export default {
     async getFlows() {
       this.flows = await this.flowModel.loadCollection();
     },
-    async change(log) {
+    async change(element, step) {
       await this.$forceUpdate();
-      console.log(log);
+      if (element?.added) {
+        await this.model.changeStep(element.added.element.id, step.id);
+      }
     },
     openModalCard(task) {
       this.selectedCard = task;
       this.modalCard = true;
     }
-  },
-  data() {
-    return {
-      flowModel: new Flow(),
-      flows: [],
-      openedPanels: [],
-      selectedCard: {},
-      modalCard: false
-    };
   }
 };
 </script>
 
-<style>
+<style lang="scss">
 .step-width {
   min-width: 320px;
   width: 320px;
@@ -112,10 +117,24 @@ export default {
 .step {
   background-color: rgb(236, 236, 236);
   height: 700px;
+
+  &__title {
+    font-weight: bold;
+  }
+
+  &.isFinish {
+    background-color: rgb(231, 248, 218);
+  }
 }
 
 .step-container {
   width: 100%;
   height: 100%;
+}
+
+.expansion-panel-content {
+  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
 }
 </style>

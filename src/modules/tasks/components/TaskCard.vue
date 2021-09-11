@@ -11,7 +11,7 @@
     <div class="flex mt-4 justify-between items-center">
       <span class="text-sm text-gray-600">{{ task.date }}</span>
 
-      <v-chip color="primary" small>
+      <v-chip color="secondary" small>
         {{ getTaskType(task.type) }}
       </v-chip>
     </div>
