@@ -8,6 +8,9 @@ export default class Task extends Model {
     };
   }
 
+  async saveCard(card, task) {
+    await this.request.patch(`${card}`, task);
+  }
   async changeStep(card, step) {
     await this.request.patch(`${card}`, { stepId: step });
   }

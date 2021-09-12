@@ -8,6 +8,12 @@
       :requirement="selectedRequirementTasks"
     />
 
+    <ModalCreateBug
+      :show="modalCreateBug"
+      @close="modalCreateBug = false"
+      :requirement="selectedRequirementBugs"
+    />
+
     <DVForm ref="form" v-model="project" :model="model" :validations="$v" card>
       <v-row>
         <v-col cols="12">
@@ -82,6 +88,24 @@
                       </v-btn>
                     </template>
                     <span>Gerar atividades</span>
+                  </v-tooltip>
+
+                  <v-tooltip bottom>
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-btn
+                        v-bind="attrs"
+                        v-on="on"
+                        text
+                        icon
+                        @click.stop="createBug(index)"
+                        class="mr-5"
+                      >
+                        <v-icon color="primary">
+                          mdi-bug
+                        </v-icon>
+                      </v-btn>
+                    </template>
+                    <span>Criar BUG</span>
                   </v-tooltip>
 
                   <v-btn
@@ -188,6 +212,7 @@ import DVForm from "@/components/Form/DVForm";
 import RequirementFields from "../components/RequirementFields";
 import RequirementBusinessRules from "../components/RequirementBusinessRules";
 import ModalCreateTask from "../components/ModalCreateTask";
+import ModalCreateBug from "../components/ModalCreateBug";
 import Project from "../models/Project";
 import Application from "../models/Application";
 import Flow from "../models/Flow";
@@ -198,7 +223,8 @@ export default {
     DVForm,
     RequirementFields,
     RequirementBusinessRules,
-    ModalCreateTask
+    ModalCreateTask,
+    ModalCreateBug
   },
   data() {
     return {
@@ -206,8 +232,10 @@ export default {
       applicationModel: new Application(),
       flowModel: new Flow(),
       selectedRequirementTasks: {},
+      selectedRequirementBugs: {},
       openedPanels: [],
       modalCreateTask: false,
+      modalCreateBug: false,
       flows: [],
       apps: [],
       project: {
@@ -245,6 +273,10 @@ export default {
     createTasks(index) {
       this.selectedRequirementTasks = this.project.requirements[index];
       this.modalCreateTask = true;
+    },
+    createBug(index) {
+      this.selectedRequirementBugs = this.project.requirements[index];
+      this.modalCreateBug = true;
     }
   },
   computed: {},

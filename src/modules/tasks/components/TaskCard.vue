@@ -11,7 +11,7 @@
     <div class="flex mt-4 justify-between items-center">
       <span class="text-sm text-gray-600">{{ task.date }}</span>
 
-      <v-chip color="secondary" small>
+      <v-chip :color="getChipColor(task.type)" small>
         {{ getTaskType(task.type) }}
       </v-chip>
     </div>
@@ -33,6 +33,17 @@ export default {
     getTaskType(type) {
       if (type === "task") {
         return "Requisito";
+      }
+      if (type === "bug") {
+        return "BUG";
+      }
+    },
+    getChipColor(type) {
+      if (type === "task") {
+        return "secondary";
+      }
+      if (type === "bug") {
+        return "error";
       }
     }
   }
