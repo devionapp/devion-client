@@ -111,7 +111,7 @@ export const queryParamsHelper = {
 
       if (!isEmpty(str)) {
         str = encodeURIComponent(str);
-        return `search=${str}`;
+        return `filter=${str}`;
       }
     } else {
       return this.serializer(object);
@@ -133,12 +133,12 @@ export const queryParamsHelper = {
     if (options.useSimpleSearch) {
       return this.serializer(filters);
     } else if (filters instanceof Filter) {
-      return `search=${filters.get()}`;
+      return `filter=${filters.get()}`;
     } else if (isObject(filters)) {
       return this.convertObjectToFilter(filters);
     } else {
       filters = encodeURIComponent(filters);
-      return `search=${filters}`;
+      return `filter=${filters}`;
     }
   },
 

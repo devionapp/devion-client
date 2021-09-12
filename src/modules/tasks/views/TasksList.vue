@@ -14,10 +14,25 @@
         :key="index"
         class="panel"
       >
-        <v-expansion-panel-header>
-          {{ flow.name }}
-        </v-expansion-panel-header>
+        <v-expansion-panel-header> {{ flow.name }} </v-expansion-panel-header>
         <v-expansion-panel-content>
+          <v-row>
+            <v-col cols="1" class="d-flex align-center">
+              <Select
+                dense
+                label="Tipo"
+                v-model="filters.where.type"
+                item-text="label"
+                :items="typeOptions"
+                clearable
+              />
+            </v-col>
+            <v-col cols="1">
+              <Button dense @click="filter(index)">
+                Filtrar
+              </Button>
+            </v-col>
+          </v-row>
           <div class="expansion-panel-content">
             <div
               v-for="step in flow.steps"
@@ -63,6 +78,7 @@ import TaskCard from "../components/TaskCard.vue";
 import ModalCard from "../components/ModalCard.vue";
 import Flow from "../models/Flow";
 import Task from "../models/Task";
+// import Filter from "@/services/filter/Filter";
 
 export default {
   name: "TasksList",
@@ -73,7 +89,22 @@ export default {
       flows: [],
       openedPanels: [],
       selectedCard: {},
-      modalCard: false
+      modalCard: false,
+      typeOptions: [
+        {
+          id: "task",
+          label: "Requisito"
+        },
+        {
+          id: "bug",
+          label: "BUG"
+        }
+      ],
+      filters: {
+        where: {
+          type: null
+        }
+      }
     };
   },
   components: {
@@ -86,7 +117,18 @@ export default {
   },
   methods: {
     async getFlows() {
-      this.flows = await this.flowModel.loadCollection();
+      this.flows = await this.flowModel.loadCollection({});
+    },
+    async filter(index) {
+      const tasks = await this.flowModel.getTasks(
+        this.flows[index],
+        this.filters
+      );
+
+      this.flows[index].steps.map(step => {
+        step.title = step.name;
+        step.tasks = tasks.filter(t => t.stepId === step.id);
+      });
     },
     async change(element, step) {
       await this.$forceUpdate();
