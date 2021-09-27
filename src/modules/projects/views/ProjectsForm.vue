@@ -132,22 +132,12 @@
                       </v-col>
                     </v-row>
                     <v-row>
-                      <v-col cols="12" lg="7">
+                      <v-col cols="12">
                         <TextField
                           autofocus
                           :class="`panel-textfield-${index}`"
                           label="Nome"
                           v-model="requirement.name"
-                        />
-                      </v-col>
-                      <v-col cols="12" lg="5">
-                        <Select
-                          :class="`panel-select-${index}`"
-                          :items="flows"
-                          v-model="requirement.flowId"
-                          label="Fluxo"
-                          itemText="name"
-                          itemValue="id"
                         />
                       </v-col>
                     </v-row>

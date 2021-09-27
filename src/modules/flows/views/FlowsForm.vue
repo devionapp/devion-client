@@ -20,33 +20,40 @@
       </v-row>
       <template v-if="flow.steps && flow.steps.length">
         <v-row v-for="(step, index) in flow.steps" :key="index">
-          <v-col cols="1" class="d-flex justify-center align-center pb-5">
-            <h3 class="text-center mb-5">{{ step.index }}.</h3>
-          </v-col>
-          <v-col cols="12" lg="4">
-            <TextField
-              :label="`Nome da etapa ${step.index}`"
-              v-model="step.name"
-            />
-          </v-col>
-          <v-col cols="12" lg="3">
-            <Select
-              label="Skill necessária"
-              v-model="step.skillId"
-              itemValue="id"
-              :items="skills"
-            />
-          </v-col>
+          <template v-if="!step.isFinish">
+            <v-col cols="1" class="d-flex justify-center align-center pb-5">
+              <h3 class="text-center mb-5">{{ step.index }}.</h3>
+            </v-col>
+            <v-col cols="12" lg="4">
+              <TextField
+                :label="`Nome da etapa ${step.index}`"
+                v-model="step.name"
+              />
+            </v-col>
+            <v-col cols="12" lg="3">
+              <Select
+                label="Skill necessária"
+                v-model="step.skillId"
+                itemValue="id"
+                :items="skills"
+              />
+            </v-col>
 
-          <v-col cols="12" lg="2">
-            <Button icon color="error" class="mt-2" @click="removeStep(index)">
-              <v-icon>mdi-delete</v-icon>
-            </Button>
-          </v-col>
+            <v-col cols="12" lg="2">
+              <Button
+                icon
+                color="error"
+                class="mt-2"
+                @click="removeStep(index)"
+              >
+                <v-icon>mdi-delete</v-icon>
+              </Button>
+            </v-col>
+          </template>
         </v-row>
         <v-row>
           <v-col cols="1" class="d-flex justify-center align-center pb-5">
-            <h3 class="text-center mb-5">{{ flow.steps.length + 1 }}.</h3>
+            <h3 class="text-center mb-5">{{ flow.steps.length }}.</h3>
           </v-col>
           <v-col cols="12" lg="4">
             <TextField :label="`Etapa final`" v-model="finishText" disabled />
@@ -99,7 +106,7 @@ export default {
       }
 
       this.flow.steps.push({
-        index: this.flow.steps.length + 1,
+        index: this.flow.steps.length,
         name: null,
         isFinish: false
       });
