@@ -6,12 +6,14 @@
       :show="modalCreateTask"
       @close="modalCreateTask = false"
       :requirement="selectedRequirementTasks"
+      :projectId="project.id"
     />
 
     <ModalCreateBug
       :show="modalCreateBug"
       @close="modalCreateBug = false"
       :requirement="selectedRequirementBugs"
+      :projectId="project.id"
     />
 
     <DVForm ref="form" v-model="project" :model="model" :validations="$v" card>
