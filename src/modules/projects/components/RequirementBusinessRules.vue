@@ -20,9 +20,9 @@
           <v-card-title> R.N {{ index + 1 }} </v-card-title>
           <v-card-text> {{ rule.description }} </v-card-text>
           <v-card-actions class="d-flex justify-end">
-            <Button @click="removeRule(index)" color="secondary" icon x-small>
+            <!-- <Button @click="removeRule(index)" color="secondary" icon x-small>
               <v-icon>mdi-pencil</v-icon>
-            </Button>
+            </Button> -->
             <Button @click="removeRule(index)" color="error" icon x-small>
               <v-icon>mdi-delete</v-icon>
             </Button>
@@ -34,9 +34,15 @@
 </template>
 
 <script>
+import RequirementBusinessRules from "../models/RequirementBusinessRules";
 export default {
   name: "RequirementBusinessRules",
   props: {
+    requirementId: {
+      type: Number,
+      required: true,
+      default: null
+    },
     value: {
       type: Array,
       required: true,
@@ -47,10 +53,10 @@ export default {
   },
   data() {
     return {
+      rules: this.value,
       newRule: {
         description: null
-      },
-      rules: this.value
+      }
     };
   },
   watch: {
@@ -70,19 +76,25 @@ export default {
       }
     }
   },
-  created() {},
   methods: {
     async addRule() {
       this.newRule.index = this.rules.length + 1;
       this.rules.push(this.newRule);
+
+      await new RequirementBusinessRules(this.requirementId).insertRecord({
+        ...this.newRule
+      });
+
       this.newRule = {
         description: null
       };
     },
     async removeRule(index) {
+      await new RequirementBusinessRules(this.requirementId).deleteRecord(
+        this.rules[index].id
+      );
       this.rules.splice(index, 1);
     }
-  },
-  computed: {}
+  }
 };
 </script>

@@ -62,6 +62,7 @@
 </template>
 
 <script>
+import RequirementFields from "../models/RequirementFields";
 export default {
   name: "RequirementFields",
   props: {
@@ -71,6 +72,11 @@ export default {
       default: () => {
         return [];
       }
+    },
+    requirementId: {
+      type: Number,
+      required: true,
+      default: null
     },
     businessRules: {
       type: Array,
@@ -136,6 +142,11 @@ export default {
   methods: {
     async addField() {
       this.fields.push(this.newField);
+
+      await new RequirementFields(this.requirementId).insertRecord({
+        ...this.newField
+      });
+
       this.newField = {
         name: null,
         type: null,
@@ -145,6 +156,9 @@ export default {
       };
     },
     async removeField(index) {
+      await new RequirementFields(this.requirementId).deleteRecord(
+        this.fields[index].id
+      );
       this.fields.splice(index, 1);
     }
   }
