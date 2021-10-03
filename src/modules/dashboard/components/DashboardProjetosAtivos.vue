@@ -1,6 +1,6 @@
 <template>
   <section class="DashboardProjetosAtivos">
-    <v-card>
+    <v-card style="height:400px;">
       <v-card-text>
         <p>
           Projetos ativos

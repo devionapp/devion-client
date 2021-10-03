@@ -58,58 +58,10 @@
       <v-col cols="12" xl="6">
         <DashboardProjetosAtivos />
       </v-col>
+      <v-col cols="12" xl="6">
+        <DashboardProjetosHorasRegistradas />
+      </v-col>
     </v-row>
-
-    <!-- <v-row>
-      <v-col cols="6">
-        <v-card class=" text-center" color="secondary" dark>
-          <v-card-text>
-            <v-sheet color="secondary">
-              <v-sparkline
-                fill
-                :value="value"
-                :labels="labels"
-                color="rgba(255, 255, 255, .7)"
-                show-labels
-                smooth
-              >
-                <template v-slot:label="item"> {{ item.value }} </template>
-              </v-sparkline>
-            </v-sheet>
-          </v-card-text>
-
-          <v-card-text>
-            <div class="text-h4 font-weight-thin">
-              Seu índice de assertividade mensal
-            </div>
-          </v-card-text>
-        </v-card>
-      </v-col>
-      <v-col cols="6">
-        <v-card class="text-center" color="primary" dark>
-          <v-card-text>
-            <v-sheet color="primary">
-              <v-sparkline
-                fill
-                :value="value"
-                :labels="labels"
-                color="rgba(255, 255, 255, .7)"
-                show-labels
-                smooth
-              >
-                <template v-slot:label="item"> {{ item.value }} </template>
-              </v-sparkline>
-            </v-sheet>
-          </v-card-text>
-
-          <v-card-text>
-            <div class="text-h4 font-weight-thin">
-              Índice de qualidade (requisito x bug)
-            </div>
-          </v-card-text>
-        </v-card>
-      </v-col>
-    </v-row> -->
   </section>
 </template>
 
@@ -117,9 +69,11 @@
 import Project from "./models/Project";
 import Task from "./models/Task";
 import DashboardProjetosAtivos from "./components/DashboardProjetosAtivos.vue";
+import DashboardProjetosHorasRegistradas from "./components/DashboardProjetosHorasRegistradas.vue";
+
 export default {
   name: "Dashboard",
-  components: { DashboardProjetosAtivos },
+  components: { DashboardProjetosAtivos, DashboardProjetosHorasRegistradas },
   data() {
     return {
       labels: [

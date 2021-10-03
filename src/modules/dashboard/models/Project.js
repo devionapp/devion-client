@@ -1,5 +1,5 @@
 import Model from "@/models/Model";
-
+import store from "@/store";
 export default class Project extends Model {
   config() {
     return {
@@ -9,7 +9,11 @@ export default class Project extends Model {
   }
 
   async countProjects() {
-    return (await this.request.get("/count")).data.count;
+    const where = {
+      tenantId: store.getters["User/getUser"].tenantId
+    };
+    return (await this.request.get(`/count?where=${JSON.stringify(where)}`))
+      .data.count;
   }
 }
 
