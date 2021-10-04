@@ -3,10 +3,10 @@
     <v-card style="height:400px; position:relative;">
       <v-card-text>
         <p>
-          Horas registradas em projetos (últimos 7 dias)
+          Task x Bug (anual)
         </p>
 
-        <BarChart
+        <LineChart
           v-if="loaded"
           :chartdata="datacollection"
           :options="chartOptions"
@@ -19,11 +19,11 @@
 
 <script>
 // import Dashboard from "../models/Dashboard";
-import BarChart from "@/components/Charts/BarChart";
+import LineChart from "@/components/Charts/LineChart";
 
 export default {
   name: "DashboardProjetosHorasRegistradas",
-  components: { BarChart },
+  components: { LineChart },
   data() {
     return {
       datacollection: null,
@@ -43,21 +43,14 @@ export default {
   methods: {
     fillData() {
       this.datacollection = {
-        labels: [
-          "27/09",
-          "28/09",
-          "29/09",
-          "30/09",
-          "01/10",
-          "02/10",
-          "03/10",
-          "04/10"
-        ],
+        labels: ["JAN", "FEV", "MAR", "ABR", "JUN", "JUL", "AGO", "SET", "OUT"],
         datasets: [
           {
             label: "Requisito",
             backgroundColor: "#183059",
             data: [
+              this.getRandomInt(),
+              this.getRandomInt(),
               this.getRandomInt(),
               this.getRandomInt(),
               this.getRandomInt(),
@@ -79,6 +72,8 @@ export default {
               this.getRandomInt(),
               this.getRandomInt(),
               this.getRandomInt(),
+              this.getRandomInt(),
+              this.getRandomInt(),
               this.getRandomInt()
             ]
           }
@@ -88,7 +83,7 @@ export default {
       this.loaded = true;
     },
     getRandomInt() {
-      return Math.floor(Math.random() * (50 - 5 + 1)) + 5;
+      return Math.floor(Math.random() * (160 - 5 + 1)) + 5;
     }
   },
   computed: {}

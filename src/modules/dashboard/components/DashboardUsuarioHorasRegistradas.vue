@@ -3,26 +3,56 @@
     <v-card style="height:400px;">
       <v-card-text>
         <p>
-          Resumo dos projetos ativos
+          Lista de horas registradas por usuário (mês atual)
         </p>
       </v-card-text>
       <table class="DashboardProjetosAtivos__table">
         <thead>
           <th>
-            Projeto
+            Usuário
           </th>
           <th>
-            Horas Estimadas
+            Horas Registradas
           </th>
           <th>
-            Horas Trabalhadas
+            % Atividade
           </th>
           <th>
-            % Requisitos Finalizados
+            % Bug
           </th>
         </thead>
         <tbody>
-          <tr v-for="(project, index) in projects" :key="index">
+          <tr>
+            <td>
+              Fulano
+            </td>
+            <td>
+              <v-progress-linear color="secondary" v-model="horas" />
+              14h12 de 40h/mês
+            </td>
+            <td>
+              40%
+            </td>
+            <td>
+              60%
+            </td>
+          </tr>
+          <tr>
+            <td>
+              Ciclano
+            </td>
+            <td>
+              <v-progress-linear color="secondary" v-model="horas2" />
+              16h00 de 40h/mês
+            </td>
+            <td>
+              100%
+            </td>
+            <td>
+              0%
+            </td>
+          </tr>
+          <!-- <tr v-for="(project, index) in projects" :key="index">
             <td>
               {{ project.name }}
             </td>
@@ -33,12 +63,9 @@
               {{ project.horasRealizadas }}
             </td>
             <td>
-              <v-progress-linear color="success" v-model="conclusao" />
-              <p class="text-center">
-                {{ project.tarefasFinalizadas }}/2 - 50%
-              </p>
+              {{ project.tarefasFinalizadas }}
             </td>
-          </tr>
+          </tr> -->
         </tbody>
       </table>
       <!-- <v-card-text class="">
@@ -58,7 +85,8 @@ export default {
     return {
       model: new Dashboard(),
       projects: [],
-      conclusao: 50
+      horas: 10,
+      horas2: 15
     };
   },
   async created() {
