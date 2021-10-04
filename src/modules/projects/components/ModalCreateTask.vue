@@ -63,6 +63,11 @@ export default {
       default() {
         return {};
       }
+    },
+    projectId: {
+      type: Number,
+      required: true,
+      default: null
     }
   },
   data() {
@@ -105,6 +110,7 @@ export default {
     async createTasks() {
       this.task.name = this.requirement.name;
       this.task.requirementId = this.requirement.id;
+      this.task.projectId = this.projectId;
       await this.cardModel.insertRecord(this.task);
       this.$emit("close");
     }

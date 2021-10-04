@@ -13,6 +13,7 @@ import { mapGetters } from "vuex";
 const Home = () => import("@/views/Home");
 const Auth = () => import("@/views/Auth");
 const Snackbar = () => import("@/components/Snackbar");
+
 export default {
   name: "App",
   components: { Home, Auth, Snackbar },

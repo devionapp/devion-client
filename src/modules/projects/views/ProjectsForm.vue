@@ -6,12 +6,14 @@
       :show="modalCreateTask"
       @close="modalCreateTask = false"
       :requirement="selectedRequirementTasks"
+      :projectId="project.id"
     />
 
     <ModalCreateBug
       :show="modalCreateBug"
       @close="modalCreateBug = false"
       :requirement="selectedRequirementBugs"
+      :projectId="project.id"
     />
 
     <DVForm ref="form" v-model="project" :model="model" :validations="$v" card>
@@ -132,22 +134,12 @@
                       </v-col>
                     </v-row>
                     <v-row>
-                      <v-col cols="12" lg="7">
+                      <v-col cols="12">
                         <TextField
                           autofocus
                           :class="`panel-textfield-${index}`"
                           label="Nome"
                           v-model="requirement.name"
-                        />
-                      </v-col>
-                      <v-col cols="12" lg="5">
-                        <Select
-                          :class="`panel-select-${index}`"
-                          :items="flows"
-                          v-model="requirement.flowId"
-                          label="Fluxo"
-                          itemText="name"
-                          itemValue="id"
                         />
                       </v-col>
                     </v-row>
@@ -174,6 +166,7 @@
                         <RequirementFields
                           v-model="requirement.fields"
                           :businessRules="requirement.businessRules"
+                          :requirementId="requirement.id"
                         />
                       </v-col>
                     </v-row>
@@ -186,6 +179,16 @@
                     </v-row>
                     <RequirementBusinessRules
                       v-model="requirement.businessRules"
+                      :requirementId="requirement.id"
+                    />
+                  </v-col>
+                </v-row>
+                <v-row cols="12">
+                  <v-col cols="12" class="d-flex justify-end">
+                    <Button
+                      label="Salvar"
+                      color="success"
+                      @click="updateRequirement(index)"
                     />
                   </v-col>
                 </v-row>
@@ -214,6 +217,7 @@ import RequirementBusinessRules from "../components/RequirementBusinessRules";
 import ModalCreateTask from "../components/ModalCreateTask";
 import ModalCreateBug from "../components/ModalCreateBug";
 import Project from "../models/Project";
+import ProjectRequirement from "../models/ProjectRequirement";
 import Application from "../models/Application";
 import Flow from "../models/Flow";
 
@@ -228,6 +232,12 @@ export default {
   },
   data() {
     return {
+      project: {
+        name: null,
+        description: null,
+        requirements: [],
+        apps: []
+      },
       model: new Project(),
       applicationModel: new Application(),
       flowModel: new Flow(),
@@ -237,13 +247,7 @@ export default {
       modalCreateTask: false,
       modalCreateBug: false,
       flows: [],
-      apps: [],
-      project: {
-        name: null,
-        description: null,
-        requirements: [],
-        apps: []
-      }
+      apps: []
     };
   },
   async mounted() {
@@ -266,8 +270,25 @@ export default {
       setTimeout(() => {
         this.$vuetify.goTo(`.panel-textfield-${index}`);
       }, 200);
+
+      const { id } = await new ProjectRequirement(this.project.id).insertRecord(
+        this.project.requirements[index]
+      );
+
+      this.project.requirements[index].id = id;
+    },
+    async updateRequirement(index) {
+      await new ProjectRequirement(this.project.id).updateRecordPatch(
+        this.project.requirements[index].id,
+        this.project.requirements[index]
+      );
+
+      await this.openedPanels.splice(index, 1);
     },
     async removeRequirement(index) {
+      await new ProjectRequirement(this.project.id).deleteRecord(
+        this.project.requirements[index].id
+      );
       this.project.requirements.splice(index, 1);
     },
     createTasks(index) {
