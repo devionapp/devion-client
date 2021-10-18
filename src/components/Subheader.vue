@@ -93,7 +93,7 @@ export default {
 
 <style lang="scss" scoped>
 .Subheader {
-  margin-bottom: 3rem;
+  margin-bottom: 1.5rem;
   width: 100%;
   display: flex;
   justify-content: space-between;

@@ -41,11 +41,6 @@
           </tr>
         </tbody>
       </table>
-      <!-- <v-card-text class="">
-        <div class="DashboardProjetosAtivos__project">
-          teste
-        </div>
-      </v-card-text> -->
     </v-card>
   </section>
 </template>

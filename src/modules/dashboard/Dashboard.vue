@@ -40,19 +40,6 @@
           </v-card-text>
         </v-card>
       </v-col>
-      <!-- <v-col cols="12" md="6" xl="3">
-        <v-card hover link to="atividades">
-          <v-card-text>
-            <div>Últimos 7 dias</div>
-            <p class="text-h4">
-              Tarefas Finalizadas
-            </p>
-            <span class="text-h2 text--primary">
-              {{ finishedTasks }}
-            </span>
-          </v-card-text>
-        </v-card>
-      </v-col> -->
     </v-row>
     <v-row>
       <v-col cols="12" xl="6">

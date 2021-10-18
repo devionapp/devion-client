@@ -6,62 +6,76 @@
     @confirm="save"
     :width="1700"
   >
-    <v-row>
-      <v-col cols="6">
-        <h3>Informações sobre a atividade</h3>
-      </v-col>
-    </v-row>
-    <v-row class="mt-2">
-      <v-col cols="6">
-        <TextArea label="Descricão" v-model="task.description" readonly />
-      </v-col>
-      <v-col cols="2">
-        <v-select
-          label="Responsável"
-          outlined
-          :items="users"
-          item-value="id"
-          v-model="task.userId"
-        >
-          <template #selection="{item}">
-            <v-list-item-avatar color="#E0E0E0">
-              {{ item.firstName.substr(0, 1) }}{{ item.lastName.substr(0, 1) }}
-            </v-list-item-avatar>
-            {{ item.firstName }} {{ item.lastName }}
-          </template>
-          <template #item="{item}">
-            <v-list-item-avatar color="#E0E0E0">
-              {{ item.firstName.substr(0, 1) }}{{ item.lastName.substr(0, 1) }}
-            </v-list-item-avatar>
-            {{ item.firstName }} {{ item.lastName }}
-          </template>
-        </v-select>
-      </v-col>
-      <v-col cols="2">
-        <TextField
-          label="Estimativa (em horas)"
-          v-model="task.estimate"
-          type="number"
-        />
-      </v-col>
-      <v-col cols="2">
-        <TextField
-          label="Realizado (em horas)"
-          v-model="task.performed"
-          type="number"
-        />
-      </v-col>
-    </v-row>
-    <v-row>
-      <v-col cols="6">
-        <h3>Tarefas</h3>
-      </v-col>
-    </v-row>
-    <v-row>
-      <v-col cols="6">
-        <TodoList />
-      </v-col>
-    </v-row>
+    <v-tabs v-model="tabs">
+      <template v-for="(step, index) in steps">
+        <v-tab :key="index">
+          <v-icon left>
+            {{ step.icon }}
+          </v-icon>
+          {{ step.name }}
+        </v-tab>
+        <v-tab-item :key="index">
+          <v-row class="mt-3">
+            <v-col cols="6">
+              <h3>Informações sobre a atividade</h3>
+            </v-col>
+          </v-row>
+          <v-row class="mt-2">
+            <v-col cols="6">
+              <TextArea label="Descricão" v-model="task.description" readonly />
+            </v-col>
+            <v-col cols="2">
+              <v-select
+                label="Responsável"
+                outlined
+                :items="users"
+                item-value="id"
+                v-model="task.userId"
+              >
+                <template #selection="{item}">
+                  <v-list-item-avatar color="#E0E0E0">
+                    {{ item.firstName.substr(0, 1)
+                    }}{{ item.lastName.substr(0, 1) }}
+                  </v-list-item-avatar>
+                  {{ item.firstName }} {{ item.lastName }}
+                </template>
+                <template #item="{item}">
+                  <v-list-item-avatar color="#E0E0E0">
+                    {{ item.firstName.substr(0, 1)
+                    }}{{ item.lastName.substr(0, 1) }}
+                  </v-list-item-avatar>
+                  {{ item.firstName }} {{ item.lastName }}
+                </template>
+              </v-select>
+            </v-col>
+            <v-col cols="2">
+              <TextField
+                label="Estimativa (em horas)"
+                v-model="task.estimate"
+                type="number"
+              />
+            </v-col>
+            <v-col cols="2">
+              <TextField
+                label="Realizado (em horas)"
+                v-model="task.performed"
+                type="number"
+              />
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="6">
+              <h3>Tarefas</h3>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="6">
+              <TodoList />
+            </v-col>
+          </v-row>
+        </v-tab-item>
+      </template>
+    </v-tabs>
   </Modal>
 </template>
 
@@ -94,6 +108,12 @@ export default {
       userModel: new User(),
       requirementModel: new Requirement(),
       users: [],
+      tabs: [],
+      steps: [
+        { name: "Dados Basicos", component: null, icon: null },
+        { name: "Comentarios", component: null, icon: "mdi-chat" },
+        { name: "Time Log", component: null, icon: "mdi-clock" }
+      ],
       task: {
         description: null,
         userId: null,
