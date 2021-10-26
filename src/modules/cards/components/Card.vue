@@ -4,17 +4,14 @@
     @click.prevent="openModalCard"
   >
     <div class="flex justify-between">
-      <p class="text-gray-700 font-semibold font-sans tracking-wide text-sm">
+      <h4 class="text-gray-900 font-semibold font-sans tracking-wide text-sm">
         {{ task.name }}
-      </p>
+      </h4>
+      <p>{{ task.project.name }}</p>
     </div>
-    <div class="flex mt-4 justify-between items-center">
-      <span class="text-sm text-gray-600">{{ task.date }}</span>
-
-      <v-chip :color="getChipColor(task.type)" small>
-        {{ getTaskType(task.type) }}
-      </v-chip>
-    </div>
+    <v-chip :color="getChipColor(task.type)" small>
+      {{ getTaskType(task.type) }}
+    </v-chip>
   </div>
 </template>
 <script>

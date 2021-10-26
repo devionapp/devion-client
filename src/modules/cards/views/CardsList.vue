@@ -3,9 +3,9 @@
     <Subheader title="Atividades" />
 
     <ModalCard
-      :show="modalCard"
-      @close="modalCard = false"
-      :card="selectedCard"
+      v-if="selectedCard !== null"
+      @close="selectedCard = null"
+      :cardId="selectedCard"
     />
 
     <v-card class="w-100">
@@ -68,7 +68,7 @@
                   group="tasks"
                   @change="change($event, step)"
                 >
-                  <task-card
+                  <Card
                     v-for="task in step.tasks"
                     :key="task.id"
                     :task="task"
@@ -87,22 +87,21 @@
 
 <script>
 import draggable from "vuedraggable";
-import TaskCard from "../components/TaskCard.vue";
+import Card from "../components/Card.vue";
 import ModalCard from "../components/ModalCard.vue";
 import Flow from "../models/Flow";
-import Task from "../models/Task";
+import CardModel from "../models/Card";
 
 export default {
-  name: "TasksList",
+  name: "CardsList",
   data() {
     return {
-      model: new Task(),
+      model: new CardModel(),
       flowModel: new Flow(),
       tabs: [],
       flows: [],
       openedPanels: [],
-      selectedCard: {},
-      modalCard: false,
+      selectedCard: null,
       typeOptions: [
         {
           id: "task",
@@ -121,7 +120,7 @@ export default {
     };
   },
   components: {
-    TaskCard,
+    Card,
     ModalCard,
     draggable
   },
@@ -133,14 +132,14 @@ export default {
       this.flows = await this.flowModel.loadCollection({});
     },
     async filter() {
-      const tasks = await this.flowModel.getTasks(
+      const cards = await this.flowModel.getTasks(
         this.flows[this.tabs],
         this.filters
       );
 
       this.flows[this.tabs].steps.map(step => {
         step.title = step.name;
-        step.tasks = tasks.filter(t => t.stepId === step.id);
+        step.tasks = cards.filter(t => t.stepId === step.id);
       });
     },
     async change(element, step) {
@@ -150,8 +149,7 @@ export default {
       }
     },
     openModalCard(task) {
-      this.selectedCard = task;
-      this.modalCard = true;
+      this.selectedCard = task.id;
     }
   }
 };

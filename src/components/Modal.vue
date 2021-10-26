@@ -4,6 +4,7 @@
     v-model="show"
     @click:outside="$emit('close')"
     :width="width"
+    v-bind="$attrs"
   >
     <v-card>
       <v-toolbar color="primary" dark>{{ title }}</v-toolbar>

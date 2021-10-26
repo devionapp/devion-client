@@ -14,12 +14,13 @@
     />
 
     <v-list subheader two-line flat>
-      <v-subheader class="subheading" v-if="todos.length == 0"
-        >Nenhuma tarefa adicionada</v-subheader
-      >
-      <v-subheader class="subheading" v-else-if="todos.length == 1"
-        >Suas tarefas</v-subheader
-      >
+      <v-subheader class="subheading" v-if="todos.length == 0">
+        Nenhuma tarefa adicionada
+      </v-subheader>
+
+      <v-subheader class="subheading" v-else-if="todos.length == 1">
+        Suas tarefas
+      </v-subheader>
 
       <v-list-item-group>
         <v-list-item v-for="(todo, i) in todos" :key="i">
@@ -27,9 +28,9 @@
             <v-list-item-action>
               <v-checkbox
                 color="success"
-                v-model="todos[i].active"
-                @click="toggle"
-              ></v-checkbox>
+                v-model="todos[i].done"
+                @click="handleActive(i, toggle)"
+              />
             </v-list-item-action>
 
             <v-list-item-content>
@@ -40,14 +41,7 @@
                 >{{ todo.title | capitalize }}</v-list-item-title
               >
             </v-list-item-content>
-            <v-btn
-              fab
-              ripple
-              small
-              color="error"
-              v-if="active"
-              @click="removeTodo(i)"
-            >
+            <v-btn fab ripple small color="error" @click="removeTodo(i)">
               <v-icon class="white--text">mdi-close</v-icon>
             </v-btn>
           </template>
@@ -58,64 +52,58 @@
 </template>
 
 <script>
+import CardChecklist from "../models/CardChecklist";
+
 export default {
-  name: "TodoList",
+  name: "ModalCardChecklist",
+  props: {
+    cardId: {
+      type: Number
+    }
+  },
   data() {
     return {
-      isDark: true,
+      model: new CardChecklist(this.cardId),
       show: true,
       newTodo: "",
-      todos: [],
-      day: this.todoDay(),
-      date: new Date().getDate(),
-      ord: this.nth(new Date().getDate()),
-      year: new Date().getFullYear()
+      todos: []
     };
   },
+  mounted() {
+    this.getChecklist();
+  },
   methods: {
-    addTodo() {
+    async handleActive(index) {
+      this.todos[index].done = true;
+
+      await this.model.updateRecordPatch("", this.todos[index]);
+    },
+    async getChecklist() {
+      this.todos = await this.model.getChecklist(this.cardId);
+    },
+    async addTodo() {
       const value = this.newTodo && this.newTodo.trim();
+
       if (!value) {
         return;
       }
+
+      await this.model.insertRecord({
+        title: this.newTodo,
+        done: false
+      });
 
       this.todos.push({
         title: this.newTodo,
         done: false
       });
+
       this.newTodo = "";
     },
 
-    removeTodo(index) {
+    async removeTodo(index) {
+      await this.model.deleteChecklistItem(this.todos[index].id);
       this.todos.splice(index, 1);
-    },
-
-    todoDay() {
-      const d = new Date();
-      const days = [
-        "Sunday",
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-        "Saturday"
-      ];
-      return days[d.getDay()];
-    },
-
-    nth(d) {
-      if (d > 3 && d < 21) return "th";
-      switch (d % 10) {
-        case 1:
-          return "st";
-        case 2:
-          return "nd";
-        case 3:
-          return "rd";
-        default:
-          return "th";
-      }
     }
   },
   filters: {
