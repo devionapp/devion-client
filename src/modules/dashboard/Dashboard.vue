@@ -48,12 +48,12 @@
       <v-col cols="12" xl="6">
         <DashboardProjetosHorasRegistradas />
       </v-col>
-      <v-col cols="12" xl="6">
+      <v-col cols="12" xl="12">
         <DashboardUsuarioHorasRegistradas />
       </v-col>
-      <v-col cols="12" xl="6">
+      <!-- <v-col cols="12" xl="6">
         <DashboardIndiceTaskBug />
-      </v-col>
+      </v-col> -->
     </v-row>
   </section>
 </template>
@@ -64,15 +64,15 @@ import Task from "./models/Task";
 import DashboardProjetosAtivos from "./components/DashboardProjetosAtivos.vue";
 import DashboardProjetosHorasRegistradas from "./components/DashboardProjetosHorasRegistradas.vue";
 import DashboardUsuarioHorasRegistradas from "./components/DashboardUsuarioHorasRegistradas.vue";
-import DashboardIndiceTaskBug from "./components/DashboardIndiceTaskBug.vue";
+// import DashboardIndiceTaskBug from "./components/DashboardIndiceTaskBug.vue";
 
 export default {
   name: "Dashboard",
   components: {
     DashboardProjetosAtivos,
     DashboardProjetosHorasRegistradas,
-    DashboardUsuarioHorasRegistradas,
-    DashboardIndiceTaskBug
+    DashboardUsuarioHorasRegistradas
+    // DashboardIndiceTaskBug
   },
   data() {
     return {

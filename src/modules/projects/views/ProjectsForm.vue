@@ -3,6 +3,7 @@
     <Subheader title="Projetos" />
 
     <ModalCreateTask
+      v-if="modalCreateTask"
       :show="modalCreateTask"
       @close="modalCreateTask = false"
       :requirement="selectedRequirementTasks"
@@ -10,6 +11,7 @@
     />
 
     <ModalCreateBug
+      v-if="modalCreateBug"
       :show="modalCreateBug"
       @close="modalCreateBug = false"
       :requirement="selectedRequirementBugs"
@@ -81,6 +83,7 @@
                         v-on="on"
                         text
                         icon
+                        :disabled="requirement.hasTask"
                         @click.stop="createTasks(index)"
                         class="mr-5"
                       >

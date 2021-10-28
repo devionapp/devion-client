@@ -11,7 +11,7 @@
       </v-col>
     </v-row>
     <v-row>
-      <v-col cols="9">
+      <v-col cols="12">
         <v-row>
           <v-col cols="9">
             <TextArea label="Descricão" v-model="card.description" />
@@ -40,6 +40,13 @@
               </template>
             </v-select>
           </v-col>
+          <v-col cols="3">
+            <TextField
+              label="Estimativa"
+              type="number"
+              v-model="card.estimate"
+            />
+          </v-col>
         </v-row>
         <v-row>
           <v-col cols="12">
@@ -51,40 +58,6 @@
             <ModalCardChecklist :cardId="card.id" />
           </v-col>
         </v-row>
-      </v-col>
-      <v-col cols="3">
-        <div class="ModalCardDadosBasicos__info">
-          <v-row>
-            <v-col>
-              <h4>Projeto</h4>
-              <p>{{ card.project.name }}</p>
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col>
-              <h4>Estimativa Total</h4>
-              <p>{{ card.estimate }}h00</p>
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col>
-              <h4>Total Trabalhado</h4>
-              <p>{{ card.performed }}h00</p>
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col>
-              <h4>Fluxo</h4>
-              <p>{{ card.flow.name }}</p>
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col>
-              <h4>Etapa Atual</h4>
-              <p>{{ card.step.name }}</p>
-            </v-col>
-          </v-row>
-        </div>
       </v-col>
     </v-row>
   </section>
@@ -127,14 +100,3 @@ export default {
   }
 };
 </script>
-
-<style lang="scss" scoped>
-.ModalCardDadosBasicos {
-  &__info {
-    background-color: rgb(239, 241, 245);
-    border-radius: 8px;
-    height: 100%;
-    padding: 15px;
-  }
-}
-</style>

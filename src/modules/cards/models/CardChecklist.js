@@ -1,6 +1,6 @@
 import Model from "@/models/Model";
 
-export default class Card extends Model {
+export default class CardChecklist extends Model {
   _cardId = null;
 
   constructor(id) {
@@ -29,4 +29,4 @@ export default class Card extends Model {
     await this.request.delete(`/?where=${JSON.stringify(where)}`);
   }
 }
-Card.use("CRUD");
+CardChecklist.use("CRUD");

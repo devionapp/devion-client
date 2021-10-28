@@ -16,6 +16,7 @@
           :label="label"
           append-icon="mdi-calendar"
           readonly
+          :dense="dense"
           v-bind="attrs"
           :disabled="disabled"
           @blur="date = parseDate(dateFormatted)"
@@ -43,6 +44,10 @@ export default {
     value: {
       type: [Date, String],
       default: ""
+    },
+    dense: {
+      type: Boolean,
+      default: false
     },
     disabled: {
       type: Boolean,

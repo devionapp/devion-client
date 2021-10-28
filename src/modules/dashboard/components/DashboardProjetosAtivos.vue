@@ -3,7 +3,7 @@
     <v-card style="height:400px;">
       <v-card-text>
         <p>
-          Resumo dos projetos ativos
+          Projetos
         </p>
       </v-card-text>
       <table class="DashboardProjetosAtivos__table">
@@ -33,9 +33,13 @@
               {{ project.horasRealizadas }}
             </td>
             <td>
-              <v-progress-linear color="success" v-model="conclusao" />
+              <v-progress-linear
+                color="success"
+                v-model="project.porcentagemTarefasFinalizadas"
+              />
               <p class="text-center">
-                {{ project.tarefasFinalizadas }}/2 - 50%
+                {{ project.tarefasFinalizadas }}/{{ project.totalTarefas }} -
+                {{ project.porcentagemTarefasFinalizadas }}%
               </p>
             </td>
           </tr>
@@ -52,8 +56,7 @@ export default {
   data() {
     return {
       model: new Dashboard(),
-      projects: [],
-      conclusao: 50
+      projects: []
     };
   },
   async created() {
