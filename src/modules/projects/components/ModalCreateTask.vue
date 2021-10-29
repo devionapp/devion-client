@@ -112,7 +112,7 @@ export default {
       this.task.requirementId = this.requirement.id;
       this.task.projectId = this.projectId;
       await this.cardModel.insertRecord(this.task);
-      this.$emit("close");
+      this.$emit("close", this.requirement.id);
     }
   }
 };

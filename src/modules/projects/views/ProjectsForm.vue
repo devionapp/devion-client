@@ -5,7 +5,7 @@
     <ModalCreateTask
       v-if="modalCreateTask"
       :show="modalCreateTask"
-      @close="modalCreateTask = false"
+      @close="onCloseModalCreateTask"
       :requirement="selectedRequirementTasks"
       :projectId="project.id"
     />
@@ -258,6 +258,13 @@ export default {
     this.flows = await this.flowModel.loadCollection();
   },
   methods: {
+    onCloseModalCreateTask(requirementId) {
+      this.modalCreateTask = false;
+      const index = this.project.requirements.findIndex(
+        r => r.id === requirementId
+      );
+      this.project.requirements[index].hasTask = true;
+    },
     async addRequirement() {
       this.project.requirements.push({
         name: "Novo requisito",

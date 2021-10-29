@@ -86,11 +86,14 @@ export default {
   },
   async created() {
     if (this.routeState === "EDIT") {
-      const response = await this.model.loadRecord(this.$route.params.id);
-      this.$emit("input", response);
+      await this.loadRecord();
     }
   },
   methods: {
+    async loadRecord() {
+      const response = await this.model.loadRecord(this.$route.params.id);
+      this.$emit("input", response);
+    },
     onCancel() {
       this.$router.go(-1);
     },

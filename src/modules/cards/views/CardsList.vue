@@ -1,5 +1,5 @@
 <template>
-  <section class="task-list" ref="panelContent">
+  <section class="CardsList" ref="panelContent">
     <Subheader title="Atividades" />
 
     <ModalCard
@@ -7,8 +7,13 @@
       @close="selectedCard = null"
       :cardId="selectedCard"
     />
+    <ModalFlow
+      v-if="showAddFlowModal !== false"
+      @close="showAddFlowModal = false"
+      :show="showAddFlowModal"
+    />
 
-    <v-card class="w-100">
+    <v-card class="CardsList__card">
       <v-toolbar color="secondary" dark flat prominent height="80">
         <v-row
           class="d-flex align-center justify-end"
@@ -80,6 +85,20 @@
             </div>
           </v-tab-item>
         </template>
+        <!-- <template>
+          <Button
+            color="success"
+            class="mt-5 mx-2"
+            rounded
+            small
+            @click="addFlow"
+          >
+            <v-icon>
+              mdi-plus
+            </v-icon>
+            Novo Fluxo
+          </Button>
+        </template> -->
       </v-tabs>
     </v-card>
   </section>
@@ -89,6 +108,7 @@
 import draggable from "vuedraggable";
 import Card from "../components/Card.vue";
 import ModalCard from "../components/ModalCard.vue";
+import ModalFlow from "../components/ModalFlow.vue";
 import Flow from "../models/Flow";
 import CardModel from "../models/Card";
 
@@ -102,6 +122,7 @@ export default {
       flows: [],
       openedPanels: [],
       selectedCard: null,
+      showAddFlowModal: false,
       typeOptions: [
         {
           id: "task",
@@ -122,7 +143,8 @@ export default {
   components: {
     Card,
     ModalCard,
-    draggable
+    draggable,
+    ModalFlow
   },
   async created() {
     await this.getFlows();
@@ -150,12 +172,25 @@ export default {
     },
     openModalCard(task) {
       this.selectedCard = task.id;
+    },
+    addFlow() {
+      this.showAddFlowModal = true;
     }
   }
 };
 </script>
 
 <style lang="scss">
+.CardsList {
+  &__card {
+    min-height: 400px;
+
+    .v-tabs {
+      min-height: 400px;
+    }
+  }
+}
+
 .step-width {
   min-width: 320px;
   width: 320px;
@@ -180,9 +215,15 @@ export default {
   }
 }
 
-.step-container {
-  width: 100%;
-  height: 100%;
+.step {
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+
+  .step-container {
+    width: 100%;
+    height: 100%;
+  }
 }
 
 .expansion-panel-content {

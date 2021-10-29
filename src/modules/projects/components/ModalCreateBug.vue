@@ -3,26 +3,31 @@
     :show="show"
     :title="`Criar BUG para: ${requirement.name}`"
     @close="$emit('close')"
-    @confirm="createTasks"
+    @confirm="createBug"
   >
     <v-row class="mt-2">
-      <v-col cols="12" lg="5">
+      <v-col>
+        <TextField label="Descrição" v-model="bug.name" />
+      </v-col>
+    </v-row>
+    <v-row class="mt-2">
+      <v-col cols="12" lg="6">
         <Select
           :items="flows"
           label="Fluxo"
           itemText="name"
           itemValue="id"
-          v-model="task.flowId"
+          v-model="bug.flowId"
         />
       </v-col>
-      <v-col cols="12" lg="5">
+      <v-col cols="12" lg="6">
         <v-select
           outlined
           label="Nivel de skill necessária"
           item-text="description"
           item-value="id"
           :items="niveis"
-          v-model="task.skillLevel"
+          v-model="bug.skillLevel"
         >
           <template v-slot:item="data" @click="data.select">
             <v-list dense>
@@ -76,12 +81,12 @@ export default {
       cardModel: new Card(),
       flows: [],
       steps: [],
-      task: {
+      bug: {
         flowId: null,
         skillLevel: null,
         type: "bug",
         requirementId: null,
-        name: this.requirement.name
+        name: null
       },
       niveis: [
         {
@@ -107,11 +112,10 @@ export default {
     this.flows = await this.flowModel.loadCollection();
   },
   methods: {
-    async createTasks() {
-      this.task.name = this.requirement.name;
-      this.task.requirementId = this.requirement.id;
-      this.task.projectId = this.projectId;
-      await this.cardModel.insertRecord(this.task);
+    async createBug() {
+      this.bug.requirementId = this.requirement.id;
+      this.bug.projectId = this.projectId;
+      await this.cardModel.insertRecord(this.bug);
       this.$emit("close");
     }
   }
