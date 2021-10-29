@@ -1,10 +1,26 @@
 <template>
   <section class="DashboardProjetosAtivos">
     <v-card style="height:400px;">
-      <v-card-text>
-        <p>
+      <v-card-text class="d-flex align-center w-100 justify-between">
+        <p class="mb-0">
           Projetos
         </p>
+        <download-excel
+          :data="projectsRelatorio"
+          worksheet="Projetos Ativos"
+          name="projetosAtivos.xls"
+        >
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn text icon color="primary" v-bind="attrs" v-on="on">
+                <v-icon>
+                  mdi-file-export
+                </v-icon>
+              </v-btn>
+            </template>
+            <span>Gerar relatório</span>
+          </v-tooltip>
+        </download-excel>
       </v-card-text>
       <table class="DashboardProjetosAtivos__table">
         <thead>
@@ -56,14 +72,47 @@ export default {
   data() {
     return {
       model: new Dashboard(),
-      projects: []
+      projects: [],
+      json_data: [
+        {
+          name: "Tony Peña",
+          city: "New York",
+          country: "United States",
+          birthdate: "1978-03-15",
+          phone: {
+            mobile: "1-541-754-3010",
+            landline: "(541) 754-3010"
+          }
+        },
+        {
+          name: "Thessaloniki",
+          city: "Athens",
+          country: "Greece",
+          birthdate: "1987-11-23",
+          phone: {
+            mobile: "+1 855 275 5071",
+            landline: "(2741) 2621-244"
+          }
+        }
+      ]
     };
   },
   async created() {
     this.projects = (await this.model.getActiveProjects()).data;
   },
   methods: {},
-  computed: {}
+  computed: {
+    projectsRelatorio() {
+      return this.projects.map(p => {
+        return {
+          Projeto: p.name,
+          "Horas Estimadas": p.horasEstimadas,
+          "Horas Realizadas": p.horasRealizadas,
+          "% Requisitos Finalizados": p.porcentagemTarefasFinalizadas
+        };
+      });
+    }
+  }
 };
 </script>
 

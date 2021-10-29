@@ -1,10 +1,26 @@
 <template>
   <section class="DashboardProjetosAtivos">
     <v-card style="height:400px;">
-      <v-card-text>
-        <p>
+      <v-card-text class="d-flex align-center w-100 justify-between">
+        <p class="mb-0">
           Lista de horas registradas por usuário (mês atual)
         </p>
+        <download-excel
+          :data="usersRelatorio"
+          worksheet="Horas por usuario"
+          name="horasUsuario.xls"
+        >
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn text icon color="primary" v-bind="attrs" v-on="on">
+                <v-icon>
+                  mdi-file-export
+                </v-icon>
+              </v-btn>
+            </template>
+            <span>Gerar relatório</span>
+          </v-tooltip>
+        </download-excel>
       </v-card-text>
       <table class="DashboardProjetosAtivos__table">
         <thead>
@@ -47,6 +63,18 @@ export default {
   },
   async created() {
     this.users = (await this.model.getUsersActivity()).data;
+  },
+  computed: {
+    usersRelatorio() {
+      return this.users.map(u => {
+        return {
+          Nome: u.name,
+          "Total horas registradas": u.total,
+          "% Atividade": u.percentTasks,
+          "% Bug": u.percentBugs
+        };
+      });
+    }
   }
 };
 </script>

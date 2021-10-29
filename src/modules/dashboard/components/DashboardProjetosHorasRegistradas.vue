@@ -3,15 +3,16 @@
     <v-card style="height:400px; position:relative;">
       <v-card-text>
         <v-row
-          class="d-flex align-center justify-start"
+          class="d-flex align-center justify-start align-center"
           style="width:100%;height:100%;margin:0;"
         >
           <p>
             Horas registradas em projetos (últimos 7 dias)
           </p>
 
-          <v-col cols="7" class="d-flex justify-end">
+          <v-col cols="5" class="d-flex justify-end align-center">
             <v-select
+              x-small
               class="mx-4"
               flat
               :items="projects"
@@ -26,9 +27,28 @@
               dense
             />
 
-            <Button dense @click="getProjectsTimeRegistered" color="primary">
+            <Button @click="getProjectsTimeRegistered" color="primary" x-small>
               Filtrar
             </Button>
+          </v-col>
+
+          <v-col cols="2">
+            <download-excel
+              :data="horasRegistradasRelatorio"
+              :worksheet="`Horas do projeto ${projectName}`"
+              :name="`horasProjeto-${projectName}.xls`"
+            >
+              <v-tooltip bottom>
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn text icon color="primary" v-bind="attrs" v-on="on">
+                    <v-icon>
+                      mdi-file-export
+                    </v-icon>
+                  </v-btn>
+                </template>
+                <span>Gerar relatório</span>
+              </v-tooltip>
+            </download-excel>
           </v-col>
         </v-row>
 
@@ -62,11 +82,26 @@ export default {
       },
       projects: [],
       loaded: false,
+      horasRegistradas: [],
       chartOptions: {
         responsive: true,
         maintainAspectRatio: false
       }
     };
+  },
+  computed: {
+    horasRegistradasRelatorio() {
+      return this.horasRegistradas.map(h => {
+        return {
+          Data: h.date,
+          Atividades: h.tasks,
+          Bugs: h.bugs
+        };
+      });
+    },
+    projectName() {
+      return this.project?.name;
+    }
   },
   async mounted() {
     await this.getProjects();
@@ -80,14 +115,14 @@ export default {
       this.loaded = false;
 
       if (!this.project) {
-        this.project = this.projects[0].id;
+        this.project = this.projects[0];
       }
 
-      const response = (
-        await this.model.getProjectsTimeRegistered(this.project)
+      this.horasRegistradas = (
+        await this.model.getProjectsTimeRegistered(this.project.id)
       ).data;
 
-      this.fillData(response);
+      this.fillData(this.horasRegistradas);
       this.loaded = true;
     },
     fillData(data) {
@@ -115,9 +150,6 @@ export default {
     getRandomInt() {
       return Math.floor(Math.random() * (50 - 5 + 1)) + 5;
     }
-  },
-  computed: {}
+  }
 };
 </script>
-
-<style lang="scss" scoped></style>

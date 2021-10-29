@@ -22,6 +22,9 @@ import Subheader from "@/components/Subheader";
 import Table from "@/components/Table";
 import Modal from "@/components/Modal";
 
+import JsonExcel from "vue-json-excel";
+
+Vue.component("downloadExcel", JsonExcel);
 Vue.component("Button", Button);
 Vue.component("TextField", TextField);
 Vue.component("Checkbox", Checkbox);
