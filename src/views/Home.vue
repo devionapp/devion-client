@@ -48,8 +48,6 @@
 
       <v-spacer></v-spacer>
 
-      <!-- FAZER IGUAL ESSE -->
-
       <v-menu left bottom offset-y>
         <template v-slot:activator="{ on, attrs }">
           <v-btn icon v-bind="attrs" v-on="on">
@@ -116,7 +114,7 @@ import hasPermission from "@/helpers/hasPermission";
 export default {
   name: "Home",
   data: () => ({
-    drawer: false
+    drawer: true
   }),
   computed: {
     ...mapGetters("User", {
@@ -150,26 +148,20 @@ export default {
           permission: "VIEW_FLOWS"
         },
         {
-          title: "Skills",
-          icon: "mdi-brain",
-          route: "skills",
-          permission: "VIEW_SKILLS"
-        },
-        {
           title: "Usuários",
           icon: "mdi-account-group",
           route: "usuarios",
           permission: "VIEW_USERS"
         }
+        // {
+        //   title: "Skills",
+        //   icon: "mdi-brain",
+        //   route: "skills",
+        //   permission: "VIEW_SKILLS"
+        // },
       ];
 
-      items.forEach((i, index) => {
-        if (i.permission && !hasPermission(i.permission)) {
-          items.splice(index, 1);
-        }
-      });
-
-      return items;
+      return items.filter(i => !i.permission || hasPermission(i.permission));
     }
   },
 

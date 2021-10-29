@@ -23,6 +23,14 @@ export default class Dashboard extends Model {
       `projects-time-registered?filter=${JSON.stringify(filters)}`
     );
   }
+
+  async getUsersActivity() {
+    return await this.request.get("users-activity");
+  }
+
+  async getEmployeeActivity() {
+    return await this.request.get("employee-activity");
+  }
 }
 
 Dashboard.use("CRUD");

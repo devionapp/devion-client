@@ -67,7 +67,6 @@ export default {
 
   methods: {
     onCancel() {
-      console.log(this.$parent);
       if (isFunction(this.$parent.onCancel)) {
         return this.$parent.onCancel();
       }

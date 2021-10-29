@@ -69,59 +69,43 @@ export default {
     };
   },
   async mounted() {
-    await Promise.all([
-      this.getProjects(),
-      this.getProjectsTimeRegistered(),
-      this.fillData()
-    ]);
+    await this.getProjects();
+    await Promise.all([this.getProjectsTimeRegistered(), this.fillData()]);
   },
   methods: {
     async getProjects() {
       this.projects = await this.projectModel.loadCollection();
     },
     async getProjectsTimeRegistered() {
-      await this.model.getProjectsTimeRegistered(this.project);
+      this.loaded = false;
+
+      if (!this.project) {
+        this.project = this.projects[0].id;
+      }
+
+      const response = (
+        await this.model.getProjectsTimeRegistered(this.project)
+      ).data;
+
+      this.fillData(response);
+      this.loaded = true;
     },
-    fillData() {
+    fillData(data) {
+      if (!data) {
+        return;
+      }
       this.datacollection = {
-        labels: [
-          "27/09",
-          "28/09",
-          "29/09",
-          "30/09",
-          "01/10",
-          "02/10",
-          "03/10",
-          "04/10"
-        ],
+        labels: data.map(d => d.date),
         datasets: [
           {
             label: "Requisito",
             backgroundColor: "#183059",
-            data: [
-              this.getRandomInt(),
-              this.getRandomInt(),
-              this.getRandomInt(),
-              this.getRandomInt(),
-              this.getRandomInt(),
-              this.getRandomInt(),
-              this.getRandomInt(),
-              this.getRandomInt()
-            ]
+            data: data.map(d => d.tasks)
           },
           {
             label: "Bug",
             backgroundColor: "#8C183E",
-            data: [
-              this.getRandomInt(),
-              this.getRandomInt(),
-              this.getRandomInt(),
-              this.getRandomInt(),
-              this.getRandomInt(),
-              this.getRandomInt(),
-              this.getRandomInt(),
-              this.getRandomInt()
-            ]
+            data: data.map(d => d.bugs)
           }
         ]
       };

@@ -1,12 +1,12 @@
 <template>
   <section class="Dashboard">
-    <v-row>
+    <v-row v-if="user.roleId !== 1 && user.roleId !== 2">
       <v-col cols="12" md="6" xl="3">
         <v-card hover link to="projetos">
           <v-card-text>
             <div>Informativo</div>
             <p class="text-h4">
-              Seus Projetos
+              Projetos ativos
             </p>
             <span class="text-h2 text--primary">
               {{ projects }}
@@ -40,20 +40,33 @@
           </v-card-text>
         </v-card>
       </v-col>
+      <v-col cols="12" xl="6">
+        <DashboardProjetosAtivos />
+      </v-col>
+      <v-col cols="12" xl="6">
+        <DashboardIndiceTaskBug />
+      </v-col>
+      <v-col cols="12">
+        <DashboardEmployeeActivity />
+      </v-col>
     </v-row>
-    <v-row>
+
+    <v-row v-else>
+      <v-col cols="12">
+        <Subheader title="Dashboard" />
+      </v-col>
       <v-col cols="12" xl="6">
         <DashboardProjetosAtivos />
       </v-col>
       <v-col cols="12" xl="6">
         <DashboardProjetosHorasRegistradas />
       </v-col>
-      <v-col cols="12" xl="12">
+      <v-col cols="12" xl="6">
         <DashboardUsuarioHorasRegistradas />
       </v-col>
-      <!-- <v-col cols="12" xl="6">
-        <DashboardIndiceTaskBug />
-      </v-col> -->
+      <v-col cols="12" xl="6">
+        <DashboardEmployeeActivity />
+      </v-col>
     </v-row>
   </section>
 </template>
@@ -61,35 +74,29 @@
 <script>
 import Project from "./models/Project";
 import Task from "./models/Task";
+import { mapGetters } from "vuex";
 import DashboardProjetosAtivos from "./components/DashboardProjetosAtivos.vue";
 import DashboardProjetosHorasRegistradas from "./components/DashboardProjetosHorasRegistradas.vue";
 import DashboardUsuarioHorasRegistradas from "./components/DashboardUsuarioHorasRegistradas.vue";
-// import DashboardIndiceTaskBug from "./components/DashboardIndiceTaskBug.vue";
+import DashboardIndiceTaskBug from "./components/DashboardIndiceTaskBug.vue";
+import DashboardEmployeeActivity from "./components/DashboardEmployeeActivity.vue";
 
 export default {
   name: "Dashboard",
   components: {
     DashboardProjetosAtivos,
     DashboardProjetosHorasRegistradas,
-    DashboardUsuarioHorasRegistradas
-    // DashboardIndiceTaskBug
+    DashboardUsuarioHorasRegistradas,
+    DashboardIndiceTaskBug,
+    DashboardEmployeeActivity
+  },
+  computed: {
+    ...mapGetters("User", {
+      user: "getUser"
+    })
   },
   data() {
     return {
-      labels: [
-        "JAN",
-        "FEV",
-        "MAR",
-        "ABR",
-        "JUN",
-        "JUL",
-        "AGO",
-        "SET",
-        "OUT",
-        "NOV",
-        "DEZ"
-      ],
-      value: [50, 83, 58, 100, 75, 36, 54, 97, 50, 100, 18],
       projects: 0,
       tasks: 0,
       bugs: 0,
@@ -101,8 +108,7 @@ export default {
     this.tasks = await new Task().countTasks();
     this.bugs = await new Task().countBugs();
   },
-  methods: {},
-  computed: {}
+  methods: {}
 };
 </script>
 

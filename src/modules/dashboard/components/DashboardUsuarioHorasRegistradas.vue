@@ -12,7 +12,7 @@
             Usuário
           </th>
           <th>
-            Horas Registradas
+            Total de horas registradas
           </th>
           <th>
             % Atividade
@@ -22,78 +22,32 @@
           </th>
         </thead>
         <tbody>
-          <tr>
-            <td>
-              Fulano
-            </td>
-            <td>
-              <v-progress-linear color="secondary" v-model="horas" />
-              14h12 de 40h/mês
-            </td>
-            <td>
-              40%
-            </td>
-            <td>
-              60%
-            </td>
+          <tr v-for="(user, index) in users" :key="index">
+            <td>{{ user.name }}</td>
+            <td>{{ user.total }}h</td>
+            <td>{{ user.percentTasks }}%</td>
+            <td>{{ user.percentBugs }}%</td>
           </tr>
-          <tr>
-            <td>
-              Ciclano
-            </td>
-            <td>
-              <v-progress-linear color="secondary" v-model="horas2" />
-              16h00 de 40h/mês
-            </td>
-            <td>
-              100%
-            </td>
-            <td>
-              0%
-            </td>
-          </tr>
-          <!-- <tr v-for="(project, index) in projects" :key="index">
-            <td>
-              {{ project.name }}
-            </td>
-            <td>
-              {{ project.horasEstimadas }}
-            </td>
-            <td>
-              {{ project.horasRealizadas }}
-            </td>
-            <td>
-              {{ project.tarefasFinalizadas }}
-            </td>
-          </tr> -->
         </tbody>
       </table>
-      <!-- <v-card-text class="">
-        <div class="DashboardProjetosAtivos__project">
-          teste
-        </div>
-      </v-card-text> -->
     </v-card>
   </section>
 </template>
 
 <script>
 import Dashboard from "../models/Dashboard";
+
 export default {
   name: "DashboardProjetosAtivos",
   data() {
     return {
       model: new Dashboard(),
-      projects: [],
-      horas: 10,
-      horas2: 15
+      users: []
     };
   },
   async created() {
-    this.projects = (await this.model.getActiveProjects()).data;
-  },
-  methods: {},
-  computed: {}
+    this.users = (await this.model.getUsersActivity()).data;
+  }
 };
 </script>
 
