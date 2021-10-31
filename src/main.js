@@ -21,8 +21,42 @@ import Textheader from "@/components/Form/Textheader";
 import Subheader from "@/components/Subheader";
 import Table from "@/components/Table";
 import Modal from "@/components/Modal";
-
 import JsonExcel from "vue-json-excel";
+import { getMessaging, getToken } from "firebase/messaging";
+import { initializeApp } from "firebase/app";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDwZg8lwGEIMp74DL7AfQBd6s7fX_RcjvQ",
+  authDomain: "devion-30f06.firebaseapp.com",
+  projectId: "devion-30f06",
+  storageBucket: "devion-30f06.appspot.com",
+  messagingSenderId: "840660513594",
+  appId: "1:840660513594:web:d59a94ae7dfa8421f95603"
+};
+
+// Initialize Firebase
+const firebaseApp = initializeApp(firebaseConfig);
+
+const messaging = getMessaging(firebaseApp);
+getToken(messaging, {
+  vapidKey:
+    "BIxaNwxHX7HV56jD-perNRFjH5uJKiEiNQwXB7Ya8P7vSJN7Imnj2d97do0U-apjF_zAHJrQJ821pQ0x1f4j-bI"
+})
+  .then(currentToken => {
+    if (currentToken) {
+      console.log("Token registrado");
+    } else {
+      // Show permission request UI
+      console.log(
+        "No registration token available. Request permission to generate one."
+      );
+      // ...
+    }
+  })
+  .catch(err => {
+    console.log("An error occurred while retrieving token. ", err);
+    // ...
+  });
 
 Vue.component("downloadExcel", JsonExcel);
 Vue.component("Button", Button);

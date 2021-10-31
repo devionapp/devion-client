@@ -40,11 +40,8 @@
           </v-card-text>
         </v-card>
       </v-col>
-      <v-col cols="12" xl="6">
+      <v-col cols="12">
         <DashboardProjetosAtivos />
-      </v-col>
-      <v-col cols="12" xl="6">
-        <DashboardIndiceTaskBug />
       </v-col>
       <v-col cols="12">
         <DashboardEmployeeActivity />
@@ -78,7 +75,6 @@ import { mapGetters } from "vuex";
 import DashboardProjetosAtivos from "./components/DashboardProjetosAtivos.vue";
 import DashboardProjetosHorasRegistradas from "./components/DashboardProjetosHorasRegistradas.vue";
 import DashboardUsuarioHorasRegistradas from "./components/DashboardUsuarioHorasRegistradas.vue";
-import DashboardIndiceTaskBug from "./components/DashboardIndiceTaskBug.vue";
 import DashboardEmployeeActivity from "./components/DashboardEmployeeActivity.vue";
 
 export default {
@@ -87,7 +83,6 @@ export default {
     DashboardProjetosAtivos,
     DashboardProjetosHorasRegistradas,
     DashboardUsuarioHorasRegistradas,
-    DashboardIndiceTaskBug,
     DashboardEmployeeActivity
   },
   computed: {

@@ -3,7 +3,7 @@
     <v-card style="height:400px;">
       <v-card-text class="d-flex align-center w-100 justify-between">
         <p class="mb-0">
-          Projetos
+          Projetos ativos
         </p>
         <download-excel
           :data="projectsRelatorio"
