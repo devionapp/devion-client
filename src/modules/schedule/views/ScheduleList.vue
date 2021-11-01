@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import Gstc from "../components/Gstc.vue";
+import Gstc from "../components/GSTC.vue";
 import Schedule from "../models/Schedule";
 import Task from "../models/Task";
 export default {

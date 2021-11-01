@@ -18,6 +18,7 @@ import { Plugin as Bookmarks } from "gantt-schedule-timeline-calendar/dist/plugi
 import "gantt-schedule-timeline-calendar/dist/style.css";
 
 import Task from "../models/Task";
+import Project from "../models/Project";
 
 let gstc, state;
 
@@ -26,17 +27,17 @@ let gstc, state;
 /**
  * @returns { import("gantt-schedule-timeline-calendar").Rows }
  */
-function generateRows() {
-  const rows = {};
-  for (let i = 0; i < 100; i++) {
-    const id = GSTC.api.GSTCID(i.toString());
-    rows[id] = {
-      id,
-      label: `Row ${i}`
-    };
-  }
-  return rows;
-}
+// function generateRows() {
+//   const rows = {};
+//   for (let i = 0; i < 100; i++) {
+//     const id = GSTC.api.GSTCID(i.toString());
+//     rows[id] = {
+//       id,
+//       label: `Row ${i}`
+//     };
+//   }
+//   return rows;
+// }
 
 /**
  * @returns { import("gantt-schedule-timeline-calendar").Items }
@@ -74,7 +75,7 @@ function formatItems(items) {
     const item = {
       id: items[i].id,
       label: items[i].name,
-      rowId: items[i].projectId | "1",
+      rowId: items[i].projectId,
       time: {
         start: Date.now(),
         end: Date.now() + 3 * 24 * 60 * 60 * 1000
@@ -86,6 +87,20 @@ function formatItems(items) {
   return result;
 }
 
+function formatRows(items) {
+  let result = [];
+
+  for (let i = 0; i < items.lenght; ++i) {
+    const item = {
+      id: items[i].id,
+      label: items[i].name
+    };
+    result.push(item);
+  }
+  console.log(result);
+  return result;
+}
+
 // main component
 
 export default {
@@ -94,7 +109,9 @@ export default {
   data() {
     return {
       modelTask: new Task(),
-      tasks: []
+      modelProject: new Project(),
+      tasks: [],
+      projects: []
     };
   },
 
@@ -104,10 +121,12 @@ export default {
      */
 
     this.tasks = await this.modelTask.loadCollection();
+    this.projects = await this.modelProject.loadCollection();
 
-    console.log(this.tasks);
-    console.log("----------");
+    console.log("Tasks");
     console.log(formatItems(this.tasks));
+    console.log("Projects");
+    console.log(formatRows(this.projects));
 
     const config = {
       licenseKey:
@@ -140,7 +159,7 @@ export default {
             }
           }
         },
-        rows: generateRows()
+        rows: GSTC.api.fromArray(formatItems(this.projects))
       },
       chart: {
         items: GSTC.api.fromArray(formatItems(this.tasks))
