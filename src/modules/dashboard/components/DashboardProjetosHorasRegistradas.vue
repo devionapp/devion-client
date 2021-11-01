@@ -115,11 +115,11 @@ export default {
       this.loaded = false;
 
       if (!this.project) {
-        this.project = this.projects[0];
+        this.project = this.projects[0]?.id;
       }
 
       this.horasRegistradas = (
-        await this.model.getProjectsTimeRegistered(this.project?.id)
+        await this.model.getProjectsTimeRegistered(this.project)
       ).data;
 
       this.fillData(this.horasRegistradas);
