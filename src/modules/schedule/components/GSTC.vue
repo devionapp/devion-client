@@ -90,14 +90,13 @@ function formatItems(items) {
 function formatRows(items) {
   let result = [];
 
-  for (let i = 0; i < items.lenght; ++i) {
+  for (let i = 0; i < items.length; ++i) {
     const item = {
       id: items[i].id,
       label: items[i].name
     };
     result.push(item);
   }
-  console.log(result);
   return result;
 }
 
@@ -159,7 +158,7 @@ export default {
             }
           }
         },
-        rows: GSTC.api.fromArray(formatItems(this.projects))
+        rows: GSTC.api.fromArray(formatRows(this.projects))
       },
       chart: {
         items: GSTC.api.fromArray(formatItems(this.tasks))
