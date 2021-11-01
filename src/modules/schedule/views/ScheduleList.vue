@@ -1,25 +1,34 @@
 <template>
   <section class="ScheduleList">
     <Subheader createPermission="CREATE_SCHEDULE" title="Schedule" />
-    <GSTC />
+    <Gstc />
   </section>
 </template>
 
 <script>
-import GSTC from "../components/GSTC.vue";
+import Gstc from "../components/Gstc.vue";
 import Schedule from "../models/Schedule";
+import Task from "../models/Task";
 export default {
   name: "ScheduleList",
   data() {
     return {
-      model: new Schedule()
+      model: new Schedule(),
+      modelTask: new Task(),
+      tasks: []
     };
   },
   components: {
-    GSTC
+    Gstc
   },
   created() {},
-  methods: {},
+  methods: {
+    // async filter(index) {
+    // const tasks = await this.flowModel.getTasks(
+    //   this.flows[index],
+    //   this.filters
+    // );}
+  },
   computed: {}
 };
 </script>
