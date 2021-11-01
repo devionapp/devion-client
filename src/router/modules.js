@@ -5,6 +5,8 @@ import users from "@/modules/users/routes";
 import skills from "@/modules/skills/routes";
 import flows from "@/modules/flows/routes";
 import cards from "@/modules/cards/routes";
+import tasks from "@/modules/tasks/routes";
+import schedule from "@/modules/schedule/routes";
 
 export default [
   ...settings,
@@ -13,5 +15,7 @@ export default [
   ...users,
   ...skills,
   ...flows,
-  ...cards
+  ...cards,
+  ...tasks,
+  ...schedule
 ];

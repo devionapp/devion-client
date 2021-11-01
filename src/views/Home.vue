@@ -189,6 +189,12 @@ export default {
           icon: "mdi-account-group",
           route: "usuarios",
           permission: "VIEW_USERS"
+        },
+        {
+          title: "Cronograma",
+          icon: "mdi-calendar-check",
+          route: "schedule",
+          permission: "VIEW_SCHEDULE"
         }
       ];
 
