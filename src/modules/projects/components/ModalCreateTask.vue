@@ -3,7 +3,7 @@
     :show="show"
     :title="`Gerar Atividades - ${requirement.name}`"
     @close="$emit('close')"
-    width="600"
+    :width="600"
     @confirm="createTasks"
   >
     <v-row class="mt-2">

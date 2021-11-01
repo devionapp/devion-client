@@ -3,7 +3,7 @@
     :show="show"
     :title="`Criar BUG para: ${requirement.name}`"
     @close="$emit('close')"
-    width="600"
+    :width="600"
     @confirm="createBug"
   >
     <v-row class="mt-2">
