@@ -1,6 +1,6 @@
 <template>
   <section class="DashboardEmployeeActivity">
-    <v-card style="height:400px;">
+    <v-card style="height:500px;">
       <v-card-text>
         <p>
           Últimas atividades registradas
@@ -22,19 +22,28 @@
           </th>
         </thead>
         <tbody>
-          <tr v-for="(activity, index) in activities" :key="index">
-            <td>{{ activity.userName }}</td>
-            <td>{{ activity.date }}</td>
-            <td>{{ activity.time }}</td>
-            <td class="d-flex">
-              {{ activity.card.requirement.name }}
-              <v-chip
-                class="ml-1"
-                :color="getChipColor(activity.card.type)"
-                x-small
-              >
-                {{ getTaskType(activity.card.type) }}
-              </v-chip>
+          <template v-if="activities.length">
+            <tr v-for="(activity, index) in activities" :key="index">
+              <td>{{ activity.userName }}</td>
+              <td>{{ moment(activity.date).format("L") }}</td>
+              <td>{{ activity.time }}</td>
+              <td class="d-flex">
+                {{ activity.card.requirement.name }}
+                <v-chip
+                  class="ml-1"
+                  :color="getChipColor(activity.card.type)"
+                  x-small
+                >
+                  {{ getTaskType(activity.card.type) }}
+                </v-chip>
+              </td>
+            </tr>
+          </template>
+          <tr v-else>
+            <td colspan="4">
+              <p>
+                Nenhuma atividade registrada
+              </p>
             </td>
           </tr>
         </tbody>
@@ -45,12 +54,13 @@
 
 <script>
 import Dashboard from "../models/Dashboard";
-
+import moment from "moment";
 export default {
   name: "DashboardEmployeeActivity",
   data() {
     return {
       model: new Dashboard(),
+      moment: moment,
       activities: []
     };
   },

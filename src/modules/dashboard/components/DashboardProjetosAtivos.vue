@@ -1,11 +1,12 @@
 <template>
   <section class="DashboardProjetosAtivos">
-    <v-card style="height:400px;">
+    <v-card style="height:500px;">
       <v-card-text class="d-flex align-center w-100 justify-between">
         <p class="mb-0">
           Projetos ativos
         </p>
         <download-excel
+          v-if="user.roleId === 1 || user.roleId === 2"
           :data="projectsRelatorio"
           worksheet="Projetos Ativos"
           name="projetosAtivos.xls"
@@ -42,12 +43,8 @@
             <td>
               {{ project.name }}
             </td>
-            <td>
-              {{ project.horasEstimadas }}
-            </td>
-            <td>
-              {{ project.horasRealizadas }}
-            </td>
+            <td>{{ project.horasEstimadas.toFixed(2) }}h</td>
+            <td>{{ project.horasRealizadas.toFixed(2) }}h</td>
             <td>
               <v-progress-linear
                 color="success"
@@ -67,6 +64,8 @@
 
 <script>
 import Dashboard from "../models/Dashboard";
+import { mapGetters } from "vuex";
+
 export default {
   name: "DashboardProjetosAtivos",
   data() {
@@ -102,6 +101,9 @@ export default {
   },
   methods: {},
   computed: {
+    ...mapGetters("User", {
+      user: "getUser"
+    }),
     projectsRelatorio() {
       return this.projects.map(p => {
         return {

@@ -1,6 +1,6 @@
 <template>
   <section class="DashboardProjetosHorasRegistradas">
-    <v-card style="height:400px; position:relative;">
+    <v-card style="height:500px; position:relative;">
       <v-card-text>
         <v-row
           class="d-flex align-center justify-start align-center"
@@ -78,7 +78,7 @@ export default {
       project: null,
       datacollection: null,
       styles: {
-        height: "320px"
+        height: "380px"
       },
       projects: [],
       loaded: false,
@@ -119,7 +119,7 @@ export default {
       }
 
       this.horasRegistradas = (
-        await this.model.getProjectsTimeRegistered(this.project.id)
+        await this.model.getProjectsTimeRegistered(this.project?.id)
       ).data;
 
       this.fillData(this.horasRegistradas);
@@ -135,12 +135,12 @@ export default {
           {
             label: "Requisito",
             backgroundColor: "#183059",
-            data: data.map(d => d.tasks)
+            data: data.map(d => d.tasks.toFixed(2))
           },
           {
             label: "Bug",
             backgroundColor: "#8C183E",
-            data: data.map(d => d.bugs)
+            data: data.map(d => d.bugs.toFixed(2))
           }
         ]
       };

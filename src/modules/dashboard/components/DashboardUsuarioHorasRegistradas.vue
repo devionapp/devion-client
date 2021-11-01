@@ -1,6 +1,6 @@
 <template>
   <section class="DashboardProjetosAtivos">
-    <v-card style="height:400px;">
+    <v-card style="height:500px;">
       <v-card-text class="d-flex align-center w-100 justify-between">
         <p class="mb-0">
           Lista de horas registradas por usuário

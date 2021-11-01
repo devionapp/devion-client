@@ -35,7 +35,7 @@
               />
             </v-col>
           </v-row>
-          <v-row>
+          <!-- <v-row>
             <v-col cols="12">
               <Select
                 multiple
@@ -46,7 +46,7 @@
                 item-text="name"
               />
             </v-col>
-          </v-row>
+          </v-row> -->
         </v-col>
         <v-col cols="8">
           <TextArea

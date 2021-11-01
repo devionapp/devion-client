@@ -1,6 +1,6 @@
 <template>
   <section class="DashboardProjetosHorasRegistradas">
-    <v-card style="height:400px; position:relative;">
+    <v-card style="height:500px; position:relative;">
       <v-card-text>
         <p>
           Task x Bug (anual)

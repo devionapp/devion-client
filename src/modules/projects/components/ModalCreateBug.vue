@@ -3,6 +3,7 @@
     :show="show"
     :title="`Criar BUG para: ${requirement.name}`"
     @close="$emit('close')"
+    width="600"
     @confirm="createBug"
   >
     <v-row class="mt-2">
@@ -11,7 +12,7 @@
       </v-col>
     </v-row>
     <v-row class="mt-2">
-      <v-col cols="12" lg="6">
+      <v-col cols="12">
         <Select
           :items="flows"
           label="Fluxo"
@@ -20,7 +21,7 @@
           v-model="bug.flowId"
         />
       </v-col>
-      <v-col cols="12" lg="6">
+      <!-- <v-col cols="12" lg="6">
         <v-select
           outlined
           label="Nivel de skill necessária"
@@ -45,7 +46,7 @@
             </v-list>
           </template>
         </v-select>
-      </v-col>
+      </v-col> -->
     </v-row>
   </Modal>
 </template>
@@ -115,6 +116,7 @@ export default {
     async createBug() {
       this.bug.requirementId = this.requirement.id;
       this.bug.projectId = this.projectId;
+      this.bug.skillLevel = 1;
       await this.cardModel.insertRecord(this.bug);
       this.$emit("close");
     }

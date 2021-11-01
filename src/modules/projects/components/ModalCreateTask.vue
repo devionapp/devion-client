@@ -3,10 +3,11 @@
     :show="show"
     :title="`Gerar Atividades - ${requirement.name}`"
     @close="$emit('close')"
+    width="600"
     @confirm="createTasks"
   >
     <v-row class="mt-2">
-      <v-col cols="12" lg="5">
+      <v-col cols="12">
         <Select
           :items="flows"
           label="Fluxo"
@@ -15,7 +16,7 @@
           v-model="task.flowId"
         />
       </v-col>
-      <v-col cols="12" lg="5">
+      <!-- <v-col cols="12" lg="5">
         <v-select
           outlined
           label="Nivel de skill necessária"
@@ -40,7 +41,7 @@
             </v-list>
           </template>
         </v-select>
-      </v-col>
+      </v-col> -->
     </v-row>
   </Modal>
 </template>
@@ -111,6 +112,7 @@ export default {
       this.task.name = this.requirement.name;
       this.task.requirementId = this.requirement.id;
       this.task.projectId = this.projectId;
+      this.task.skillLevel = 1;
       await this.cardModel.insertRecord(this.task);
       this.$emit("close", this.requirement.id);
     }

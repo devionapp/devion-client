@@ -63,21 +63,26 @@
         </template>
 
         <v-list left-bottom>
-          <v-list-item
-            v-for="(notification, index) in notifications"
-            :key="index"
-          >
-            <v-list-item-icon>
-              <v-icon>mdi-bell</v-icon>
-            </v-list-item-icon>
-            <v-list-item-content>
-              <v-list-item-title
-                v-html="notification.message"
-              ></v-list-item-title>
-              <v-list-item-subtitle
-                v-html="moment(notification.date).format('L')"
-              ></v-list-item-subtitle>
-            </v-list-item-content>
+          <template v-if="notifications.length">
+            <v-list-item
+              v-for="(notification, index) in notifications"
+              :key="index"
+            >
+              <v-list-item-icon>
+                <v-icon>mdi-bell</v-icon>
+              </v-list-item-icon>
+              <v-list-item-content>
+                <v-list-item-title
+                  v-html="notification.message"
+                ></v-list-item-title>
+                <v-list-item-subtitle
+                  v-html="moment(notification.date).format('L')"
+                ></v-list-item-subtitle>
+              </v-list-item-content>
+            </v-list-item>
+          </template>
+          <v-list-item v-else>
+            Nenhuma notificação.
           </v-list-item>
         </v-list>
       </v-menu>
@@ -172,6 +177,12 @@ export default {
           icon: "mdi-sitemap",
           route: "flows",
           permission: "VIEW_FLOWS"
+        },
+        {
+          title: "Skills",
+          icon: "mdi-brain",
+          route: "skills",
+          permission: "VIEW_SKILLS"
         },
         {
           title: "Usuários",
