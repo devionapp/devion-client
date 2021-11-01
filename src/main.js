@@ -22,7 +22,7 @@ import Subheader from "@/components/Subheader";
 import Table from "@/components/Table";
 import Modal from "@/components/Modal";
 import JsonExcel from "vue-json-excel";
-import { getMessaging, getToken } from "firebase/messaging";
+import { getMessaging, getToken, onMessage } from "firebase/messaging";
 import { initializeApp } from "firebase/app";
 
 const firebaseConfig = {
@@ -44,7 +44,7 @@ getToken(messaging, {
 })
   .then(currentToken => {
     if (currentToken) {
-      console.log("Token registrado");
+      console.log(currentToken);
     } else {
       // Show permission request UI
       console.log(
@@ -57,6 +57,11 @@ getToken(messaging, {
     console.log("An error occurred while retrieving token. ", err);
     // ...
   });
+
+onMessage(messaging, payload => {
+  console.log("Message received. ", payload);
+  // ...
+});
 
 Vue.component("downloadExcel", JsonExcel);
 Vue.component("Button", Button);

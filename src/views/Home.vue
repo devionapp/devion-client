@@ -50,18 +50,33 @@
 
       <v-menu left bottom offset-y>
         <template v-slot:activator="{ on, attrs }">
-          <v-btn icon v-bind="attrs" v-on="on">
-            <v-icon>mdi-bell</v-icon>
-          </v-btn>
+          <v-badge
+            :content="unreadNotifications"
+            :value="unreadNotifications > 0"
+            color="red"
+            overlap
+          >
+            <v-btn icon v-bind="attrs" v-on="on" @click="clearMessages">
+              <v-icon>mdi-bell</v-icon>
+            </v-btn>
+          </v-badge>
         </template>
 
         <v-list left-bottom>
-          <v-list-item>
+          <v-list-item
+            v-for="(notification, index) in notifications"
+            :key="index"
+          >
             <v-list-item-icon>
               <v-icon>mdi-bell</v-icon>
             </v-list-item-icon>
             <v-list-item-content>
-              Atividade Liberada
+              <v-list-item-title
+                v-html="notification.message"
+              ></v-list-item-title>
+              <v-list-item-subtitle
+                v-html="moment(notification.date).format('L')"
+              ></v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
         </v-list>
@@ -95,7 +110,6 @@
           </v-list-item>
         </v-list>
       </v-menu>
-      <!-- ------- -->
     </v-app-bar>
 
     <v-main>
@@ -111,15 +125,27 @@
 <script>
 import { mapGetters, mapMutations } from "vuex";
 import hasPermission from "@/helpers/hasPermission";
+import Notification from "@/modules/notifications/models/Notification";
+import moment from "moment";
+
 export default {
   name: "Home",
   data: () => ({
-    drawer: true
+    drawer: true,
+    notificationModel: new Notification(),
+    notifications: [],
+    moment: moment
   }),
+  async mounted() {
+    await this.getNotifications();
+  },
   computed: {
     ...mapGetters("User", {
       user: "getUser"
     }),
+    unreadNotifications() {
+      return (this.notifications?.filter(n => !n.read)).length;
+    },
     items() {
       let items = [
         { title: "Dashboard", icon: "mdi-view-dashboard", route: "dashboard" },
@@ -153,12 +179,6 @@ export default {
           route: "usuarios",
           permission: "VIEW_USERS"
         }
-        // {
-        //   title: "Skills",
-        //   icon: "mdi-brain",
-        //   route: "skills",
-        //   permission: "VIEW_SKILLS"
-        // },
       ];
 
       return items.filter(i => !i.permission || hasPermission(i.permission));
@@ -169,6 +189,18 @@ export default {
     ...mapMutations("User", {
       setUser: "SET_USER"
     }),
+    async getNotifications() {
+      this.notifications = await this.notificationModel.loadCollection();
+    },
+    async clearMessages() {
+      await Promise.all(
+        this.notifications.map(async n => {
+          await this.notificationModel.updateRecord(n.id, { ...n, read: true });
+        })
+      );
+
+      await this.getNotifications();
+    },
     logout() {
       localStorage.removeItem("devionToken");
       this.setUser(null);
